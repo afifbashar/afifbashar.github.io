@@ -45,13 +45,13 @@ function toggleInputs() {
 function calculateDose() {
     // Get input values
     const weight = parseFloat(document.getElementById('weight').value);
+    const dosePerKg = parseFloat(document.getElementById('dose').value);
     const medicationType = document.querySelector('input[name="medication-type"]:checked').value;
 
     let totalDoseMg = 0;
     let mlNeeded = 0;
 
     if (medicationType === 'syrup') {
-        const dosePerKg = parseFloat(document.getElementById('dose').value);
         const syrupStrength = document.getElementById('strength').value; // e.g., "120 mg/5 ml"
         
         // Extract mg and ml from strength input
