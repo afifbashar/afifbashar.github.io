@@ -27,9 +27,18 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock(); // Initial call to display the time immediately
 
-// Scrolling notice (if required for notices)
-document.addEventListener("DOMContentLoaded", function () {
+// Function to create a scrolling notice
+function createScrollingNotice() {
+    const noticeText = 'Stay tuned for our upcoming health tips and workshops!';
+    const noticeContainer = document.createElement('div');
+    noticeContainer.classList.add('notice'); // Add a class for styling
+
     const marquee = document.createElement('marquee');
-    marquee.textContent = 'Stay tuned for upcoming health tips and workshops!';
-    document.body.insertBefore(marquee, document.body.firstChild);
-});
+    marquee.textContent = noticeText;
+
+    noticeContainer.appendChild(marquee);
+    document.getElementById('notice').appendChild(noticeContainer);
+}
+
+// Call the function to create the scrolling notice
+document.addEventListener("DOMContentLoaded", createScrollingNotice);
