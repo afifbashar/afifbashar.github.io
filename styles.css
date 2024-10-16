@@ -129,3 +129,82 @@ footer {
         font-size: 1.2rem;
     }
 }
+
+/* General form styling */
+#dose-calculator {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+#dose-calculator h2 {
+    color: #0078FF;
+    margin-bottom: 1.5rem;
+}
+
+#dose-calculator label {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+#dose-calculator input, 
+#dose-calculator select {
+    width: 100%;
+    padding: 10px;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+#dose-calculator button {
+    background-color: #25D366;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+#dose-calculator button:hover {
+    background-color: #1DAE53;
+}
+
+#result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #e9f5e9;
+    border: 2px solid #25D366;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: #25D366;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    #dose-calculator {
+        padding: 1rem;
+    }
+
+    #dose-calculator input, 
+    #dose-calculator select {
+        font-size: 0.9rem;
+    }
+
+    #dose-calculator button {
+        font-size: 1rem;
+        padding: 0.6rem 1.5rem;
+    }
+
+    #result {
+        font-size: 1rem;
+    }
+}
