@@ -122,45 +122,30 @@
         </div>
     </section>
 
-  <section id="dose-calculator">
-            <h2>Dose Calculation</h2>
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" required>
+<section id="dose-calculator">
+    <h2>Pediatric Dose Calculator</h2>
+    <label for="weight">Child's Weight (kg):</label>
+    <input type="number" id="weight" placeholder="Enter weight in kg" required>
+    
+    <label for="dose">Dose (mg/kg):</label>
+    <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
-            <label for="dose">Dose (mg/kg):</label>
-            <input type="number" id="dose" required>
+    <label for="medication-type">Select Medication Type:</label>
+    <select id="medication-type" onchange="toggleStrengthInput()">
+        <option value="">Select</option>
+        <option value="tablet">Tablet</option>
+        <option value="syrup">Syrup</option>
+    </select>
 
-            <div>
-                <label for="tablet">
-                    <input type="radio" name="medication-type" id="tablet" value="tablet" onclick="toggleInputs()" checked>
-                    Tablet
-                </label>
-                <label for="syrup">
-                    <input type="radio" name="medication-type" id="syrup" value="syrup" onclick="toggleInputs()">
-                    Syrup
-                </label>
-            </div>
+    <div id="syrup-strength" style="display: none;">
+        <label for="strength">Syrup Strength (mg/5 ml):</label>
+        <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
+    </div>
 
-            <div id="tablet-inputs" style="display: block;">
-                <label for="tablet-dose">Tablet Dose (mg):</label>
-                <input type="number" id="tablet-dose">
-            </div>
-
-            <div id="syrup-inputs" style="display: none;">
-                <label for="strength">Syrup Strength (mg/tsf):</label>
-                <input type="text" id="strength" placeholder="e.g., 120 mg/5 ml">
-            </div>
-
-            <button onclick="calculateDose()">Calculate Dose</button>
-            <div id="result"></div>
-        </section>
-    <section id="blog">
-        <div class="container">
-            <h2>Blog</h2>
-            <p>Check out my latest articles on medical insights, patient care tips, and more!</p>
-            <button id="read-more">Read More</button>
-        </div>
-    </section>
+    <button onclick="calculateDose()">Calculate Dose</button>
+    
+    <div id="result"></div>
+</section>
 
     <section id="contact">
         <div class="container">
