@@ -44,17 +44,31 @@ header nav ul li a {
     text-align: center;
 }
 
-#hero .btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.7rem 2rem;
-    background: #25D366;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
+/* Clock and Date Styling */
+.clock {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #25D366;
+    background-color: #f4f4f4;
+    border: 3px solid #25D366;
+    padding: 15px;
+    margin-top: 20px;
+    width: fit-content;
+    margin: 20px auto;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* About section - Profile Image Styling */
+.date {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #333;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Profile Image Styling */
 .profile-img {
     border-radius: 50%; /* Make the profile image circular */
     width: 150px; /* Adjust as needed */
@@ -96,40 +110,6 @@ footer {
     margin-top: 2rem;
 }
 
-/* Clock and Date Styling */
-.clock {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #25D366;
-    background-color: #f4f4f4;
-    border: 3px solid #25D366;
-    padding: 15px;
-    margin-top: 20px;
-    width: fit-content;
-    margin: 20px auto;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.date {
-    font-size: 1.5rem;
-    font-weight: normal;
-    color: #333;
-    margin-top: 10px;
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .clock {
-        font-size: 2.5rem;
-    }
-
-    .date {
-        font-size: 1.2rem;
-    }
-}
-
 /* General form styling */
 #dose-calculator {
     background-color: #f9f9f9;
@@ -139,7 +119,6 @@ footer {
     max-width: 600px;
     margin: 2rem auto;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
 }
 
 #dose-calculator h2 {
@@ -184,11 +163,19 @@ footer {
     border: 2px solid #25D366;
     border-radius: 5px;
     font-size: 1.2rem;
-    color: #25D366;
+    text-align: left;
 }
 
 /* Responsive design */
 @media (max-width: 600px) {
+    .clock {
+        font-size: 2.5rem;
+    }
+
+    .date {
+        font-size: 1.2rem;
+    }
+
     #dose-calculator {
         padding: 1rem;
     }
@@ -199,9 +186,10 @@ footer {
 
     #dose-calculator button {
         font-size: 1rem;
-            padding: 0.5rem 1.5rem;
-}
+        padding: 0.6rem 1.5rem;
+    }
 
-#result {
-    font-size: 1rem;
+    #result {
+        font-size: 1rem;
+    }
 }
