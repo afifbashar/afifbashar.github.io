@@ -39,30 +39,30 @@ function createScrollingNotice() {
     noticeContainer.appendChild(marquee);
     document.getElementById('notice').appendChild(noticeContainer);
 }
-document.getElementById('calculator-form').addEventListener('submit', function(e) {
-  e.preventDefault();
+function calculateDose() {
+    // Get input values
+    const weight = parseFloat(document.getElementById('weight').value);
+    const dosePerKg = parseFloat(document.getElementById('dose').value);
+    const syrupStrength = parseFloat(document.getElementById('strength').value); // mg per 5 ml
 
-  const weight = parseFloat(document.getElementById('weight').value);
-  const dosePerKg = parseFloat(document.getElementById('dose-per-kg').value);
-  const format = document.getElementById('format').value;
+    // Validate inputs
+    if (isNaN(weight) || isNaN(dosePerKg) || isNaN(syrupStrength)) {
+        document.getElementById('result').innerHTML = "Please enter valid numbers.";
+        return;
+    }
 
-  if (isNaN(weight) || isNaN(dosePerKg) || weight <= 0 || dosePerKg <= 0) {
-    document.getElementById('result').innerText = 'Please enter valid numbers.';
-    return;
-  }
+    // Calculate total dose in mg
+    const totalDoseMg = weight * dosePerKg;
 
-  // Calculate the total dose in mg
-  const doseInMg = weight * dosePerKg;
+    // Calculate how many ml of syrup needed
+    const mlNeeded = (totalDoseMg / syrupStrength) * 5;
 
-  // Calculate based on the format selected
-  let resultText = '';
-  if (format === 'tablet') {
-    resultText = `The calculated dose is ${doseInMg.toFixed(2)} mg.`;
-  } else if (format === 'syrup') {
-    // Assume 1 teaspoon (tsp) = 5 mL, convert mg to mL
-    const doseInMl = doseInMg / 5;
-    resultText = `The calculated dose is ${doseInMg.toFixed(2)} mg, which is approximately ${doseInMl.toFixed(2)} mL (${(doseInMl / 5).toFixed(2)} teaspoons).`;
-  }
+    // Convert ml to tsf (1 tsf = 5 ml)
+    const teaspoons = mlNeeded / 5;
 
-  document.getElementById('result').innerText = resultText;
-});
+    // Display result
+    document.getElementById('result').innerHTML = `
+        Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong><br>
+        Amount of syrup: <strong>${mlNeeded.toFixed(2)} ml (${teaspoons.toFixed(2)} tsf)</strong>
+    `;
+}
