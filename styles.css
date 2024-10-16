@@ -154,8 +154,7 @@ footer {
     display: block;
 }
 
-#dose-calculator input, 
-#dose-calculator select {
+#dose-calculator input {
     width: 100%;
     padding: 10px;
     margin: 0.5rem 0 1rem 0;
@@ -194,8 +193,7 @@ footer {
         padding: 1rem;
     }
 
-    #dose-calculator input, 
-    #dose-calculator select {
+    #dose-calculator input {
         font-size: 0.9rem;
     }
 
