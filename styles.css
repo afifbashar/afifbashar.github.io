@@ -54,6 +54,16 @@ header nav ul li a {
     text-decoration: none;
 }
 
+/* About section - Profile Image Styling */
+.profile-img {
+    border-radius: 50%; /* Make the profile image circular */
+    width: 150px; /* Adjust as needed */
+    height: 150px; /* Adjust as needed */
+    object-fit: cover; /* Ensures the image fits within the circle */
+    margin-top: 20px;
+}
+
+/* Service Grid - Circular Styling */
 .service-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -61,29 +71,21 @@ header nav ul li a {
 }
 
 .service-item {
-    background: #0078FF;
+    background: linear-gradient(135deg, #0078FF, #25D366); /* Gradient background */
     color: white;
-    padding: 1rem;
+    padding: 2rem; /* Increased padding for circular shape */
     text-align: center;
-    border-radius: 50%; /* Make the item circular */
-    transition: background 0.3s; /* Transition effect */
+    border-radius: 50%; /* Make the service items circular */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px; /* Set height for uniform circular items */
+    transition: transform 0.3s; /* Transition effect on hover */
 }
 
 .service-item:hover {
-    background: #25D366; /* Change color on hover */
-}
-
-.service-item h3 {
-    margin-bottom: 0.5rem;
-}
-
-/* Profile image styling */
-.profile-img {
-    width: 150px; /* Adjust size as needed */
-    height: 150px; /* Adjust size as needed */
-    border-radius: 50%; /* Make the image circular */
-    object-fit: cover; /* Ensures the image covers the container */
-    border: 5px solid #0078FF; /* Optional border for the image */
+    transform: scale(1.05); /* Slight zoom on hover */
 }
 
 footer {
