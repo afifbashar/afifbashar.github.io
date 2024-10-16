@@ -39,6 +39,8 @@ function createScrollingNotice() {
     noticeContainer.appendChild(marquee);
     document.getElementById('notice').appendChild(noticeContainer);
 }
+
+// Function to calculate pediatric syrup dosage
 function calculateDose() {
     // Get input values
     const weight = parseFloat(document.getElementById('weight').value);
@@ -51,16 +53,22 @@ function calculateDose() {
         return;
     }
 
+    // Ensure the inputs are positive numbers
+    if (weight <= 0 || dosePerKg <= 0 || syrupStrength <= 0) {
+        document.getElementById('result').innerHTML = "Please enter positive values.";
+        return;
+    }
+
     // Calculate total dose in mg
     const totalDoseMg = weight * dosePerKg;
 
-    // Calculate how many ml of syrup needed
+    // Calculate how many ml of syrup are needed
     const mlNeeded = (totalDoseMg / syrupStrength) * 5;
 
-    // Convert ml to tsf (1 tsf = 5 ml)
+    // Convert ml to teaspoons (1 tsf = 5 ml)
     const teaspoons = mlNeeded / 5;
 
-    // Display result
+    // Display result with proper formatting
     document.getElementById('result').innerHTML = `
         Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong><br>
         Amount of syrup: <strong>${mlNeeded.toFixed(2)} ml (${teaspoons.toFixed(2)} tsf)</strong>
