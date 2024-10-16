@@ -142,6 +142,15 @@ footer {
     font-size: 1rem;
 }
 
+#dose-calculator select {
+    width: 100%;
+    padding: 10px;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
 #dose-calculator button {
     background-color: #25D366;
     color: white;
@@ -166,6 +175,11 @@ footer {
     text-align: left;
 }
 
+/* Syrup strength input styling */
+#syrup-strength-container {
+    display: none; /* Hidden by default */
+}
+
 /* Responsive design */
 @media (max-width: 600px) {
     .clock {
@@ -180,7 +194,7 @@ footer {
         padding: 1rem;
     }
 
-    #dose-calculator input {
+    #dose-calculator input, #dose-calculator select {
         font-size: 0.9rem;
     }
 
