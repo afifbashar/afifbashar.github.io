@@ -122,36 +122,38 @@
         </div>
     </section>
 
-    <section id="dose-calculator">
-    <h2>Pediatric Dose Calculator</h2>
-    
-    <form id="dose-calculator-form">
-        <label for="weight">Child's Weight (kg):</label>
-        <input type="number" id="weight" placeholder="Enter weight" required>
-        
-        <label>Select Medication Type:</label>
-        <input type="radio" id="syrup" name="medication-type" value="syrup" checked onclick="toggleInputs()">
-        <label for="syrup">Syrup</label>
-        <input type="radio" id="tablet" name="medication-type" value="tablet" onclick="toggleInputs()">
-        <label for="tablet">Tablet</label>
+  <section id="dose-calculator">
+            <h2>Dose Calculation</h2>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" required>
 
-        <div id="syrup-inputs">
             <label for="dose">Dose (mg/kg):</label>
-            <input type="number" id="dose" placeholder="Enter dose" required>
-            <label for="strength">Syrup Strength (mg/5 ml or mg/1 tsf):</label>
-            <input type="text" id="strength" placeholder="e.g., 120 mg/5 ml" required>
-        </div>
+            <input type="number" id="dose" required>
 
-        <div id="tablet-inputs" style="display: none;">
-            <label for="tablet-dose">Tablet Dose (mg):</label>
-            <input type="number" id="tablet-dose" placeholder="Enter tablet dose" required>
-        </div>
+            <div>
+                <label for="tablet">
+                    <input type="radio" name="medication-type" id="tablet" value="tablet" onclick="toggleInputs()" checked>
+                    Tablet
+                </label>
+                <label for="syrup">
+                    <input type="radio" name="medication-type" id="syrup" value="syrup" onclick="toggleInputs()">
+                    Syrup
+                </label>
+            </div>
 
-        <button type="button" onclick="calculateDose()">Calculate</button>
-    </form>
+            <div id="tablet-inputs" style="display: block;">
+                <label for="tablet-dose">Tablet Dose (mg):</label>
+                <input type="number" id="tablet-dose">
+            </div>
 
-    <section id="result"></section> <!-- Result section for displaying results -->
-</section>
+            <div id="syrup-inputs" style="display: none;">
+                <label for="strength">Syrup Strength (mg/tsf):</label>
+                <input type="text" id="strength" placeholder="e.g., 120 mg/5 ml">
+            </div>
+
+            <button onclick="calculateDose()">Calculate Dose</button>
+            <div id="result"></div>
+        </section>
     <section id="blog">
         <div class="container">
             <h2>Blog</h2>
