@@ -127,24 +127,29 @@
         <h2>Pediatric Dose Calculator</h2>
         <label for="weight">Child's Weight (kg):</label>
         <input type="number" id="weight" placeholder="Enter weight in kg" required>
-        
+
         <label for="dose">Dose (mg/kg):</label>
         <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
         <label for="medication-type">Select Medication Type:</label>
-        <select id="medication-type" onchange="toggleStrengthInput()">
+        <select id="medication-type" onchange="toggleInputs()">
             <option value="">Select</option>
             <option value="tablet">Tablet</option>
             <option value="syrup">Syrup</option>
         </select>
 
-        <div id="syrup-strength" style="display: none;">
+        <div id="syrup-inputs" style="display: none;">
             <label for="strength">Syrup Strength (mg/5 ml):</label>
-            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
+            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml" required>
+        </div>
+
+        <div id="tablet-inputs" style="display: none;">
+            <label for="tablet-dose">Tablet Dose (mg):</label>
+            <input type="number" id="tablet-dose" placeholder="Enter dose in mg" required>
         </div>
 
         <button onclick="calculateDose()">Calculate Dose</button>
-        
+
         <div id="result"></div>
     </section>
 
