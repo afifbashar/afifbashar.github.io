@@ -127,29 +127,24 @@
         <h2>Pediatric Dose Calculator</h2>
         <label for="weight">Child's Weight (kg):</label>
         <input type="number" id="weight" placeholder="Enter weight in kg" required>
-
+        
         <label for="dose">Dose (mg/kg):</label>
         <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
         <label for="medication-type">Select Medication Type:</label>
-        <select id="medication-type" onchange="toggleInputs()">
+        <select id="medication-type" onchange="toggleStrengthInput()">
             <option value="">Select</option>
             <option value="tablet">Tablet</option>
             <option value="syrup">Syrup</option>
         </select>
 
-        <div id="syrup-inputs" style="display: none;">
+        <div id="syrup-strength" style="display: none;">
             <label for="strength">Syrup Strength (mg/5 ml):</label>
-            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml" required>
-        </div>
-
-        <div id="tablet-inputs" style="display: none;">
-            <label for="tablet-dose">Tablet Dose (mg):</label>
-            <input type="number" id="tablet-dose" placeholder="Enter dose in mg" required>
+            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
         </div>
 
         <button onclick="calculateDose()">Calculate Dose</button>
-
+        
         <div id="result"></div>
     </section>
 
@@ -175,40 +170,35 @@
             <h3>Follow Me</h3>
             <div class="social-links">
                 <a href="https://www.facebook.com/" target="_blank">Facebook</a>
-                <a href="https://www.twitter.com/afifbashar" target="_blank">Twitter</a>
+                <a href="https://www.twitter.com/" target="_blank">Twitter</a>
                 <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a>
                 <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-                <a href="https://www.youtube.com/drafifbashar" target="_blank">Youtube</a>
             </div>
         </div>
     </section>
 
     <section id="schedule-consultation">
-        <div class="container">
-            <h2>Schedule a Consultation</h2>
-            <p>If you would like to schedule a consultation, please reach out through:</p>
-            <p>
-                <a href="https://wa.me/1234567890" target="_blank" style="text-decoration: none; color: #25D366;">
-                    <i class="fab fa-whatsapp" style="font-size: 24px;"></i> WhatsApp
-                </a>
-            </p>
-            <p>
-                <a href="https://m.me/102380172711713?text=I%20would%20like%20to%20book%20a%20consultation." target="_blank" style="text-decoration: none; color: #0078FF;">
-                    <i class="fab fa-facebook-messenger" style="font-size:24px;">Messenger
-                        </a>
-            </p>
-            <footer>
-    <div class="container">
-        <p>&copy; 2024 Dr. Afif Bashar. All Rights Reserved.</p>
+        <h2>Schedule a Consultation</h2>
+        <p>If you would like to schedule a consultation, please reach out through:</p>
         <p>
-            Book a consultation via 
-            <a href="https://m.me/102380172711713" target="_blank">
-                <i class="fab fa-facebook-messenger" style="font-size: 24px; color: #0078FF;"></i> Messenger
+            <a href="https://wa.me/1234567890" target="_blank" style="text-decoration: none; color: #25D366;">
+                <i class="fab fa-whatsapp" style="font-size: 24px;"></i> WhatsApp
             </a>
         </p>
-    </div>
-</footer>
+        <p>
+            <a href="https://m.me/DrAfifBashar?text=I%20would%20like%20to%20book%20a%20consultation." target="_blank" style="text-decoration: none; color: #0078FF;">
+                <i class="fab fa-facebook-messenger" style="font-size: 24px;"></i> Messenger
+            </a>
+        </p>
+    </section>
 
-<script src="script.js"></script>
-            </body>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dr. Afif Bashar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
