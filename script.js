@@ -40,5 +40,3 @@ function createScrollingNotice() {
     document.getElementById('notice').appendChild(noticeContainer);
 }
 
-// Call the function to create the scrolling notice
-document.addEventListener("DOMContentLoaded", createScrollingNotice);
