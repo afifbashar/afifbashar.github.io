@@ -121,24 +121,34 @@
             </div>
         </div>
     </section>
-<section id="dose-calculator">
+
+    <section id="dose-calculator">
     <h2>Pediatric Dose Calculator</h2>
-    <label for="weight">Child's Weight (kg):</label>
-    <input type="number" id="weight" placeholder="Enter weight" required>
     
-    <label for="dose">Dose (mg/kg):</label>
-    <input type="number" id="dose" placeholder="Enter dose" required>
+    <form id="dose-calculator-form">
+        <label for="weight">Child's Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight" required>
+        
+        <label>Select Medication Type:</label>
+        <input type="radio" id="syrup" name="medication-type" value="syrup" checked onclick="toggleInputs()">
+        <label for="syrup">Syrup</label>
+        <input type="radio" id="tablet" name="medication-type" value="tablet" onclick="toggleInputs()">
+        <label for="tablet">Tablet</label>
 
-    <label for="syrup-type">Select Syrup Type:</label>
-    <input type="radio" id="syrup" name="syrup-type" value="syrup" checked>
-    <label for="syrup">Syrup</label>
-    <input type="radio" id="tablet" name="syrup-type" value="tablet">
-    <label for="tablet">Tablet</label>
+        <div id="syrup-inputs">
+            <label for="dose">Dose (mg/kg):</label>
+            <input type="number" id="dose" placeholder="Enter dose" required>
+            <label for="strength">Syrup Strength (mg/5 ml or mg/1 tsf):</label>
+            <input type="text" id="strength" placeholder="e.g., 120 mg/5 ml" required>
+        </div>
 
-    <label for="strength">Syrup Strength (mg/ml):</label>
-    <input type="number" id="strength" placeholder="Enter strength" required>
-    
-    <button onclick="calculateDose()">Calculate</button>
+        <div id="tablet-inputs" style="display: none;">
+            <label for="tablet-dose">Tablet Dose (mg):</label>
+            <input type="number" id="tablet-dose" placeholder="Enter tablet dose" required>
+        </div>
+
+        <button type="button" onclick="calculateDose()">Calculate</button>
+    </form>
 
     <section id="result"></section> <!-- Result section for displaying results -->
 </section>
