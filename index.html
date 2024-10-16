@@ -30,15 +30,15 @@
         </div>
     </header>
 
-
-<!-- Scrolling Notice -->
-<section id="notice">
-    <div class="container">
-        <marquee behavior="scroll" direction="left" scrollamount="5">
-            Stay tuned for our upcoming health tips and workshops!
-        </marquee>
-    </div>
-</section>
+    <!-- Scrolling Notice -->
+    <section id="notice">
+        <div class="container">
+            <marquee behavior="scroll" direction="left" scrollamount="5">
+                Stay tuned for our upcoming health tips and workshops!
+            </marquee>
+        </div>
+    </section>
+    
     <section id="hero">
         <div class="container">
             <h2>Your Health, My Priority</h2>
@@ -122,30 +122,31 @@
         </div>
     </section>
 
-<section id="dose-calculator">
-    <h2>Pediatric Dose Calculator</h2>
-    <label for="weight">Child's Weight (kg):</label>
-    <input type="number" id="weight" placeholder="Enter weight in kg" required>
-    
-    <label for="dose">Dose (mg/kg):</label>
-    <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
+    <!-- Updated Dose Calculator Section -->
+    <section id="dose-calculator">
+        <h2>Pediatric Dose Calculator</h2>
+        <label for="weight">Child's Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight in kg" required>
+        
+        <label for="dose">Dose (mg/kg):</label>
+        <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
-    <label for="medication-type">Select Medication Type:</label>
-    <select id="medication-type" onchange="toggleStrengthInput()">
-        <option value="">Select</option>
-        <option value="tablet">Tablet</option>
-        <option value="syrup">Syrup</option>
-    </select>
+        <label for="medication-type">Select Medication Type:</label>
+        <select id="medication-type" onchange="toggleStrengthInput()">
+            <option value="">Select</option>
+            <option value="tablet">Tablet</option>
+            <option value="syrup">Syrup</option>
+        </select>
 
-    <div id="syrup-strength" style="display: none;">
-        <label for="strength">Syrup Strength (mg/5 ml):</label>
-        <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
-    </div>
+        <div id="syrup-strength" style="display: none;">
+            <label for="strength">Syrup Strength (mg/5 ml):</label>
+            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
+        </div>
 
-    <button onclick="calculateDose()">Calculate Dose</button>
-    
-    <div id="result"></div>
-</section>
+        <button onclick="calculateDose()">Calculate Dose</button>
+        
+        <div id="result"></div>
+    </section>
 
     <section id="contact">
         <div class="container">
@@ -188,25 +189,21 @@
             </p>
             <p>
                 <a href="https://m.me/102380172711713?text=I%20would%20like%20to%20book%20a%20consultation." target="_blank" style="text-decoration: none; color: #0078FF;">
-                    <i class="fab fa-facebook-messenger" style="font-size: 24px;"></i> Messenger
-                </a>
+                    <i class="fab fa-facebook-messenger" style="font-size:24px;">Messenger
+                        </a>
             </p>
-        </div>
-    </section>
+            <footer>
+    <div class="container">
+        <p>&copy; 2024 Dr. Afif Bashar. All Rights Reserved.</p>
+        <p>
+            Book a consultation via 
+            <a href="https://m.me/102380172711713" target="_blank">
+                <i class="fab fa-facebook-messenger" style="font-size: 24px; color: #0078FF;"></i> Messenger
+            </a>
+        </p>
+    </div>
+</footer>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Dr. Afif Bashar. All Rights Reserved.</p>
-            <p>
-                Book a consultation via 
-                <a href="https://m.me/102380172711713" target="_blank">
-                    <i class="fab fa-facebook-messenger" style="font-size: 24px; color: #0078FF;"></i> Messenger
-                </a>
-            </p>
-        </div>
-    </footer>
-    
-    <script src="script.js"></script>
-</body>
-
+<script src="script.js"></script>
+            </body>
 </html>
