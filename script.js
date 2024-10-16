@@ -29,53 +29,51 @@ updateClock(); // Initial call to display the time immediately
 
 // Function to toggle input fields based on medication type selection
 function toggleInputs() {
-    const syrupStrengthContainer = document.getElementById('syrup-strength-container');
-    const medicationType = document.getElementById('medication-type').value;
-    
-    // Show syrup strength input if syrup is selected; otherwise, hide it
-    syrupStrengthContainer.style.display = medicationType === 'syrup' ? 'block' : 'none';
-}
+            const medicationType = document.getElementById("medication-type").value;
+            const syrupInputs = document.getElementById("syrup-inputs");
+            const tabletInputs = document.getElementById("tablet-inputs");
 
-function calculateDose() {
-    // Get input values
-    const weight = parseFloat(document.getElementById('weight').value);
-    const dosePerKg = parseFloat(document.getElementById('dose').value);
-    const medicationType = document.getElementById('medication-type').value;
-    let totalDoseMg = 0;
-
-    // Validate inputs
-    if (isNaN(weight) || isNaN(dosePerKg)) {
-        document.getElementById('result').innerHTML = "Please enter valid numbers for weight and dose.";
-        return;
-    }
-
-    // Calculate total dose in mg
-    totalDoseMg = weight * dosePerKg;
-
-    if (medicationType === 'syrup') {
-        const syrupStrength = parseFloat(document.getElementById('strength').value); // mg per 5 ml
-
-        // Validate syrup strength input
-        if (isNaN(syrupStrength) || syrupStrength <= 0) {
-            document.getElementById('result').innerHTML = "Please enter a valid syrup strength.";
-            return;
+            if (medicationType === "syrup") {
+                syrupInputs.style.display = "block";
+                tabletInputs.style.display = "none";
+            } else if (medicationType === "tablet") {
+                syrupInputs.style.display = "none";
+                tabletInputs.style.display = "block";
+            } else {
+                syrupInputs.style.display = "none";
+                tabletInputs.style.display = "none";
+            }
         }
 
-        // Calculate how many ml of syrup needed
-        const mlNeeded = (totalDoseMg / syrupStrength) * 5; // Calculate ml needed based on strength
+        function calculateDose() {
+            const weight = parseFloat(document.getElementById("weight").value);
+            const dose = parseFloat(document.getElementById("dose").value);
+            const medicationType = document.getElementById("medication-type").value;
 
-        // Convert ml to tsf (1 tsf = 5 ml)
-        const teaspoons = mlNeeded / 5;
+            let result = '';
+            if (medicationType === "syrup") {
+                const strength = parseFloat(document.getElementById("strength").value);
+                if (strength > 0) {
+                    const totalDose = weight * dose;
+                    const volume = (totalDose / strength) * 5; // 5 ml per strength
+                    result = `Total dose: ${totalDose.toFixed(2)} mg, Volume of syrup to administer: ${volume.toFixed(2)} ml`;
+                } else {
+                    result = 'Please enter a valid syrup strength.';
+                }
+            } else if (medicationType === "tablet") {
+                const tabletDose = parseFloat(document.getElementById("tablet-dose").value);
+                if (tabletDose > 0) {
+                    const totalDose = weight * dose;
+                    const numberOfTablets = Math.ceil(totalDose / tabletDose);
+                    result = `Total dose: ${totalDose.toFixed(2)} mg, Number of tablets to administer: ${numberOfTablets}`;
+                } else {
+                    result = 'Please enter a valid tablet dose.';
+                }
+            } else {
+                result = 'Please select a medication type.';
+            }
 
-        // Display result for syrup
-        document.getElementById('result').innerHTML = `
-            Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong><br>
-            Amount of syrup: <strong>${mlNeeded.toFixed(2)} ml (${teaspoons.toFixed(2)} tsf)</strong>
-        `;
-    } else {
-        // Display result for tablets
-        document.getElementById('result').innerHTML = `
-            Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong>
-        `;
+            document.getElementById("result").innerText = result;
+        }
     }
 }
