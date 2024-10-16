@@ -122,27 +122,23 @@
         </div>
     </section>
 <section id="dose-calculator">
-  <div class="container">
+<div id="dose-calculator">
     <h2>Pediatric Dose Calculator</h2>
     <form id="calculator-form">
-      <label for="weight">Child's Weight (kg):</label>
-      <input type="number" id="weight" name="weight" required>
+        <label for="weight">Child's Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight in kg" required>
 
-      <label for="dose-per-kg">Dose per kg (mg/kg):</label>
-      <input type="number" id="dose-per-kg" name="dose-per-kg" required>
+        <label for="dose">Dose per kg (mg/kg):</label>
+        <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
-      <!-- Select format: Tablet or Syrup -->
-      <label for="format">Format:</label>
-      <select id="format" name="format">
-        <option value="tablet">Tablet (mg)</option>
-        <option value="syrup">Syrup (mL)</option>
-      </select>
+        <label for="strength">Syrup Strength (mg per 5 ml):</label>
+        <input type="number" id="strength" placeholder="Enter syrup strength (e.g., 120 mg/5 ml)" required>
 
-      <button type="submit">Calculate Dose</button>
+        <button type="button" onclick="calculateDose()">Calculate</button>
     </form>
 
     <div id="result"></div>
-  </div>
+</div>
 </section>
     <section id="blog">
         <div class="container">
