@@ -27,60 +27,59 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock(); // Initial call to display the time immediately
 
-// Function to create a scrolling notice
-function createScrollingNotice() {
-    const noticeText = 'Stay tuned for our upcoming health tips and workshops!';
-    const noticeContainer = document.createElement('div');
-    noticeContainer.classList.add('notice'); // Add a class for styling
-
-    const marquee = document.createElement('marquee');
-    marquee.textContent = noticeText;
-
-    noticeContainer.appendChild(marquee);
-    document.getElementById('notice').appendChild(noticeContainer);
+// Function to toggle input fields based on medication type selection
+function toggleInputs() {
+    const syrupInputs = document.getElementById('syrup-inputs');
+    const tabletInputs = document.getElementById('tablet-inputs');
+    
+    // Show syrup inputs if syrup is selected; otherwise, show tablet inputs
+    if (document.getElementById('syrup').checked) {
+        syrupInputs.style.display = 'block';
+        tabletInputs.style.display = 'none';
+    } else {
+        syrupInputs.style.display = 'none';
+        tabletInputs.style.display = 'block';
+    }
 }
 
-// Function to calculate pediatric syrup dosage
 function calculateDose() {
     // Get input values
     const weight = parseFloat(document.getElementById('weight').value);
-    const dosePerKg = parseFloat(document.getElementById('dose').value);
-    const syrupStrength = parseFloat(document.getElementById('strength').value); // mg per ml
-    const dosageForm = document.querySelector('input[name="dosageForm"]:checked').value; // syrup or tablet
+    const medicationType = document.querySelector('input[name="medication-type"]:checked').value;
 
-    // Validate inputs
-    if (isNaN(weight) || isNaN(dosePerKg)) {
-        document.getElementById('result').innerHTML = "Please enter valid numbers for weight and dose per kg.";
-        return;
-    }
+    let totalDoseMg = 0;
+    let mlNeeded = 0;
 
-    // Ensure the inputs are positive numbers
-    if (weight <= 0 || dosePerKg <= 0) {
-        document.getElementById('result').innerHTML = "Please enter positive values.";
-        return;
-    }
+    if (medicationType === 'syrup') {
+        const dosePerKg = parseFloat(document.getElementById('dose').value);
+        const syrupStrength = document.getElementById('strength').value; // e.g., "120 mg/5 ml"
+        
+        // Extract mg and ml from strength input
+        const [mgPart, mlPart] = syrupStrength.split('/');
+        const strengthMg = parseFloat(mgPart); // e.g., 120
+        const strengthMl = parseFloat(mlPart); // e.g., 5
 
-    // Calculate total dose in mg
-    const totalDoseMg = weight * dosePerKg;
+        // Calculate total dose in mg
+        totalDoseMg = weight * dosePerKg;
 
-    // If the dosage form is syrup and a strength is provided
-    if (dosageForm === 'syrup' && !isNaN(syrupStrength) && syrupStrength > 0) {
-        // Calculate how many ml of syrup are needed
-        const mlNeeded = (totalDoseMg / syrupStrength);
-
-        // Convert ml to teaspoons (1 tsp = 5 ml)
-        const teaspoons = mlNeeded / 5;
+        // Calculate how many ml of syrup needed
+        mlNeeded = (totalDoseMg / strengthMg) * strengthMl;
 
         // Display result for syrup
         document.getElementById('result').innerHTML = `
             Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong><br>
-            Amount of syrup: <strong>${mlNeeded.toFixed(2)} ml (${teaspoons.toFixed(2)} tsp)</strong>
+            Amount of syrup: <strong>${mlNeeded.toFixed(2)} ml</strong>
         `;
+        
     } else {
+        const tabletDose = parseFloat(document.getElementById('tablet-dose').value);
+        
+        // Total dose is directly the tablet dose
+        totalDoseMg = tabletDose;
+
         // Display result for tablets
         document.getElementById('result').innerHTML = `
-            Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong><br>
-            Tablets: <strong>Dosage depends on the strength of the tablets.</strong>
+            Total dose: <strong>${totalDoseMg.toFixed(2)} mg</strong>
         `;
     }
 }
