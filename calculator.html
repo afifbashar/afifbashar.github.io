@@ -1,58 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pediatric Dose Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            section {
+                margin: 10px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <header>
+        <h1>Pediatric Dose Calculator</h1>
+    </header>
 
-<header>
-    <nav>
-        <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#dose-calculator">Calculator</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+    <section id="dose-calculator">
+        <h2>Pediatric Dose Calculator</h2>
+        <label for="weight">Child's Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight in kg" required>
 
-<section id="hero">
-    <h1>Welcome to Pediatric Dose Calculator</h1>
-    <p>Your trusted tool for calculating medication dosages for children.</p>
-</section>
+        <label for="dose">Dose (mg/kg):</label>
+        <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
 
-<section id="dose-calculator">
-    <h2>Pediatric Dose Calculator</h2>
-    <label for="weight">Child's Weight (kg):</label>
-    <input type="number" id="weight" placeholder="Enter weight in kg" required>
-    
-    <label for="dose">Dose (mg/kg):</label>
-    <input type="number" id="dose" placeholder="Enter dose in mg/kg" required>
+        <label for="medication-type">Select Medication Type:</label>
+        <select id="medication-type" onchange="toggleInputs()">
+            <option value="">Select</option>
+            <option value="tablet">Tablet</option>
+            <option value="syrup">Syrup</option>
+        </select>
 
-    <label for="medication-type">Select Medication Type:</label>
-    <select id="medication-type" onchange="toggleStrengthInput()">
-        <option value="">Select</option>
-        <option value="tablet">Tablet</option>
-        <option value="syrup">Syrup</option>
-    </select>
+        <div id="syrup-inputs" style="display: none;">
+            <label for="strength">Syrup Strength (mg/5 ml):</label>
+            <input type="number" id="strength" placeholder="Enter strength in mg/5 ml" required>
+        </div>
 
-    <div id="syrup-strength" style="display: none;">
-        <label for="strength">Syrup Strength (mg/5 ml):</label>
-        <input type="number" id="strength" placeholder="Enter strength in mg/5 ml">
-    </div>
+        <div id="tablet-inputs" style="display: none;">
+            <label for="tablet-dose">Tablet Dose (mg):</label>
+            <input type="number" id="tablet-dose" placeholder="Enter dose in mg" required>
+        </div>
 
-    <button onclick="calculateDose()">Calculate Dose</button>
-    
-    <div id="result"></div>
-</section>
+        <button onclick="calculateDose()">Calculate Dose</button>
 
-<footer>
-    <p>&copy; 2024 Dr. Afif Bashar. All rights reserved.</p>
-</footer>
+        <div id="result"></div>
+    </section>
 
-<script src="script.js"></script>
+    <footer>
+        <p>&copy; 2024 Dr. Afif Bashar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleInputs() {
+            const medicationType = document.getElementById("medication-type").value;
+            const syrupInputs = document.getElementById("syrup-inputs");
+            const tabletInputs = document.getElementById("tablet-inputs");
+
+            if (medicationType === "syrup") {
+                syrupInputs.style.display = "block";
+                tabletInputs.style.display = "none";
+            } else if (medicationType === "tablet") {
+                syrupInputs.style.display = "none";
+                tabletInputs.style.display = "block";
+            } else {
+                syrupInputs.style.display = "none";
+                tabletInputs.style.display = "none";
+            }
+        }
+
+        function calculateDose() {
+            const weight = parseFloat(document.getElementById("weight").value);
+            const dose = parseFloat(document.getElementById("dose").value);
+            const medicationType = document.getElementById("medication-type").value;
+
+            let result = '';
+            if (medicationType === "syrup") {
+                const strength = parseFloat(document.getElementById("strength").value);
+                if (strength > 0) {
+                    const totalDose = weight * dose;
+                    const volume = (totalDose / strength) * 5; // 5 ml per strength
+                    result = `Total dose: ${totalDose.toFixed(2)} mg, Volume of syrup to administer: ${volume.toFixed(2)} ml`;
+                } else {
+                    result = 'Please enter a valid syrup strength.';
+                }
+            } else if (medicationType === "tablet") {
+                const tabletDose = parseFloat(document.getElementById("tablet-dose").value);
+                if (tabletDose > 0) {
+                    const totalDose = weight * dose;
+                    const numberOfTablets = Math.ceil(totalDose / tabletDose);
+                    result = `Total dose: ${totalDose.toFixed(2)} mg, Number of tablets to administer: ${numberOfTablets}`;
+                } else {
+                    result = 'Please enter a valid tablet dose.';
+                }
+            } else {
+                result = 'Please select a medication type.';
+            }
+
+            document.getElementById("result").innerText = result;
+        }
+    </script>
 </body>
+
 </html>
