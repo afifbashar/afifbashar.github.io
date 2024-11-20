@@ -57,3 +57,9 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 // Initial call to avoid delay
 updateDateTime();
+
+// Hide preloader when the page is fully loaded
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    preloader.style.display = 'none';
+});
