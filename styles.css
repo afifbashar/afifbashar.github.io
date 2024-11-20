@@ -201,7 +201,8 @@ body {
 
 /* Section Backgrounds */
 .bg-light {
-    background-color: var(--darker-bg) !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-primary);
 }
 
 /* Footer */
@@ -241,4 +242,28 @@ footer {
     object-fit: cover;
     border-radius: 8px;
     display: block;
+}
+
+/* Calculator and Contact Section Text */
+#calculator, #contact {
+    color: var(--text-primary);
+}
+
+#calculator .card, #contact .card {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+#calculator .form-label, #contact .form-label {
+    color: var(--text-primary);
+}
+
+#calculator .btn, #contact .btn {
+    background-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+#calculator .btn:hover, #contact .btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
 }
