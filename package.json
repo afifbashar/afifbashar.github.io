@@ -1,0 +1,13 @@
+{
+  "name": "dr-afif-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "servor --reload"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "bootstrap": "^5.3.3",
+    "servor": "^4.0.2"
+  }
+}
