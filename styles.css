@@ -271,3 +271,30 @@ footer {
     background-color: var(--secondary-color);
     color: var(--text-primary);
 }
+
+/* Specific styles for WhatsApp and Messenger buttons */
+.btn-whatsapp {
+    background-color: #25D366; /* WhatsApp green */
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1EBE57; /* Darker shade for hover */
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-messenger {
+    background-color: #0078FF; /* Messenger blue */
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-messenger:hover {
+    background-color: #0066CC; /* Darker shade for hover */
+    color: #ffffff;
+    transform: translateY(-2px);
+}
