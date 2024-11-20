@@ -192,6 +192,10 @@ body {
     color: var(--text-primary);
 }
 
+.form-control::placeholder, .form-select::placeholder {
+    color: var(--text-secondary);
+}
+
 .form-control:focus, .form-select:focus {
     background-color: var(--card-bg);
     border-color: var(--primary-color);
