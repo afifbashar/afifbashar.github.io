@@ -1,1 +1,296 @@
-node_modules/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England) - Medical Professional Portfolio">
+    <meta name="google-site-verification" content="onyejj1CJRgefnp0qc8DEfvHe5iqQjaLNi288GOWfRc" />
+    <title>Dr. Afif Bashar - MBBS, MRCS Part A (England)</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="node_modules/aos/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Dr. Afif Bashar<br><small>MBBS, MRCS Part A (England)</small></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#videos">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#calculator">Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notice Bar -->
+    <div class="notice-bar">
+        <div class="container">
+            <marquee class="bengali-text">
+                বাবা-মায়ের প্রতি অনুরোধ, ছোট বাচ্চাদের খেলনার সময় নজরদারি করুন এবং নিশ্চিত করুন যে তারা ছোট জিনিসপত্র নিয়ে খেলছে না।
+            </marquee>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="text-center">
+        <div class="container">
+            <h1 class="display-4 mb-4" data-aos="fade-up">Dr. Afif Bashar</h1>
+            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">MBBS, MRCS Part A (England)</p>
+            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="150">Expert Medical Care & Compassionate Service</p>
+            <a href="#contact" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="200">
+                Schedule Consultation
+            </a>
+            <div class="mt-4" data-aos="fade-up" data-aos-delay="250">
+                <div id="clock" class="display-6 mb-2"></div>
+                <div id="date" class="lead"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6" data-aos="fade-right">
+                    <img src="Profile.jpg" alt="Placeholder" class="img-fluid profile-image">
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <h2 class="mb-4">About Me</h2>
+                    <p class="lead">MBBS, MRCS Part A (England)</p>
+                    <p>Dedicated medical professional with expertise in chronic disease management, pediatric care, and dermatology. Committed to providing quality healthcare through personalized attention and patient education.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rest of the HTML remains exactly the same -->
+    <!-- Videos Section -->
+    <section id="videos" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Latest Videos</h2>
+            <div class="row">
+                <!-- Featured Video -->
+                <div class="col-lg-8 mx-auto mb-5" data-aos="fade-up">
+                    <div class="ratio ratio-16x9">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Dd1eArn3o_M?si=iJelbAp6KvdaoW-F?rel=0" 
+                            title="Latest YouTube video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                
+                <!-- Video Grid -->
+                <div class="video-grid" id="videoGrid" data-aos="fade-up">
+                    <!-- Videos will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Services</h2>
+            <div class="row g-4">
+                <div class="col-md-3" data-aos="fade-up">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-md fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Medical Consultation</h5>
+                            <p class="card-text">Comprehensive medical consultations for various health conditions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-clipboard-check fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Second Opinion</h5>
+                            <p class="card-text">Expert second opinions for complex medical cases.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-baby fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Pediatric Care</h5>
+                            <p class="card-text">Specialized healthcare services for children and adolescents.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-allergies fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Dermatology</h5>
+                            <p class="card-text">Diagnosis and treatment of skin conditions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-procedures fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Surgical Consultations</h5>
+                            <p class="card-text">Pre and post-operative care guidance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chalkboard-teacher fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Patient Education</h5>
+                            <p class="card-text">Comprehensive health education and lifestyle guidance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-building fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Corporate Health</h5>
+                            <p class="card-text">Healthcare solutions for organizations and businesses.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-microscope fa-3x mb-3 text-primary"></i>
+                            <h5 class="card-title">Research Collaboration</h5>
+                            <p class="card-text">Partnership opportunities in medical research.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Pediatric Dose Calculator</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <form id="doseCalculator" class="card p-4 bg-light">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Weight (kg)</label>
+                                        <input type="number" class="form-control" id="weight" step="0.1" min="0" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Age (optional)</label>
+                                        <input type="number" class="form-control" id="age" min="0" max="18">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Search Medication</label>
+                                    <input type="text" class="form-control" id="drugSearch" placeholder="Search by generic or trade name">
+                                    <div id="searchResults" class="list-group mt-2"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Medication</label>
+                                    <select class="form-select" id="medication" required>
+                                        <option value="">Select medication</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Form</label>
+                                    <select class="form-select" id="medicationForm" required disabled>
+                                        <option value="">Select form</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Calculate Dose</button>
+                                <div id="result" class="mt-3"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Contact Me</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+                    <form action="https://formspree.io/f/mgveelyo" method="POST">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="d-flex flex-column h-100">
+                        <div class="consultation-links mb-4">
+                            <h4>Quick Consultation</h4>
+                            <a href="https://wa.me/+8801794519139" class="btn btn-success mb-2 w-100">
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </a>
+                            <a href="https://m.me/afif.bashar" class="btn btn-primary w-100">
+                                <i class="fab fa-facebook-messenger me-2"></i>Messenger
+                            </a>
+                        </div>
+                        <div class="social-links mt-auto">
+                            <h4>Follow Me</h4>
+                            <div class="d-flex gap-3">
+                                <a href="#" class="fs-4"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="fs-4"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="fs-4"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="fs-4"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Dr. Afif Bashar. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Library -->
+    <script src="node_modules/aos/dist/aos.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="calculator.js"></script>
+    <script src="videos.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
