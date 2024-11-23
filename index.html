@@ -21,27 +21,6 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    Memory Full
-You said:
-Please update my website with e preloader and bouncing my name and seo friendly,  i will give you html first then css
-ChatGPT said:
-ChatGPT
-​
-
-
-
-
-
-
-You said:
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England) - Medical Professional Portfolio">
-    <meta name="google-site-verification" content="aLeDHVwndVcrDjri-yU6PBB_GRy-toYXv1O7BA3JV8w" />
-    <title>Dr. Afif Bashar - MBBS, MRCS Part A (England)</title>
     
     <!-- Bootstrap CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -57,6 +36,23 @@ You said:
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+        /* Bounce Animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Apply bounce animation to the name */
+        .bounce-name {
+            display: inline-block;
+            animation: bounce 1s ease infinite;
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader -->
@@ -67,7 +63,10 @@ You said:
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Dr. Afif Bashar<br><small>MBBS, MRCS Part A (England)</small></a>
+            <a class="navbar-brand" href="#"> 
+                <span class="bounce-name">Dr. Afif Bashar</span><br>
+                <small>MBBS, MRCS Part A (England)</small>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
