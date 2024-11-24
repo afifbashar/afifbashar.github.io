@@ -63,3 +63,34 @@ window.addEventListener('load', function() {
     const preloader = document.getElementById('preloader');
     preloader.style.display = 'none';
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const phrases = ["Welcome to My Website", "Expert Medical Care & Compassionate Service"];
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    const autoText = document.getElementById("autoText");
+
+    function typeEffect() {
+        if (currentCharIndex < phrases[currentPhraseIndex].length) {
+            autoText.textContent += phrases[currentPhraseIndex][currentCharIndex];
+            currentCharIndex++;
+            setTimeout(typeEffect, 100); // Typing speed
+        } else {
+            setTimeout(eraseEffect, 2000); // Pause before erasing
+        }
+    }
+
+    function eraseEffect() {
+        if (currentCharIndex > 0) {
+            autoText.textContent = autoText.textContent.slice(0, -1);
+            currentCharIndex--;
+            setTimeout(eraseEffect, 50); // Erasing speed
+        } else {
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            setTimeout(typeEffect, 500); // Pause before typing next phrase
+        }
+    }
+
+    typeEffect(); // Start the effect
+});
