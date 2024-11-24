@@ -64,6 +64,31 @@
         transform: scale(1);
     }
 }
+/* Typing Animation */
+.typing-effect {
+  font-size: 2rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #3498db; /* Cursor style */
+  width: 0;
+  animation: typing 3s steps(40) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
 
     
 </style>
@@ -111,21 +136,22 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="hero" class="text-center">
-        <div class="container">
-            <h1 class="display-4 mb-4" data-aos="fade-up">Dr. Afif Bashar</h1>
-            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">MBBS, MRCS Part A (England)</p>
-             <p class="lead mb-4" data-aos="fade-up" data-aos-delay="130">Welcome to My Website</p>
-            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="130">Expert Medical Care & Compassionate Service</p>
-            <a href="#contact" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="200">
-                Schedule Consultation
-            </a>
-            <div class="mt-4" data-aos="fade-up" data-aos-delay="250">
-                <div id="clock" class="display-6 mb-2"></div>
-                <div id="date" class="lead"></div>
-            </div>
+    <!-- Hero Section -->
+<section id="hero" class="text-center">
+    <div class="container">
+        <h1 class="display-4 mb-4" data-aos="fade-up">Dr. Afif Bashar</h1>
+        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">MBBS, MRCS Part A (England)</p>
+        <p class="lead mb-4 typing-effect" data-aos="fade-up" data-aos-delay="130">Welcome to My Website</p> <!-- Apply typing effect here -->
+        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="130">Expert Medical Care & Compassionate Service</p>
+        <a href="#contact" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="200">
+            Schedule Consultation
+        </a>
+        <div class="mt-4" data-aos="fade-up" data-aos-delay="250">
+            <div id="clock" class="display-6 mb-2"></div>
+            <div id="date" class="lead"></div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- About Section -->
     <section id="about" class="py-5">
