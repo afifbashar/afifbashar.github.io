@@ -594,16 +594,19 @@ function searchDrug(query) {
 function calculateBMI() {
     const heightCm = parseFloat(document.getElementById('heightCm').value);
     const heightInch = parseFloat(document.getElementById('heightInch').value);
+    const heightFeet = parseFloat(document.getElementById('heightFeet').value);
     const weightKg = parseFloat(document.getElementById('weightKg').value);
 
     let heightM = 0;
 
     if (heightCm) {
         heightM = heightCm / 100;
+    } else if (heightFeet && heightInch) {
+        heightM = (heightFeet * 12 + heightInch) * 0.0254;
     } else if (heightInch) {
         heightM = heightInch * 0.0254;
     } else {
-        document.getElementById('bmiResult').innerHTML = 'Please enter height in cm or inches.';
+        document.getElementById('bmiResult').innerHTML = 'Please enter height in cm, feet and inches, or inches.';
         return;
     }
 
