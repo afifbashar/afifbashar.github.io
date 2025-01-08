@@ -596,38 +596,42 @@ function calculateBMI() {
     const heightInch = parseFloat(document.getElementById('heightInch').value) || 0;
     const weightKg = parseFloat(document.getElementById('weightKg').value);
 
-    if (!weightKg || (heightFeet === 0 && heightInch === 0)) {
+    // Validate input
+    if (weightKg <= 0 || (heightFeet === 0 && heightInch === 0)) {
         document.getElementById('bmiResult').innerHTML = `
             <div class="alert alert-danger">Please enter valid height and weight values.</div>
         `;
         return;
     }
 
-    const heightM = ((heightFeet * 12) + heightInch) * 0.0254; // Convert height to meters
+    // Convert height to meters
+    const heightM = ((heightFeet * 12) + heightInch) * 0.0254;
     const bmi = weightKg / (heightM * heightM);
 
     let category = "";
     let adviceEn = "";
     let adviceBn = "";
 
+    // Determine BMI category and suggestions
     if (bmi < 18.5) {
         category = "Underweight";
-        adviceEn = "Increase calorie intake with nutritious foods.";
+        adviceEn = "Increase your calorie intake with nutritious foods.";
         adviceBn = "পুষ্টিকর খাবার খেয়ে ক্যালোরি গ্রহণ বাড়ান।";
     } else if (bmi >= 18.5 && bmi < 24.9) {
         category = "Normal";
-        adviceEn = "Maintain your current diet and exercise.";
-        adviceBn = "আপনার বর্তমান ডায়েট এবং ব্যায়াম বজায় রাখুন।";
+        adviceEn = "Maintain your current diet and exercise regularly.";
+        adviceBn = "আপনার বর্তমান ডায়েট বজায় রাখুন এবং নিয়মিত ব্যায়াম করুন।";
     } else if (bmi >= 25 && bmi < 29.9) {
         category = "Overweight";
-        adviceEn = "Consider a calorie deficit diet and more exercise.";
-        adviceBn = "ক্যালোরি কমানোর ডায়েট এবং বেশি ব্যায়াম করার চেষ্টা করুন।";
+        adviceEn = "Adopt a calorie deficit diet and increase physical activity.";
+        adviceBn = "ক্যালোরি কমানোর ডায়েট এবং শারীরিক কার্যকলাপ বাড়ানোর চেষ্টা করুন।";
     } else {
         category = "Obese";
-        adviceEn = "Seek advice from a healthcare provider.";
+        adviceEn = "Consult a healthcare provider for professional advice.";
         adviceBn = "একজন স্বাস্থ্য বিশেষজ্ঞের সাথে পরামর্শ করুন।";
     }
 
+    // Display result
     document.getElementById('bmiResult').innerHTML = `
         <div class="alert alert-success">
             <h5>BMI Result: ${bmi.toFixed(2)} (${category})</h5>
