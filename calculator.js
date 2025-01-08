@@ -589,3 +589,74 @@ function searchDrug(query) {
             tradeNames: drug.tradeNames
         }));
 }
+
+
+function calculateBMI() {
+    const heightCm = parseFloat(document.getElementById('heightCm').value);
+    const heightInch = parseFloat(document.getElementById('heightInch').value);
+    const weightKg = parseFloat(document.getElementById('weightKg').value);
+
+    let heightM = 0;
+
+    if (heightCm) {
+        heightM = heightCm / 100;
+    } else if (heightInch) {
+        heightM = heightInch * 0.0254;
+    } else {
+        document.getElementById('bmiResult').innerHTML = 'Please enter height in cm or inches.';
+        return;
+    }
+
+    if (!weightKg) {
+        document.getElementById('bmiResult').innerHTML = 'Please enter weight in kg.';
+        return;
+    }
+
+    const bmi = weightKg / (heightM * heightM);
+    let resultText = '';
+    let adviceText = '';
+
+    if (bmi < 18.5) {
+        resultText = `Underweight (BMI: ${bmi.toFixed(2)})`;
+        adviceText = 'You should increase your calorie intake and include more nutritious foods in your diet.';
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+        resultText = `Normal weight (BMI: ${bmi.toFixed(2)})`;
+        adviceText = 'Maintain your current diet and exercise regularly to stay healthy.';
+    } else if (bmi >= 25 && bmi < 29.9) {
+        resultText = `Overweight (BMI: ${bmi.toFixed(2)})`;
+        adviceText = 'Consider reducing calorie intake and increasing physical activity to lose weight.';
+    } else {
+        resultText = `Obese (BMI: ${bmi.toFixed(2)})`;
+        adviceText = 'Consult with a healthcare provider for a personalized weight loss plan.';
+    }
+
+    const resultHtml = `
+        <div class="alert alert-info">
+            <h5 class="alert-heading">BMI Result</h5>
+            <p>${resultText}</p>
+            <p><strong>Advice:</strong> ${adviceText}</p>
+        </div>
+        <div class="alert alert-info">
+            <h5 class="alert-heading">বিএমআই ফলাফল</h5>
+            <p>${bmi.toFixed(2)} (বিএমআই)</p>
+            <p><strong>পরামর্শ:</strong> ${translateAdvice(adviceText)}</p>
+        </div>
+    `;
+
+    document.getElementById('bmiResult').innerHTML = resultHtml;
+}
+
+function translateAdvice(advice) {
+    switch (advice) {
+        case 'You should increase your calorie intake and include more nutritious foods in your diet.':
+            return 'আপনার ক্যালোরি গ্রহণ বাড়াতে হবে এবং আপনার খাদ্যে আরও পুষ্টিকর খাবার অন্তর্ভুক্ত করতে হবে।';
+        case 'Maintain your current diet and exercise regularly to stay healthy.':
+            return 'আপনার বর্তমান খাদ্যাভ্যাস বজায় রাখুন এবং সুস্থ থাকতে নিয়মিত ব্যায়াম করুন।';
+        case 'Consider reducing calorie intake and increasing physical activity to lose weight.':
+            return 'ওজন কমানোর জন্য ক্যালোরি গ্রহণ কমানো এবং শারীরিক কার্যকলাপ বাড়ানোর কথা বিবেচনা করুন।';
+        case 'Consult with a healthcare provider for a personalized weight loss plan.':
+            return 'একটি ব্যক্তিগতকৃত ওজন কমানোর পরিকল্পনার জন্য একজন স্বাস্থ্যসেবা প্রদানকারীর সাথে পরামর্শ করুন।';
+        default:
+            return '';
+    }
+}
