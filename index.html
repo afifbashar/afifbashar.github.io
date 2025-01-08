@@ -307,25 +307,35 @@
                                 <button type="submit" class="btn btn-primary w-100">Calculate Dose</button>
                                 <div id="result" class="mt-3"></div>
                             <!-- New BMI Calculator Elements -->
-<h3 class="text-center mb-4">BMI Calculator</h3>
-<div class="mb-3">
-    <label class="form-label">Height (cm)</label>
-    <input type="number" class="form-control" id="heightCm" step="0.1" min="0">
-</div>
-<div class="mb-3">
-    <label class="form-label">Height (inches)</label>
-    <input type="number" class="form-control" id="heightInch" step="0.1" min="0">
-</div>
-<div class="mb-3">
-    <label class="form-label">Height (feet)</label>
-    <input type="number" class="form-control" id="heightFeet" step="0.1" min="0">
+                                <h3 class="text-center mb-4">BMI Calculator</h3>
+  <div class="mb-3">
+    <label class="form-label">Height</label>
+    <div class="row">
+        <div class="col">
+            <input type="number" class="form-control" id="heightFeet" placeholder="Feet" min="0">
+        </div>
+        <div class="col">
+            <input type="number" class="form-control" id="heightInch" placeholder="Inch" min="0">
+        </div>
+    </div>
 </div>
 <div class="mb-3">
     <label class="form-label">Weight (kg)</label>
-    <input type="number" class="form-control" id="weightKg" step="0.1" min="0">
+    <input type="number" class="form-control" id="weightKg" step="0.1" min="0" placeholder="Enter your weight">
 </div>
-<button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI</button>
-<div id="bmiResult" class="mt-3"></div>
+<button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate</button>
+<div id="bmiResult" class="mt-4"></div>
+<div class="mt-4">
+    <h5>Formula</h5>
+    <p>BMI = Weight (kg) / Height² (m²)</p>
+    <h5>Notes</h5>
+    <p>Your BMI indicates your weight category. Consult a healthcare provider for personalized advice.</p>
+    <h5 class="text-danger">Warning</h5>
+    <p>
+        Always confirm the results with your healthcare provider. This calculator is a guide and not a substitute for medical advice.
+    </p>
+</div>
+
                             </form>
                         </div>
                     </div>
