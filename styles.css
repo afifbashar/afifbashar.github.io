@@ -72,10 +72,14 @@ body {
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(135deg, rgba(0, 180, 216, 0.1) 0%, rgba(0, 180, 216, 0.2) 100%);
+    background: linear-gradient(135deg, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.9) 100%);
     padding: 8rem 0;
     position: relative;
     overflow: hidden;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 #hero::before {
@@ -109,14 +113,14 @@ body {
 /* Cards */
 .card {
     background-color: var(--card-bg);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease-in-out;
     border: 1px solid rgba(0, 180, 216, 0.2);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
-
 .card:hover {
-    transform: translateY(-5px);
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg) scale(1.05);
     box-shadow: 0 8px 15px rgba(0, 180, 216, 0.2);
+    background-color: rgba(0, 180, 216, 0.1);
 }
 
 .card-body {
@@ -203,6 +207,16 @@ body {
     color: var(--text-primary);
 }
 
+/* Add Vibrant Colors to Buttons */
+.btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.btn:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
 /* Section Backgrounds */
 .bg-light {
     background-color: var(--card-bg) !important;
@@ -226,17 +240,20 @@ footer {
 }
 
 /* Responsive Adjustments */
+/* Add Responsive Adjustments */
 @media (max-width: 768px) {
     #hero {
         padding: 4rem 0;
+        text-align: center;
     }
-    
     .display-4 {
         font-size: 2.5rem;
     }
-    
     .video-grid {
         grid-template-columns: 1fr;
+    }
+    .card {
+        margin-bottom: 1rem;
     }
 }
 
