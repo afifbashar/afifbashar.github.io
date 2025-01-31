@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-section {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+            background-color: #e0e0e0;
+        }
+
+        .delete-btn {
+            margin-left: auto;
+            background-color: #ff4444;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .edit-btn {
+            background-color: #ffa500;
+            margin-left: 10px;
+        }
+
+        .edit-btn:hover {
+            background-color: #cc8400;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="input-section">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <button onclick="addTodo()">Add Task</button>
+        </div>
+        <ul id="todoList">
+            <!-- Todo items will be added here -->
+        </ul>
+    </div>
+
+    <script>
+        // Load todos from localStorage when page loads
+        document.addEventListener('DOMContentLoaded', loadTodos);
+
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            
+            if (text === '') return;
+
+            const todo = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+
+            addTodoToList(todo);
+            saveTodos();
+            input.value = '';
+        }
+
+        function addTodoToList(todo) {
+            const list = document.getElementById('todoList');
+            const li = document.createElement('li');
+            li.setAttribute('data-id', todo.id);
+
+            li.innerHTML = `
+                <span>${todo.text}</span>
+                <button class="edit-btn" onclick="editTodo(${todo.id})">Edit</button>
+                <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+            `;
+
+            if (todo.completed) {
+                li.classList.add('completed');
+            }
+
+            li.querySelector('span').addEventListener('click', () => toggleComplete(todo.id));
+            list.appendChild(li);
+        }
+
+        function toggleComplete(id) {
+            const li = document.querySelector(`[data-id="${id}"]`);
+            li.classList.toggle('completed');
+            saveTodos();
+        }
+
+        function editTodo(id) {
+            const li = document.querySelector(`[data-id="${id}"]`);
+            const span = li.querySelector('span');
+            const newText = prompt('Edit task:', span.textContent);
+            
+            if (newText !== null && newText.trim() !== '') {
+                span.textContent = newText.trim();
+                saveTodos();
+            }
+        }
+
+        function deleteTodo(id) {
+            const li = document.querySelector(`[data-id="${id}"]`);
+            li.remove();
+            saveTodos();
+        }
+
+        function saveTodos() {
+            const todos = [];
+            document.querySelectorAll('#todoList li').forEach(li => {
+                todos.push({
+                    id: parseInt(li.getAttribute('data-id')),
+                    text: li.querySelector('span').textContent,
+                    completed: li.classList.contains('completed')
+                });
+            });
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.forEach(todo => addTodoToList(todo));
+        }
+
+        // Add todo when Enter key is pressed
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+    </script>
+</body>
+  </html>
