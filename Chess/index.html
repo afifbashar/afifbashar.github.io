@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive 2-Player Chess Game</title>
+  <!-- Chessboard.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css">
+  <style>
+    /* Center the board and make it responsive */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #board {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    /* Optional: A container for status messages */
+    #status {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>2-Player Chess</h1>
+  <div id="board"></div>
+  <div id="status"></div>
+
+  <!-- Include chess.js (for game logic) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
+  <!-- Include chessboard.js (for board UI) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
+  <script>
+    // Initialize the chess game logic
+    var game = new Chess();
+
+    // Function to update game status text
+    function updateStatus() {
+      var statusEl = document.getElementById('status');
+      var status = '';
+
+      if (game.in_checkmate()) {
+        status = 'Game over, ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins by checkmate.';
+      } else if (game.in_draw()) {
+        status = 'Game over, drawn position.';
+      } else {
+        status = (game.turn() === 'w' ? 'White' : 'Black') + ' to move.';
+        if (game.in_check()) {
+          status += ' (in check)';
+        }
+      }
+      statusEl.textContent = status;
+    }
+
+    // Called when a piece drag starts
+    function onDragStart(source, piece, position, orientation) {
+      // Disallow moves if the game is over
+      if (game.game_over()) return false;
+
+      // Only allow moving the correct color pieces
+      if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+        return false;
+      }
+    }
+
+    // Called when a piece is dropped
+    function onDrop(source, target) {
+      // Attempt to make the move on the game object
+      var move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q' // Always promote to a queen for simplicity
+      });
+
+      // Illegal move? Snap the piece back to its original square
+      if (move === null) return 'snapback';
+
+      // Update board position after the move is made
+      board.position(game.fen());
+      updateStatus();
+    }
+
+    // Ensure the board position matches the game state after piece snap
+    function onSnapEnd() {
+      board.position(game.fen());
+    }
+
+    // Configure the chessboard
+    var board = Chessboard('board', {
+      draggable: true,
+      position: 'start',
+      onDragStart: onDragStart,
+      onDrop: onDrop,
+      onSnapEnd: onSnapEnd,
+      // Optional: Animation speed can be adjusted
+      pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/img/chesspieces/wikipedia/{piece}.png'
+    });
+
+    // Initialize status display
+    updateStatus();
+  </script>
+</body>
+</html>
