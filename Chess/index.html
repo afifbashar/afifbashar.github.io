@@ -5,84 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Game</title>
     <style>
-        .container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .chess-board {
-            width: 560px;
-            height: 560px;
-            border: 2px solid #333;
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-        }
-
-        .square {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .white {
-            background-color: #f0d9b5;
-        }
-
-        .black {
-            background-color: #b58863;
-        }
-
-        .selected {
-            background-color: #7a9a58 !important;
-        }
-
-        .possible-move {
-            background-color: #7a9a5855;
-        }
-
-        .captured-pieces {
-            width: 200px;
-            padding: 10px;
-            border: 2px solid #333;
-            min-height: 100px;
-        }
-
-        .game-info {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .captured-piece {
-            font-size: 30px;
-            margin: 5px;
-        }
-
-        .game-over {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 3px solid #333;
-            text-align: center;
-            display: none;
-        }
-
-        .restart-btn {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
+        /* ... (keep previous CSS styles) ... */
     </style>
 </head>
 <body>
@@ -135,27 +58,27 @@
                 const initialPosition = [
                     ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
                     ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
-                    [],
-                    [],
-                    [],
-                    [],
+                    [null, null, null, null, null, null, null, null],
+                    [null, null, null, null, null, null, null, null],
+                    [null, null, null, null, null, null, null, null],
+                    [null, null, null, null, null, null, null, null],
                     ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
                     ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
                 ];
 
                 const squares = this.board.children;
-                for (let i = 0; i < squares.length; i++) {
-                    const row = Math.floor(i / 8);
-                    const col = i % 8;
-                    const piece = initialPosition[row][col];
-                    
-                    if (piece) {
-                        const pieceElement = document.createElement('div');
-                        pieceElement.className = 'piece';
-                        pieceElement.textContent = piece;
-                        pieceElement.style.color = row < 2 ? 'black' : 'white';
-                        pieceElement.dataset.type = this.getPieceType(piece);
-                        squares[i].appendChild(pieceElement);
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const piece = initialPosition[row][col];
+                        const index = row * 8 + col;
+                        if (piece) {
+                            const pieceElement = document.createElement('div');
+                            pieceElement.className = 'piece';
+                            pieceElement.textContent = piece;
+                            pieceElement.style.color = row < 2 ? 'black' : 'white';
+                            pieceElement.dataset.type = this.getPieceType(piece);
+                            squares[index].appendChild(pieceElement);
+                        }
                     }
                 }
             }
@@ -179,10 +102,7 @@
                     }
                     this.clearSelection();
                 } else if (piece && this.isCorrectPlayer(piece)) {
-                    this.selectedPiece = {
-                        square: square,
-                        element: piece
-                    };
+                    this.selectedPiece = { square, element: piece };
                     square.classList.add('selected');
                     this.showPossibleMoves(square);
                 }
@@ -192,14 +112,85 @@
                 const fromPiece = fromSquare.querySelector('.piece');
                 const toPiece = toSquare.querySelector('.piece');
                 const pieceType = fromPiece.dataset.type;
-                
-                // Basic king capture check
-                if (toPiece && toPiece.dataset.type === 'king') {
-                    this.showGameOver(fromPiece.style.color === 'white' ? 'White' : 'Black');
-                    return false;
+                const fromRow = parseInt(fromSquare.dataset.row);
+                const fromCol = parseInt(fromSquare.dataset.col);
+                const toRow = parseInt(toSquare.dataset.row);
+                const toCol = parseInt(toSquare.dataset.col);
+                const deltaRow = toRow - fromRow;
+                const deltaCol = toCol - fromCol;
+                const color = fromPiece.style.color;
+
+                // Prevent capturing own pieces
+                if (toPiece && toPiece.style.color === color) return false;
+
+                switch(pieceType) {
+                    case 'pawn':
+                        const direction = color === 'white' ? -1 : 1;
+                        const startRow = color === 'white' ? 6 : 1;
+                        
+                        // Regular move
+                        if (fromCol === toCol && !toPiece) {
+                            if (deltaRow === direction) return true;
+                            if (fromRow === startRow && deltaRow === 2 * direction && 
+                                !this.isPieceBetween(fromRow, fromCol, toRow, toCol)) return true;
+                        }
+                        
+                        // Capture move
+                        if (Math.abs(deltaCol) === 1 && deltaRow === direction && toPiece) return true;
+                        break;
+
+                    case 'rook':
+                        if (fromRow !== toRow && fromCol !== toCol) return false;
+                        return this.isPathClear(fromRow, fromCol, toRow, toCol);
+
+                    case 'knight':
+                        return (Math.abs(deltaRow) === 2 && Math.abs(deltaCol) === 1) ||
+                               (Math.abs(deltaRow) === 1 && Math.abs(deltaCol) === 2);
+
+                    case 'bishop':
+                        if (Math.abs(deltaRow) !== Math.abs(deltaCol)) return false;
+                        return this.isPathClear(fromRow, fromCol, toRow, toCol);
+
+                    case 'queen':
+                        if (fromRow !== toRow && fromCol !== toCol && 
+                            Math.abs(deltaRow) !== Math.abs(deltaCol)) return false;
+                        return this.isPathClear(fromRow, fromCol, toRow, toCol);
+
+                    case 'king':
+                        return Math.abs(deltaRow) <= 1 && Math.abs(deltaCol) <= 1;
                 }
 
-                return true; // Simplified validation
+                return true;
+            }
+
+            isPathClear(fromRow, fromCol, toRow, toCol) {
+                const rowStep = Math.sign(toRow - fromRow);
+                const colStep = Math.sign(toCol - fromCol);
+                let currentRow = fromRow + rowStep;
+                let currentCol = fromCol + colStep;
+
+                while (currentRow !== toRow || currentCol !== toCol) {
+                    const index = currentRow * 8 + currentCol;
+                    if (this.board.children[index].querySelector('.piece')) return false;
+                    currentRow += rowStep;
+                    currentCol += colStep;
+                }
+                return true;
+            }
+
+            isPieceBetween(fromRow, fromCol, toRow, toCol) {
+                const rowStep = Math.sign(toRow - fromRow);
+                const colStep = Math.sign(toCol - fromCol);
+                let currentRow = fromRow + rowStep;
+                let currentCol = fromCol + colStep;
+
+                while (currentRow !== toRow || currentCol !== toCol) {
+                    const index = currentRow * 8 + currentCol;
+                    if (this.board.children[index].querySelector('.piece')) return true;
+                    currentRow += rowStep;
+                    currentCol += colStep;
+                }
+                return false;
             }
 
             movePiece(fromSquare, toSquare) {
@@ -211,6 +202,11 @@
                 }
 
                 toSquare.appendChild(piece);
+                
+                // Check for king capture
+                if (targetPiece?.dataset.type === 'king') {
+                    this.showGameOver(piece.style.color === 'white' ? 'White' : 'Black');
+                }
             }
 
             capturePiece(piece) {
@@ -222,18 +218,12 @@
                 capturedElement.className = 'captured-piece';
                 capturedElement.textContent = piece.textContent;
                 capturedDiv.appendChild(capturedElement);
-
-                if (piece.dataset.type === 'king') {
-                    this.showGameOver(piece.style.color === 'white' ? 'Black' : 'White');
-                }
             }
 
             showGameOver(winner) {
                 this.gameActive = false;
-                const gameOverDiv = document.getElementById('game-over');
-                const winnerText = document.getElementById('winner-text');
-                winnerText.textContent = `${winner} Wins!`;
-                gameOverDiv.style.display = 'block';
+                document.getElementById('game-over').style.display = 'block';
+                document.getElementById('winner-text').textContent = `${winner} Wins!`;
             }
 
             updateTurnDisplay() {
@@ -246,7 +236,7 @@
             }
 
             getPieceType(piece) {
-                const pieces = {
+                const types = {
                     '♔': 'king', '♚': 'king',
                     '♕': 'queen', '♛': 'queen',
                     '♖': 'rook', '♜': 'rook',
@@ -254,7 +244,16 @@
                     '♘': 'knight', '♞': 'knight',
                     '♙': 'pawn', '♟': 'pawn'
                 };
-                return pieces[piece];
+                return types[piece.textContent];
+            }
+
+            showPossibleMoves(square) {
+                const allSquares = document.getElementsByClassName('square');
+                Array.from(allSquares).forEach(sq => {
+                    if (this.isValidMove(square, sq)) {
+                        sq.classList.add('possible-move');
+                    }
+                });
             }
 
             clearSelection() {
@@ -265,19 +264,9 @@
                 this.clearPossibleMoves();
             }
 
-            showPossibleMoves(square) {
-                // Simplified possible moves visualization
-                const allSquares = document.getElementsByClassName('square');
-                Array.from(allSquares).forEach(sq => {
-                    if (this.isValidMove(square, sq)) {
-                        sq.classList.add('possible-move');
-                    }
-                });
-            }
-
             clearPossibleMoves() {
-                const squares = document.getElementsByClassName('square');
-                Array.from(squares).forEach(sq => sq.classList.remove('possible-move'));
+                Array.from(document.getElementsByClassName('square'))
+                    .forEach(sq => sq.classList.remove('possible-move'));
             }
         }
 
