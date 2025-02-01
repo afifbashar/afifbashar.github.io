@@ -1,117 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Responsive 2-Player Chess Game</title>
-  <!-- Chessboard.js CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css">
-  <style>
-    /* Center the board and make it responsive */
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f0f0f0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game</title>
+    <style>
+        .chess-board {
+            width: 480px;
+            height: 480px;
+            border: 2px solid #333;
+            margin: 20px auto;
+        }
 
-    h1 {
-      margin-bottom: 20px;
-    }
+        .square {
+            width: 60px;
+            height: 60px;
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+        }
 
-    #board {
-      width: 100%;
-      max-width: 500px;
-    }
+        .white {
+            background-color: #f0d9b5;
+        }
 
-    /* Optional: A container for status messages */
-    #status {
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
-  </style>
+        .black {
+            background-color: #b58863;
+        }
+
+        .selected {
+            background-color: #7a9a58;
+        }
+
+        .piece {
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-  <h1>2-Player Chess</h1>
-  <div id="board"></div>
-  <div id="status"></div>
+    <div class="chess-board" id="board"></div>
 
-  <!-- Include chess.js (for game logic) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
-  <!-- Include chessboard.js (for board UI) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
-  <script>
-    // Initialize the chess game logic
-    var game = new Chess();
+    <script>
+        class ChessGame {
+            constructor() {
+                this.board = document.getElementById('board');
+                this.selectedPiece = null;
+                this.currentPlayer = 'white';
+                this.initializeBoard();
+                this.createPieces();
+            }
 
-    // Function to update game status text
-    function updateStatus() {
-      var statusEl = document.getElementById('status');
-      var status = '';
+            initializeBoard() {
+                this.board.innerHTML = '';
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const square = document.createElement('div');
+                        square.className = `square ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
+                        square.dataset.row = row;
+                        square.dataset.col = col;
+                        square.addEventListener('click', (e) => this.handleSquareClick(e));
+                        this.board.appendChild(square);
+                    }
+                }
+            }
 
-      if (game.in_checkmate()) {
-        status = 'Game over, ' + (game.turn() === 'w' ? 'Black' : 'White') + ' wins by checkmate.';
-      } else if (game.in_draw()) {
-        status = 'Game over, drawn position.';
-      } else {
-        status = (game.turn() === 'w' ? 'White' : 'Black') + ' to move.';
-        if (game.in_check()) {
-          status += ' (in check)';
+            createPieces() {
+                const initialPosition = [
+                    ['black', '♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
+                    ['black', '♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
+                    [],
+                    [],
+                    [],
+                    [],
+                    ['white', '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
+                    ['white', '♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
+                ];
+
+                const squares = document.getElementsByClassName('square');
+                for (let i = 0; i < squares.length; i++) {
+                    const row = parseInt(squares[i].dataset.row);
+                    const col = parseInt(squares[i].dataset.col);
+                    const pieceData = initialPosition[row][col];
+                    
+                    if (pieceData) {
+                        const piece = document.createElement('div');
+                        piece.className = 'piece';
+                        piece.textContent = initialPosition[row][col + 1];
+                        piece.style.color = initialPosition[row][0] === 'white' ? '#fff' : '#000';
+                        squares[i].appendChild(piece);
+                    }
+                }
+            }
+
+            handleSquareClick(event) {
+                const square = event.currentTarget;
+                const piece = square.querySelector('.piece');
+
+                if (this.selectedPiece) {
+                    // Move piece
+                    if (square !== this.selectedPiece.square) {
+                        const isValidMove = this.isValidMove(
+                            this.selectedPiece.square,
+                            square
+                        );
+
+                        if (isValidMove) {
+                            this.movePiece(this.selectedPiece.square, square);
+                            this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+                        }
+                    }
+                    this.clearSelection();
+                } else if (piece) {
+                    // Select piece
+                    const pieceColor = piece.style.color === 'rgb(255, 255, 255)' ? 'white' : 'black';
+                    if (pieceColor === this.currentPlayer) {
+                        this.selectedPiece = {
+                            square: square,
+                            element: piece
+                        };
+                        square.classList.add('selected');
+                    }
+                }
+            }
+
+            isValidMove(fromSquare, toSquare) {
+                const fromRow = parseInt(fromSquare.dataset.row);
+                const fromCol = parseInt(fromSquare.dataset.col);
+                const toRow = parseInt(toSquare.dataset.row);
+                const toCol = parseInt(toSquare.dataset.col);
+                const piece = fromSquare.querySelector('.piece').textContent;
+
+                // Basic pawn movement validation
+                if (piece === '♙' || piece === '♟') {
+                    const direction = piece === '♙' ? -1 : 1;
+                    const startRow = piece === '♙' ? 6 : 1;
+                    
+                    // Regular move
+                    if (fromCol === toCol && !toSquare.querySelector('.piece')) {
+                        if (fromRow + direction === toRow) return true;
+                        if (fromRow === startRow && fromRow + (2 * direction) === toRow) return true;
+                    }
+                }
+
+                return true; // Simplified validation for other pieces
+            }
+
+            movePiece(fromSquare, toSquare) {
+                const piece = fromSquare.querySelector('.piece');
+                const targetPiece = toSquare.querySelector('.piece');
+
+                if (targetPiece) {
+                    targetPiece.remove();
+                }
+
+                toSquare.appendChild(piece);
+            }
+
+            clearSelection() {
+                if (this.selectedPiece) {
+                    this.selectedPiece.square.classList.remove('selected');
+                    this.selectedPiece = null;
+                }
+            }
         }
-      }
-      statusEl.textContent = status;
-    }
 
-    // Called when a piece drag starts
-    function onDragStart(source, piece, position, orientation) {
-      // Disallow moves if the game is over
-      if (game.game_over()) return false;
-
-      // Only allow moving the correct color pieces
-      if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false;
-      }
-    }
-
-    // Called when a piece is dropped
-    function onDrop(source, target) {
-      // Attempt to make the move on the game object
-      var move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q' // Always promote to a queen for simplicity
-      });
-
-      // Illegal move? Snap the piece back to its original square
-      if (move === null) return 'snapback';
-
-      // Update board position after the move is made
-      board.position(game.fen());
-      updateStatus();
-    }
-
-    // Ensure the board position matches the game state after piece snap
-    function onSnapEnd() {
-      board.position(game.fen());
-    }
-
-    // Configure the chessboard
-    var board = Chessboard('board', {
-      draggable: true,
-      position: 'start',
-      onDragStart: onDragStart,
-      onDrop: onDrop,
-      onSnapEnd: onSnapEnd,
-      // Optional: Animation speed can be adjusted
-      pieceTheme: 'https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/img/chesspieces/wikipedia/{piece}.png'
-    });
-
-    // Initialize status display
-    updateStatus();
-  </script>
+        // Initialize the game
+        const game = new ChessGame();
+    </script>
 </body>
 </html>
