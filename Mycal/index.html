@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Drug Dose Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pediatric Drug Dose Calculator</h2>
+        
+        <div class="input-group">
+            <label for="weight">Patient Weight (kg)</label>
+            <input type="number" id="weight" step="0.1">
+        </div>
+
+        <div class="input-group">
+            <label for="age">Age Group</label>
+            <select id="age">
+                <option value="neonate">Neonate (<28 days)</option>
+                <option value="infant">Infant (1 month - 1 year)</option>
+                <option value="child">Child (>1 year)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="drug">Select Drug</label>
+            <select id="drug">
+                <option value="">Select a drug</option>
+                <!-- Drugs will be populated by JavaScript -->
+            </select>
+        </div>
+
+        <button onclick="calculateDose()">Calculate Dose</button>
+
+        <div class="result" id="result">
+            <h3>Dosage Calculation</h3>
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // Drug database
+        const drugs = [
+            {
+                name: "Ampicillin",
+                dosePerKg: 100,
+                maxDose: 4000,
+                frequency: { neonate: "12 hourly", infant: "8 hourly", child: "8 hourly" },
+                concentration: { vial: "500mg/5ml", syrup: "125mg/TSF" },
+                tradeNames: ["Ampexin", "Acmeicillin", "Ficillin"]
+            },
+            {
+                name: "Gentamycin",
+                dosePerKg: 5,
+                maxDose: 240,
+                frequency: { neonate: "Once daily", infant: "8 hourly", child: "8 hourly" },
+                concentration: { vial: "80mg/2ml" },
+                tradeNames: ["Gentin", "Genacyn"]
+            },
+            {
+                name: "Cefotaxime",
+                dosePerKg: 100,
+                maxDose: 12000,
+                meningitisDose: 150,
+                frequency: { neonate: "8 hourly", infant: "8 hourly", child: "8 hourly" },
+                concentration: { vial: "1gm/10ml" },
+                tradeNames: ["Maxcef", "Cefotime"]
+            },
+            // Add more drugs following the same structure
+        ];
+
+        // Populate drug dropdown
+        const drugSelect = document.getElementById('drug');
+        drugs.forEach(drug => {
+            const option = document.createElement('option');
+            option.value = drug.name;
+            option.textContent = drug.name;
+            drugSelect.appendChild(option);
+        });
+
+        function calculateDose() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const age = document.getElementById('age').value;
+            const selectedDrug = document.getElementById('drug').value;
+            
+            if (!weight || !selectedDrug) {
+                alert("Please enter weight and select a drug");
+                return;
+            }
+
+            const drug = drugs.find(d => d.name === selectedDrug);
+            let dailyDose = weight * drug.dosePerKg;
+            
+            // Check for meningitis dose
+            if (drug.meningitisDose) {
+                if (confirm("Is this for meningitis?")) {
+                    dailyDose = weight * drug.meningitisDose;
+                }
+            }
+
+            // Calculate per dose
+            const frequency = drug.frequency[age];
+            const dosesPerDay = frequency.includes("hourly") 
+                ? 24 / parseInt(frequency) 
+                : 1;
+            
+            const perDose = dailyDose / dosesPerDay;
+            
+            // Convert to volume
+            let preparation = '';
+            if (drug.concentration.vial) {
+                const [strength, volume] = drug.concentration.vial.split('/');
+                const mg = parseInt(strength);
+                const ml = parseInt(volume);
+                const volumePerDose = (perDose / mg) * ml;
+                preparation = `Inject ${volumePerDose.toFixed(2)}ml (${drug.concentration.vial} vial)`;
+            }
+
+            // Display results
+            const output = document.getElementById('output');
+            output.innerHTML = `
+                <p><strong>${drug.name}</strong></p>
+                <p>Daily Dose: ${dailyDose.toFixed(1)}mg</p>
+                <p>Per Dose: ${perDose.toFixed(1)}mg (${frequency})</p>
+                <p>Preparation: ${preparation}</p>
+                <p>Trade Names: ${drug.tradeNames.join(', ')}</p>
+            `;
+
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
