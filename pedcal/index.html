@@ -103,23 +103,168 @@
 
     <script src="calculator.js"></script>
     <script>
-        document.getElementById('calculateButton').addEventListener('click', function () {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const selectedMedicationKey = document.getElementById('medication').value;
-            const selectedForm = document.getElementById('medicationForm').value;
-            const resultDiv = document.getElementById('result');
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('drugSearch');
+            const searchResults = document.getElementById('searchResults');
+            const medicationSelect = document.getElementById('medication');
+            const formSelect = document.getElementById('medicationForm');
 
-            if (!selectedMedicationKey || !selectedForm || isNaN(weight)) {
-                resultDiv.innerHTML = 'Please select a medication, form, and enter a valid weight.';
-                return;
+            // Populate medication dropdown initially
+            populateMedicationDropdown();
+
+            // Search input listener
+            searchInput.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                searchResults.innerHTML = ''; // Clear previous results
+                if (query.length > 0) {
+                    const results = searchDrug(query);
+                    if (results.length > 0) {
+                        searchResults.style.display = 'block';
+                        results.forEach(drug => {
+                            const resultItem = document.createElement('div');
+                            resultItem.className = 'list-group-item';
+                            resultItem.textContent = `${drug.name} (${drug.tradeNames.join(', ')})`;
+                            resultItem.addEventListener('click', function () {
+                                populateMedicationDropdown(drug.key);
+                                populateFormDropdown(drug.key);
+                                searchInput.value = '';
+                                searchResults.style.display = 'none';
+                            });
+                            searchResults.appendChild(resultItem);
+                        });
+                    } else {
+                        const noResultItem = document.createElement('div');
+                        noResultItem.className = 'list-group-item';
+                        noResultItem.textContent = 'No results found';
+                        searchResults.appendChild(noResultItem);
+                        searchResults.style.display = 'block';
+                    }
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            // Update form options when medication changes
+            medicationSelect.addEventListener('change', function (e) {
+                const medication = e.target.value;
+                populateFormDropdown(medication);
+            });
+
+            // Calculate dose on button click
+            document.getElementById('calculateButton').addEventListener('click', function () {
+                const weight = parseFloat(document.getElementById('weight').value);
+                const selectedMedicationKey = medicationSelect.value;
+                const selectedForm = formSelect.value;
+                const resultDiv = document.getElementById('result');
+
+                if (!selectedMedicationKey || !selectedForm || isNaN(weight)) {
+                    resultDiv.innerHTML = 'Please select a medication, form, and enter a valid weight.';
+                    return;
+                }
+
+                const med = drugDatabase[selectedMedicationKey];
+                const formInfo = med.forms[selectedForm];
+                let doseText = '';
+
+                if (med.weightBased) {
+                    const totalDose = weight * formInfo.dosePerKg;
+
+                    switch (selectedForm) {
+                        case 'syrup':
+                            const mlDose = (totalDose * 5) / parseInt(formInfo.strength.split('mg/')[0]);
+                            const tspDose = mlDose / 5;
+                            doseText = `
+                                Single Dose: ${totalDose.toFixed(1)}mg (${mlDose.toFixed(1)}ml or ${tspDose.toFixed(1)} teaspoons)
+                                Given every ${med.interval} hours
+                                Strength: ${formInfo.strength}
+                                Daily Dose: ${(totalDose * med.maxDosePerDay).toFixed(1)}mg
+                            `;
+                            break;
+
+                        case 'drops':
+                            const dropDose = (totalDose / parseInt(formInfo.strength)) * formInfo.dropsPerMl;
+                            doseText = `
+                                Single Dose: ${totalDose.toFixed(1)}mg (${dropDose.toFixed(0)} drops)
+                                Given every ${med.interval} hours
+                                Strength: ${formInfo.strength}
+                            `;
+                            break;
+
+                        default:
+                            doseText = `Single Dose: ${totalDose.toFixed(1)}mg`;
+                    }
+                } else {
+                    let dosage = formInfo.standardDose;
+                    let ageGroup = Object.keys(dosage).find(range => {
+                        if (range.startsWith('<') && age < parseInt(range.slice(1))) return true;
+                        if (range.startsWith('>') && age > parseInt(range.slice(1))) return true;
+                        if (range.includes('-')) {
+                            let [min, max] = range.split('-').map(n => parseInt(n));
+                            return age >= min && age <= max;
+                        }
+                        return false;
+                    });
+
+                    doseText = `
+                        Standard Dose: ${dosage[ageGroup]}
+                        Given every ${med.interval} hours
+                        Maximum ${med.maxDosePerDay} doses per day
+                    `;
+                }
+
+                resultDiv.innerHTML = `
+                    ${med.name} Dosing
+                    ${doseText}
+                    ${med.notes ? `Note: ${med.notes}` : ''}
+                `;
+            });
+
+            // Helper functions to populate dropdowns
+            function populateMedicationDropdown(selectedKey = null) {
+                medicationSelect.innerHTML = '<option value="">Select medication</option>';
+                Object.entries(drugDatabase).forEach(([key, drug]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = `${drug.name} (${drug.tradeNames.join(', ')})`;
+                    if (key === selectedKey) {
+                        option.selected = true;
+                    }
+                    medicationSelect.appendChild(option);
+                });
             }
 
-            const dose = calculateDose(weight, null, selectedMedicationKey, selectedForm);
-            resultDiv.innerHTML = dose;
-        });
+            function populateFormDropdown(selectedKey) {
+                formSelect.innerHTML = '<option value="">Select form</option>';
+                const selectedMedication = drugDatabase[selectedKey];
+                if (selectedMedication) {
+                    Object.keys(selectedMedication.forms).forEach(form => {
+                        const option = document.createElement('option');
+                        option.value = form;
+                        option.textContent = form.charAt(0).toUpperCase() + form.slice(1);
+                        formSelect.appendChild(option);
+                    });
+                    formSelect.disabled = false;
+                } else {
+                    formSelect.disabled = true;
+                }
+            }
 
-        // Initialize
-        populateMedicationDropdown();
+            // Enhanced search function
+            function searchDrug(query) {
+                query = query.toLowerCase();
+                return Object.entries(drugDatabase)
+                    .filter(([_, drug]) => {
+                        const matchesSearch = drug.name.toLowerCase().includes(query) ||
+                            drug.tradeNames.some(name => name.toLowerCase().includes(query));
+                        return matchesSearch;
+                    })
+                    .map(([key, drug]) => ({
+                        key: key,
+                        name: drug.name,
+                        tradeNames: drug.tradeNames
+                    }));
+            }
+        });
     </script>
 </body>
 </html>
