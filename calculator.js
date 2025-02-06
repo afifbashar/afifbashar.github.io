@@ -1,4 +1,4 @@
-export const drugDatabase = {
+const drugDatabase = {
   ampicillin: {
     name: 'Ampicillin',
     tradeNames: ['Ampexin', 'Acmecillin', 'Ficillin', 'Pen-A'],
