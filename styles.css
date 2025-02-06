@@ -117,11 +117,7 @@ body {
     border: 1px solid rgba(0, 180, 216, 0.2);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
-.card:hover {
-    transform: perspective(1000px) rotateX(10deg) rotateY(10deg) scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 180, 216, 0.2);
-    background-color: rgba(0, 180, 216, 0.1);
-}
+
 
 .card-body {
     color: var(--text-primary);
