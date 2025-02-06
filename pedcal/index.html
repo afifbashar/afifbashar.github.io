@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Drug Dose Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #searchResults {
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+        }
+        .list-group-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+        .list-group-item:hover {
+            background-color: #f0f0f0;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9f7ef;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pediatric Drug Dose Calculator</h1>
+    <div class="container">
+        <label for="drugSearch">Search Drug:</label>
+        <input type="text" id="drugSearch" placeholder="Type to search drug...">
+        <div id="searchResults"></div>
+
+        <label for="medication">Select Medication:</label>
+        <select id="medication">
+            <option value="">Select medication</option>
+        </select>
+
+        <label for="medicationForm">Select Form:</label>
+        <select id="medicationForm" disabled>
+            <option value="">Select form</option>
+        </select>
+
+        <label for="weight">Enter Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter weight in kg">
+
+        <button id="calculateButton">Calculate Dose</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="calculator.js"></script>
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', function () {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const selectedMedicationKey = document.getElementById('medication').value;
+            const selectedForm = document.getElementById('medicationForm').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!selectedMedicationKey || !selectedForm || isNaN(weight)) {
+                resultDiv.innerHTML = 'Please select a medication, form, and enter a valid weight.';
+                return;
+            }
+
+            const dose = calculateDose(weight, null, selectedMedicationKey, selectedForm);
+            resultDiv.innerHTML = dose;
+        });
+
+        // Initialize
+        populateMedicationDropdown();
+    </script>
+</body>
+</html>
