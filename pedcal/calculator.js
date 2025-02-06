@@ -304,10 +304,10 @@ const drugDatabase = {
         tradeNames: ['Sultolin', 'Brodil', 'Ventolin'],
         category: 'Bronchodilator',
         forms: {
-            syrup: { strength: '2mg/5ml', dosePerKg: 0.2 },
-            nebulization: { strength: '5mg/ml', dosePerKg: 0.04 }
+            syrup: { strength: '2mg/5ml', standardDose: { '<2years': '2.5ml', '2-5years': '5ml', '>5years': '10ml' } },
+            nebulization: { strength: '5mg/ml', standardDose: { '<2years': '0.25ml', '2-5years': '0.5ml', '>5years': '1ml' } }
         },
-        weightBased: true,
+        weightBased: false,
         maxDosePerDay: 4,
         interval: '6-8',
         notes: 'Monitor heart rate during nebulization'
@@ -340,81 +340,23 @@ const drugDatabase = {
     }
 };
 
-// Function to calculate dose
-function calculateDose(weight, age, medication, form) {
-    const med = drugDatabase[medication];
-    const formInfo = med.forms[form];
-    let doseText = '';
-    let warningText = '';
-
-    if (med.weightBased && !weight) {
-        return 'Weight is required for this medication';
-    }
-
-    if (med.weightBased) {
-        const totalDose = weight * formInfo.dosePerKg;
-
-        // Check maximum daily dose
-        if (med.maxDailyDose) {
-            const dailyDose = totalDose * med.maxDosePerDay;
-            if (dailyDose > (weight * med.maxDailyDose)) {
-                warningText = `Warning: Calculated daily dose exceeds maximum recommended dose of ${med.maxDailyDose}mg/kg/day`;
-            }
-        }
-
-        switch (form) {
-            case 'syrup':
-                const mlDose = (totalDose * 5) / parseInt(formInfo.strength.split('mg/')[0]);
-                const tspDose = mlDose / 5;
-                doseText = `
-                    Single Dose: ${totalDose.toFixed(1)}mg (${mlDose.toFixed(1)}ml or ${tspDose.toFixed(1)} teaspoons)
-                    Given every ${med.interval} hours
-                    Strength: ${formInfo.strength}
-                    Daily Dose: ${(totalDose * med.maxDosePerDay).toFixed(1)}mg
-                `;
-                break;
-
-            case 'drops':
-                const dropDose = (totalDose / parseInt(formInfo.strength)) * formInfo.dropsPerMl;
-                doseText = `
-                    Single Dose: ${totalDose.toFixed(1)}mg (${dropDose.toFixed(0)} drops)
-                    Given every ${med.interval} hours
-                    Strength: ${formInfo.strength}
-                `;
-                break;
-
-            default:
-                doseText = `Single Dose: ${totalDose.toFixed(1)}mg`;
-        }
-    } else {
-        // Age-based dosing
-        let dosage = formInfo.standardDose;
-        let ageGroup = Object.keys(dosage).find(range => {
-            if (range.startsWith('<') && age < parseInt(range.slice(1))) return true;
-            if (range.startsWith('>') && age > parseInt(range.slice(1))) return true;
-            if (range.includes('-')) {
-                let [min, max] = range.split('-').map(n => parseInt(n));
-                return age >= min && age <= max;
-            }
-            return false;
-        });
-
-        doseText = `
-            Standard Dose: ${dosage[ageGroup]}
-            Given every ${med.interval} hours
-            Maximum ${med.maxDosePerDay} doses per day
-        `;
-    }
-
-    return `
-        ${med.name} Dosing
-        ${doseText}
-        ${med.notes ? `Note: ${med.notes}` : ''}
-        ${warningText}
-    `;
+// Enhanced search function
+function searchDrug(query) {
+    query = query.toLowerCase();
+    return Object.entries(drugDatabase)
+        .filter(([_, drug]) => {
+            const matchesSearch = drug.name.toLowerCase().includes(query) ||
+                drug.tradeNames.some(name => name.toLowerCase().includes(query));
+            return matchesSearch;
+        })
+        .map(([key, drug]) => ({
+            key: key,
+            name: drug.name,
+            tradeNames: drug.tradeNames
+        }));
 }
 
-// Update form options when medication changes
+// Populate dropdowns dynamically
 document.getElementById('medication').addEventListener('change', function (e) {
     const medication = e.target.value;
     const formSelect = document.getElementById('medicationForm');
@@ -432,7 +374,7 @@ document.getElementById('medication').addEventListener('change', function (e) {
     }
 });
 
-// Search functionality
+// Search input listener
 document.getElementById('drugSearch').addEventListener('input', function () {
     const query = this.value.toLowerCase().trim();
     const searchResults = document.getElementById('searchResults');
@@ -462,7 +404,7 @@ document.getElementById('drugSearch').addEventListener('input', function () {
     }
 });
 
-// Populate dropdowns
+// Helper functions to populate dropdowns
 function populateMedicationDropdown(selectedKey) {
     const medicationSelect = document.getElementById('medication');
     medicationSelect.innerHTML = '<option>Select medication</option>';
@@ -492,12 +434,4 @@ function populateFormDropdown(selectedKey) {
     } else {
         formSelect.disabled = true;
     }
-}
-
-// Enhanced search function
-function searchDrug(query) {
-    query = query.toLowerCase();
-    return Object.entries(drugDatabase)
-        .filter(([_, drug]) => drug.name.toLowerCase().includes(query) || drug.tradeNames.some(name => name.toLowerCase().includes(query)))
-        .map(([key, drug]) => ({ key: key, name: drug.name, tradeNames: drug.tradeNames }));
 }
