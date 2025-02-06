@@ -1,189 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediatric Drug Dose Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e9f7ef;
-            border-radius: 4px;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pediatric Drug Doses Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e9f7ef;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      display: none;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Pediatric Drug Dose Calculator</h2>
-        
-        <div class="input-group">
-            <label for="weight">Patient Weight (kg)</label>
-            <input type="number" id="weight" step="0.1">
-        </div>
+  <h1>Pediatric Drug Doses Calculator</h1>
+  <div class="container">
+    <label for="drug">Select Drug:</label>
+    <select id="drug">
+      <option value="">-- Select Drug --</option>
+      <option value="Ampicillin">Ampicillin</option>
+      <option value="Gentamycin">Gentamycin</option>
+      <option value="Amikacin">Amikacin</option>
+      <option value="Ceftazidim">Ceftazidim</option>
+      <option value="Cefotaxime">Cefotaxime</option>
+      <option value="Paracetamol">Paracetamol</option>
+      <option value="Salbutamol">Salbutamol</option>
+      <!-- Add more drugs here -->
+    </select>
 
-        <div class="input-group">
-            <label for="age">Age Group</label>
-            <select id="age">
-                <option value="neonate">Neonate (<28 days)</option>
-                <option value="infant">Infant (1 month - 1 year)</option>
-                <option value="child">Child (>1 year)</option>
-            </select>
-        </div>
+    <label for="form">Select Form:</label>
+    <select id="form">
+      <option value="">-- Select Form --</option>
+      <option value="Tablet">Tablet</option>
+      <option value="Syrup">Syrup</option>
+      <option value="Drop">Drop</option>
+      <option value="Nebulization">Nebulization</option>
+      <option value="Suppository">Suppository</option>
+    </select>
 
-        <div class="input-group">
-            <label for="drug">Select Drug</label>
-            <select id="drug">
-                <option value="">Select a drug</option>
-                <!-- Drugs will be populated by JavaScript -->
-            </select>
-        </div>
+    <label for="weight">Enter Weight (kg):</label>
+    <input type="number" id="weight" placeholder="e.g., 10">
 
-        <button onclick="calculateDose()">Calculate Dose</button>
+    <label for="age">Enter Age (years):</label>
+    <input type="number" id="age" placeholder="e.g., 2">
 
-        <div class="result" id="result">
-            <h3>Dosage Calculation</h3>
-            <div id="output"></div>
-        </div>
+    <button onclick="calculateDose()">Calculate Dose</button>
+
+    <div class="result" id="result">
+      <p><strong>Result:</strong> <span id="doseResult"></span></p>
     </div>
 
-    <script>
-        // Drug database
-        const drugs = [
-            {
-                name: "Ampicillin",
-                dosePerKg: 100,
-                maxDose: 4000,
-                frequency: { neonate: "12 hourly", infant: "8 hourly", child: "8 hourly" },
-                concentration: { vial: "500mg/5ml", syrup: "125mg/TSF" },
-                tradeNames: ["Ampexin", "Acmeicillin", "Ficillin"]
-            },
-            {
-                name: "Gentamycin",
-                dosePerKg: 5,
-                maxDose: 240,
-                frequency: { neonate: "Once daily", infant: "8 hourly", child: "8 hourly" },
-                concentration: { vial: "80mg/2ml" },
-                tradeNames: ["Gentin", "Genacyn"]
-            },
-            {
-                name: "Cefotaxime",
-                dosePerKg: 100,
-                maxDose: 12000,
-                meningitisDose: 150,
-                frequency: { neonate: "8 hourly", infant: "8 hourly", child: "8 hourly" },
-                concentration: { vial: "1gm/10ml" },
-                tradeNames: ["Maxcef", "Cefotime"]
-            },
-            // Add more drugs following the same structure
-        ];
+    <div class="error" id="error"></div>
+  </div>
 
-        // Populate drug dropdown
-        const drugSelect = document.getElementById('drug');
-        drugs.forEach(drug => {
-            const option = document.createElement('option');
-            option.value = drug.name;
-            option.textContent = drug.name;
-            drugSelect.appendChild(option);
-        });
+  <script>
+    const drugData = {
+      "Ampicillin": {
+        Tablet: { dose: "250mg, 500mg" },
+        Syrup: { dose: "125mg/TSF", conversion: "1TSF=5ml" },
+        Drop: { dose: "125mg/1.25ml", conversion: "15drops=1ml" },
+        defaultDose: "100mg/kg/day"
+      },
+      "Gentamycin": {
+        Injection: { dose: "20mg/2ml, 80mg/2ml" },
+        defaultDose: "5mg/kg/day"
+      },
+      "Amikacin": {
+        Injection: { dose: "100mg/2ml, 500mg/2ml" },
+        defaultDose: "7.5mg/kg/day or 15mg/kg/day"
+      },
+      "Ceftazidim": {
+        Injection: { dose: "250mg/2.5ml, 500mg/5ml, 1gm/10ml" },
+        defaultDose: "100mg/kg/day"
+      },
+      "Cefotaxime": {
+        Injection: { dose: "250mg/2.5ml, 500mg/5ml, 1gm/10ml" },
+        defaultDose: "100mg/kg/day"
+      },
+      "Paracetamol": {
+        Tablet: { dose: "250mg, 500mg" },
+        Syrup: { dose: "120mg/TSF", conversion: "1TSF=5ml" },
+        Drop: { dose: "80mg/ml", conversion: "15drops=1ml" },
+        defaultDose: "15mg/kg/dose"
+      },
+      "Salbutamol": {
+        Syrup: { dose: "2mg/TSF", conversion: "1TSF=5ml" },
+        Nebulization: { dose: "0.04ml/kg/dose" },
+        defaultDose: "0.2-0.4mg/kg/day"
+      }
+      // Add more drugs here
+    };
 
-        function calculateDose() {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const age = document.getElementById('age').value;
-            const selectedDrug = document.getElementById('drug').value;
-            
-            if (!weight || !selectedDrug) {
-                alert("Please enter weight and select a drug");
-                return;
-            }
+    function calculateDose() {
+      const drug = document.getElementById("drug").value;
+      const form = document.getElementById("form").value;
+      const weight = parseFloat(document.getElementById("weight").value);
+      const age = parseFloat(document.getElementById("age").value);
+      const resultDiv = document.getElementById("result");
+      const doseResult = document.getElementById("doseResult");
+      const errorDiv = document.getElementById("error");
 
-            const drug = drugs.find(d => d.name === selectedDrug);
-            let dailyDose = weight * drug.dosePerKg;
-            
-            // Check for meningitis dose
-            if (drug.meningitisDose) {
-                if (confirm("Is this for meningitis?")) {
-                    dailyDose = weight * drug.meningitisDose;
-                }
-            }
+      if (!drug || !form || isNaN(weight) || isNaN(age)) {
+        errorDiv.textContent = "Please fill in all fields.";
+        resultDiv.style.display = "none";
+        return;
+      }
 
-            // Calculate per dose
-            const frequency = drug.frequency[age];
-            const dosesPerDay = frequency.includes("hourly") 
-                ? 24 / parseInt(frequency) 
-                : 1;
-            
-            const perDose = dailyDose / dosesPerDay;
-            
-            // Convert to volume
-            let preparation = '';
-            if (drug.concentration.vial) {
-                const [strength, volume] = drug.concentration.vial.split('/');
-                const mg = parseInt(strength);
-                const ml = parseInt(volume);
-                const volumePerDose = (perDose / mg) * ml;
-                preparation = `Inject ${volumePerDose.toFixed(2)}ml (${drug.concentration.vial} vial)`;
-            }
+      errorDiv.textContent = "";
+      const selectedDrug = drugData[drug];
+      if (!selectedDrug) {
+        errorDiv.textContent = "Drug data not found.";
+        resultDiv.style.display = "none";
+        return;
+      }
 
-            // Display results
-            const output = document.getElementById('output');
-            output.innerHTML = `
-                <p><strong>${drug.name}</strong></p>
-                <p>Daily Dose: ${dailyDose.toFixed(1)}mg</p>
-                <p>Per Dose: ${perDose.toFixed(1)}mg (${frequency})</p>
-                <p>Preparation: ${preparation}</p>
-                <p>Trade Names: ${drug.tradeNames.join(', ')}</p>
-            `;
+      const formDetails = selectedDrug[form];
+      if (!formDetails) {
+        errorDiv.textContent = `Form "${form}" not available for this drug.`;
+        resultDiv.style.display = "none";
+        return;
+      }
 
-            document.getElementById('result').style.display = 'block';
+      let dose = selectedDrug.defaultDose;
+      if (formDetails.dose.includes("TSF")) {
+        const tsfMatch = formDetails.dose.match(/(\d+)mg\/TSF/);
+        if (tsfMatch) {
+          const mgPerTsf = parseInt(tsfMatch[1]);
+          const mlPerTsf = 5; // 1TSF = 5ml
+          const requiredMg = eval(dose.replace("mg/kg", "") * weight);
+          const requiredTsf = requiredMg / mgPerTsf;
+          doseResult.textContent = `${requiredTsf.toFixed(2)} TSF (${requiredTsf * mlPerTsf} ml)`;
         }
-    </script>
+      } else if (formDetails.dose.includes("ml")) {
+        const mlMatch = formDetails.dose.match(/(\d+)mg\/(\d+)ml/);
+        if (mlMatch) {
+          const mg = parseInt(mlMatch[1]);
+          const ml = parseInt(mlMatch[2]);
+          const requiredMg = eval(dose.replace("mg/kg", "") * weight);
+          const requiredMl = (requiredMg / mg) * ml;
+          doseResult.textContent = `${requiredMl.toFixed(2)} ml`;
+        }
+      } else {
+        doseResult.textContent = `Default dose: ${dose}`;
+      }
+
+      resultDiv.style.display = "block";
+    }
+  </script>
 </body>
 </html>
