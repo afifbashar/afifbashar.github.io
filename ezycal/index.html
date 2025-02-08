@@ -8,44 +8,40 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Custom CSS -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body {
             background-color: #f8f9fa;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .calculator-card {
-            margin-top: 2rem;
-            margin-bottom: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
         }
 
-        .form-label {
-            font-weight: 600;
-            color: #2c3e50;
+        #searchResults {
+            position: absolute;
+            width: calc(100% - 30px);
+            z-index: 1000;
+            display: none;
         }
 
-        #searchResults {
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1000;
+        #searchResults.show {
+            display: block;
         }
 
         .result-card {
             background-color: #e9f7ef;
             border-left: 4px solid #28a745;
-        }
-
-        .drug-highlight {
-            color: #218838;
-            font-weight: 600;
-        }
-
-        .alert-heading {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
         }
 
         .loading-spinner {
@@ -57,100 +53,66 @@
             z-index: 9999;
         }
 
-        @media (max-width: 768px) {
-            .calculator-card {
-                margin-top: 1rem;
-            }
-            
-            .form-control {
-                font-size: 0.9rem;
-            }
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
-    <!-- Calculator Section -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card calculator-card">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0">Pediatric Dose Calculator</h3>
+    <div class="calculator-card card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Pediatric Dose Calculator</h3>
+        </div>
+        
+        <div class="card-body">
+            <form id="doseCalculator">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="weight" class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" id="weight" step="0.1" min="0" required>
                     </div>
-                    
-                    <div class="card-body">
-                        <form id="doseCalculator">
-                            <!-- Weight and Age Inputs -->
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-6">
-                                    <label for="weight" class="form-label">Weight (kg)</label>
-                                    <input type="number" 
-                                           class="form-control" 
-                                           id="weight" 
-                                           step="0.1" 
-                                           min="0" 
-                                           required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="age" class="form-label">Age (optional)</label>
-                                    <input type="number" 
-                                           class="form-control" 
-                                           id="age" 
-                                           min="0" 
-                                           max="18">
-                                </div>
-                            </div>
-
-                            <!-- Medication Search -->
-                            <div class="mb-4">
-                                <label class="form-label">Search Medication</label>
-                                <div class="input-group">
-                                    <input type="text" 
-                                           class="form-control" 
-                                           id="drugSearch" 
-                                           placeholder="Search by generic or brand name">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                </div>
-                                <div id="searchResults" class="list-group mt-2"></div>
-                            </div>
-
-                            <!-- Medication Selection -->
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-6">
-                                    <label class="form-label">Medication</label>
-                                    <select class="form-select" 
-                                            id="medication" 
-                                            required>
-                                        <option value="">Select medication</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Form</label>
-                                    <select class="form-select" 
-                                            id="medicationForm" 
-                                            required 
-                                            disabled>
-                                        <option value="">Select form</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Calculate Button -->
-                            <div class="d-grid gap-2">
-                                <button type="submit" 
-                                        class="btn btn-primary btn-lg">
-                                    Calculate Dose
-                                </button>
-                            </div>
-                        </form>
-
-                        <!-- Results Section -->
-                        <div id="result" class="mt-4"></div>
+                    <div class="col-md-6">
+                        <label for="age" class="form-label">Age (optional)</label>
+                        <input type="number" class="form-control" id="age" min="0" max="18">
                     </div>
                 </div>
-            </div>
+
+                <div class="mb-4 position-relative">
+                    <label class="form-label">Search Medication</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="drugSearch" 
+                               placeholder="Search by generic, brand, or category">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <div id="searchResults" class="list-group mt-1"></div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Medication</label>
+                        <select class="form-select" id="medication" required>
+                            <option value="">Select medication</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Form</label>
+                        <select class="form-select" id="medicationForm" required disabled>
+                            <option value="">Select form</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Calculate Dose
+                    </button>
+                </div>
+            </form>
+
+            <div id="result" class="mt-4"></div>
         </div>
     </div>
 
@@ -159,20 +121,191 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
-    <!-- Calculator JS -->
-    <script src="calculator.js"></script>
 
     <script>
-        // Loading spinner control
-        document.getElementById('doseCalculator').addEventListener('submit', function() {
-            document.querySelector('.loading-spinner').style.display = 'block';
-            setTimeout(() => {
-                document.querySelector('.loading-spinner').style.display = 'none';
-            }, 1000);
+        const drugDatabase = {
+            paracetamol: {
+                name: 'Paracetamol',
+                tradeNames: ['Ace', 'Napa', 'Renova'],
+                category: 'Analgesic/Antipyretic',
+                forms: {
+                    syrup: { 
+                        strength: '120mg/5ml', 
+                        dosePerKg: 15,
+                        concentration: '24mg/ml'
+                    },
+                    tablet: { 
+                        strength: '500mg', 
+                        dosePerKg: 15 
+                    }
+                },
+                weightBased: true,
+                maxDosePerDay: 4,
+                interval: '4-6',
+                notes: 'Do not exceed 4g per day in adults'
+            },
+
+            amoxicillin: {
+                name: 'Amoxicillin',
+                tradeNames: ['Moxacil', 'Tycil', 'Amoxil'],
+                category: 'Antibiotic',
+                forms: {
+                    syrup: {
+                        strength: '250mg/5ml',
+                        dosePerKg: 20,
+                        concentration: '50mg/ml'
+                    },
+                    tablet: {
+                        strength: '500mg',
+                        dosePerKg: 20
+                    }
+                },
+                weightBased: true,
+                maxDosePerDay: 3,
+                interval: '8',
+                notes: 'Complete full course as prescribed'
+            },
+
+            ceftriaxone: {
+                name: 'Ceftriaxone',
+                tradeNames: ['Ceftron', 'Dicephin', 'Roficin'],
+                category: 'Antibiotic',
+                forms: {
+                    vial: {
+                        strength: '1g/10ml',
+                        dosePerKg: 50,
+                        concentration: '100mg/ml'
+                    }
+                },
+                weightBased: true,
+                maxDosePerDay: 2,
+                interval: '12',
+                notes: 'Meningitis dose: 100mg/kg/day'
+            }
+        };
+
+        // Search Function
+        function searchDrug(query) {
+            const searchTerm = query.toLowerCase().trim();
+            if (!searchTerm) return [];
+
+            return Object.entries(drugDatabase)
+                .filter(([key, drug]) => {
+                    return drug.name.toLowerCase().includes(searchTerm) ||
+                           drug.tradeNames.some(t => t.toLowerCase().includes(searchTerm)) ||
+                           drug.category.toLowerCase().includes(searchTerm) ||
+                           key.toLowerCase().includes(searchTerm);
+                })
+                .map(([key, drug]) => ({
+                    key: key,
+                    name: drug.name,
+                    tradeNames: drug.tradeNames,
+                    category: drug.category
+                }));
+        }
+
+        // Dose Calculation
+        function calculateDose(weight, medicationKey, form) {
+            const drug = drugDatabase[medicationKey];
+            const formInfo = drug.forms[form];
+            
+            if (!drug || !formInfo) return 'Invalid selection';
+            if (drug.weightBased && !weight) return 'Weight is required';
+
+            const doseMg = (weight * formInfo.dosePerKg).toFixed(1);
+            let administration = '';
+
+            if (formInfo.concentration) {
+                const mlDose = (doseMg / formInfo.concentration.split('mg')[0]).toFixed(1);
+                administration = `${mlDose}ml`;
+                
+                if (form === 'syrup') {
+                    const tsp = (mlDose / 5).toFixed(1);
+                    administration += ` (${tsp} tsp)`;
+                }
+            }
+
+            return `
+                <div class="result-card">
+                    <h5>${drug.name} Dosing</h5>
+                    <p>Single Dose: <strong>${doseMg}mg</strong></p>
+                    ${administration ? `<p>Administration: ${administration}</p>` : ''}
+                    <p>Frequency: Every ${drug.interval} hours</p>
+                    ${drug.notes ? `<p class="text-danger mt-2"><strong>Note:</strong> ${drug.notes}</p>` : ''}
+                </div>
+            `;
+        }
+
+        // Event Listeners
+        document.getElementById('doseCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const weight = parseFloat(document.getElementById('weight').value);
+            const medication = document.getElementById('medication').value;
+            const form = document.getElementById('medicationForm').value;
+            
+            document.getElementById('result').innerHTML = calculateDose(weight, medication, form);
+        });
+
+        document.getElementById('drugSearch').addEventListener('input', function(e) {
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
+            
+            if (this.value.length > 0) {
+                const results = searchDrug(this.value);
+                
+                results.forEach(drug => {
+                    const item = document.createElement('a');
+                    item.className = 'list-group-item list-group-item-action';
+                    item.innerHTML = `
+                        <div class="d-flex justify-content-between">
+                            <strong>${drug.name}</strong>
+                            <span class="text-muted">${drug.category}</span>
+                        </div>
+                        <small class="text-secondary">${drug.tradeNames.join(', ')}</small>
+                    `;
+                    
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.getElementById('medication').value = drug.key;
+                        document.getElementById('medication').dispatchEvent(new Event('change'));
+                        this.value = '';
+                        resultsContainer.innerHTML = '';
+                    });
+                    
+                    resultsContainer.appendChild(item);
+                });
+                
+                resultsContainer.style.display = results.length ? 'block' : 'none';
+            } else {
+                resultsContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('medication').addEventListener('change', function(e) {
+            const formSelect = document.getElementById('medicationForm');
+            formSelect.innerHTML = '<option value="">Select form</option>';
+            
+            if (this.value && drugDatabase[this.value]) {
+                Object.entries(drugDatabase[this.value].forms).forEach(([form, details]) => {
+                    const option = document.createElement('option');
+                    option.value = form;
+                    option.textContent = `${form.charAt(0).toUpperCase() + form.slice(1)} (${details.strength})`;
+                    formSelect.appendChild(option);
+                });
+                formSelect.disabled = false;
+            } else {
+                formSelect.disabled = true;
+            }
+        });
+
+        // Initialize medication dropdown
+        Object.entries(drugDatabase).forEach(([key, drug]) => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = drug.name;
+            document.getElementById('medication').appendChild(option);
         });
     </script>
 </body>
