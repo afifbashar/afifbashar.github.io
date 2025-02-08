@@ -765,3 +765,156 @@ const drugDatabase = {
 
     // Add more drugs following the same pattern...
 };
+// Enhanced Search Function
+function searchDrug(query) {
+    const results = [];
+    const searchTerm = query.toLowerCase().trim();
+    
+    Object.entries(drugDatabase).forEach(([key, drug]) => {
+        const match = 
+            drug.name.toLowerCase().includes(searchTerm) ||
+            drug.tradeNames.some(t => t.toLowerCase().includes(searchTerm)) ||
+            drug.category.toLowerCase().includes(searchTerm);
+        
+        if (match) {
+            results.push({
+                key: key,
+                name: drug.name,
+                tradeNames: drug.tradeNames,
+                category: drug.category
+            });
+        }
+    });
+    
+    return results;
+}
+
+// Dynamic Form Handling
+document.getElementById('medication').addEventListener('change', function(e) {
+    const medicationKey = e.target.value;
+    const formSelect = document.getElementById('medicationForm');
+    formSelect.innerHTML = '<option value="">Select form</option>';
+    
+    if (medicationKey && drugDatabase[medicationKey]) {
+        Object.entries(drugDatabase[medicationKey].forms).forEach(([formName, formData]) => {
+            const option = document.createElement('option');
+            option.value = formName;
+            option.textContent = `${formName.charAt(0).toUpperCase() + formName.slice(1)} (${formData.strength})`;
+            formSelect.appendChild(option);
+        });
+        formSelect.disabled = false;
+    } else {
+        formSelect.disabled = true;
+    }
+});
+
+// Enhanced Dose Calculation
+function calculateDose(weight, age, medicationKey, form) {
+    const drug = drugDatabase[medicationKey];
+    const formData = drug.forms[form];
+    let resultHTML = '';
+    
+    if (!drug || !formData) return 'Invalid selection';
+
+    if (drug.weightBased) {
+        if (!weight) return 'Weight required for this medication';
+        
+        const singleDoseMg = (weight * formData.dosePerKg).toFixed(1);
+        let administration = '';
+        
+        if (formData.concentration) {
+            const doseMl = (singleDoseMg / parseFloat(formData.concentration)).toFixed(1);
+            administration = `${doseMl}ml`;
+            
+            if (form === 'syrup') {
+                const tsp = (doseMl / 5).toFixed(1);
+                administration += ` (${tsp} teaspoons)`;
+            }
+        }
+        
+        resultHTML = `
+            <div class="alert alert-info result-card">
+                <h5 class="alert-heading">${drug.name} Dosing</h5>
+                <p>Single dose: <strong>${singleDoseMg}mg</strong></p>
+                ${administration ? `<p>Administration: ${administration}</p>` : ''}
+                <p>Frequency: Every ${drug.interval} hours</p>
+                <p>Max daily dose: ${weight * drug.maxDailyDose}mg</p>
+                ${drug.notes ? `<div class="mt-2 text-danger"><strong>Note:</strong> ${drug.notes}</div>` : ''}
+            </div>
+        `;
+    } else {
+        if (!age) return 'Age required for this medication';
+        
+        let ageGroup = Object.keys(formData.standardDose).find(range => {
+            const [min, max] = range.split('-').map(n => parseInt(n));
+            return age >= min && age <= max;
+        });
+        
+        resultHTML = `
+            <div class="alert alert-info result-card">
+                <h5 class="alert-heading">${drug.name} Dosing</h5>
+                <p>Standard dose: <strong>${formData.standardDose[ageGroup]}</strong></p>
+                <p>Frequency: Every ${drug.interval} hours</p>
+                <p>Max daily doses: ${drug.maxDosePerDay}</p>
+                ${drug.notes ? `<div class="mt-2 text-danger"><strong>Note:</strong> ${drug.notes}</div>` : ''}
+            </div>
+        `;
+    }
+    
+    return resultHTML;
+}
+
+// Form Submission Handler
+document.getElementById('doseCalculator').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const weight = parseFloat(document.getElementById('weight').value);
+    const age = parseFloat(document.getElementById('age').value);
+    const medication = document.getElementById('medication').value;
+    const form = document.getElementById('medicationForm').value;
+    
+    document.getElementById('result').innerHTML = calculateDose(weight, age, medication, form);
+});
+
+// Search Implementation
+document.getElementById('drugSearch').addEventListener('input', function(e) {
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = '';
+    
+    if (this.value.length > 2) {
+        const results = searchDrug(this.value);
+        
+        results.forEach(drug => {
+            const item = document.createElement('a');
+            item.className = 'list-group-item list-group-item-action';
+            item.innerHTML = `
+                <div class="d-flex justify-content-between">
+                    <span class="drug-name">${drug.name}</span>
+                    <small class="text-muted">${drug.category}</small>
+                </div>
+                <small class="text-secondary">Trade names: ${drug.tradeNames.join(', ')}</small>
+            `;
+            
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('medication').value = drug.key;
+                document.getElementById('medication').dispatchEvent(new Event('change'));
+                resultsContainer.innerHTML = '';
+                this.value = '';
+            });
+            
+            resultsContainer.appendChild(item);
+        });
+    }
+});
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Populate initial medication list
+    const medSelect = document.getElementById('medication');
+    Object.entries(drugDatabase).forEach(([key, drug]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = `${drug.name} (${drug.tradeNames[0]})`;
+        medSelect.appendChild(option);
+    });
+});
