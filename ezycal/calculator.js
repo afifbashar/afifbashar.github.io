@@ -1,6 +1,249 @@
 const drugDatabase = {
     // Existing drugs remain unchanged
     // ... 
+    // ... Previous entries remain unchanged ...
+    // ANTIEMETICS
+    domperidone: {
+        name: 'Domperidone',
+        tradeNames: ['Domin', 'Omidon', 'Motigut'],
+        category: 'Antiemetic',
+        forms: {
+            syrup: {
+                strength: '5mg/5ml',
+                dosePerKg: 0.4,
+                concentration: '1mg/ml'
+            },
+            tablet: {
+                strength: '10mg',
+                dosePerKg: 0.4
+            },
+            drops: {
+                strength: '5mg/ml',
+                dosePerKg: 0.4,
+                dropsPerMl: 20
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6-8',
+        notes: 'Administer 15-30 minutes before meals'
+    },
+
+    ondansetron: {
+        name: 'Ondansetron',
+        tradeNames: ['Emeset', 'Onaseron', 'Ofran'],
+        category: 'Antiemetic',
+        forms: {
+            syrup: {
+                strength: '4mg/5ml',
+                dosePerKg: 0.15,
+                concentration: '0.8mg/ml'
+            },
+            tablet: {
+                strength: '4mg',
+                dosePerKg: 0.15
+            },
+            injection: {
+                strength: '2mg/ml',
+                dosePerKg: 0.15
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        notes: 'Monitor for QT prolongation'
+    },
+
+    // ANTICONVULSANTS
+    diazepam: {
+        name: 'Diazepam',
+        tradeNames: ['Sedil', 'Easium'],
+        category: 'Anticonvulsant',
+        forms: {
+            rectal: {
+                strength: '5mg/ml',
+                dosePerKg: 0.5,
+                concentration: '5mg/ml'
+            },
+            injection: {
+                strength: '10mg/2ml',
+                dosePerKg: 0.3
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: 'PRN',
+        notes: 'Respiratory monitoring required'
+    },
+
+    sodiumValproate: {
+        name: 'Sodium Valproate',
+        tradeNames: ['Valex', 'Valpro', 'Convules'],
+        category: 'Anticonvulsant',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 5,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '200mg',
+                dosePerKg: 5
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Monitor liver function tests'
+    },
+
+    // ANTIHELMINTHICS
+    mebendazole: {
+        name: 'Mebendazole',
+        tradeNames: ['Ermox', 'Solas', 'Meben'],
+        category: 'Antihelminthic',
+        forms: {
+            tablet: {
+                strength: '100mg',
+                standardDose: {
+                    '1-12years': '100mg'
+                }
+            },
+            syrup: {
+                strength: '100mg/5ml',
+                standardDose: {
+                    '1-12years': '5ml'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Administer for 3 consecutive days'
+    },
+
+    pyrantelPamoate: {
+        name: 'Pyrantel Pamoate',
+        tradeNames: ['Delentin', 'Melphin'],
+        category: 'Antihelminthic',
+        forms: {
+            syrup: {
+                strength: '250mg/5ml',
+                dosePerKg: 10,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Repeat dose after 2 weeks'
+    },
+
+    // GASTROINTESTINAL
+    ranitidine: {
+        name: 'Ranitidine',
+        tradeNames: ['Ranison', 'Neotak', 'Ranidine'],
+        category: 'Antacid',
+        forms: {
+            syrup: {
+                strength: '75mg/5ml',
+                dosePerKg: 2,
+                concentration: '15mg/ml'
+            },
+            injection: {
+                strength: '50mg/2ml',
+                dosePerKg: 2
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Adjust dose in renal impairment'
+    },
+
+    // RESPIRATORY
+    aminophylline: {
+        name: 'Aminophylline',
+        tradeNames: ['Phyllocontin', 'Truphylline'],
+        category: 'Bronchodilator',
+        forms: {
+            injection: {
+                strength: '125mg/5ml',
+                dosePerKg: 5,
+                concentration: '25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        notes: 'Monitor serum theophylline levels'
+    },
+
+    // EMERGENCY MEDICATIONS
+    adrenaline: {
+        name: 'Adrenaline',
+        tradeNames: ['Epinephrine'],
+        category: 'Emergency',
+        forms: {
+            injection: {
+                strength: '1mg/ml (1:1000)',
+                standardDose: {
+                    'neonates': '0.01mg/kg',
+                    'children': '0.01mg/kg'
+                }
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: 'PRN',
+        notes: 'IV/IM use for anaphylaxis'
+    },
+
+    // ANTIBIOTICS (Additional)
+    cefixime: {
+        name: 'Cefixime',
+        tradeNames: ['Cef-3', 'Denver', 'T-Cef'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '100mg/5ml',
+                dosePerKg: 4,
+                concentration: '20mg/ml'
+            },
+            tablet: {
+                strength: '200mg',
+                dosePerKg: 4
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Administer with or without food'
+    },
+
+    azithromycin: {
+        name: 'Azithromycin',
+        tradeNames: ['Zimax', 'Azith', 'Zithromax'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 10,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 10
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: '3-day course for most infections'
+    }
+};
+
+// ... Rest of the JavaScript code remains unchanged ...
         paracetamol: {
         name: 'Paracetamol',
         tradeNames: ['Ace', 'Napa', 'Tylenol'],
