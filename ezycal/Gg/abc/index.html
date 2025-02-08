@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Dose Calculator</title>
+    
+    <!-- Bootstrap Dark Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/dark.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #28a745;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9e9e9e;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .calculator-card {
+            background-color: var(--surface-color);
+            border: 1px solid #2d2d2d;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control, .form-select {
+            background-color: #2d2d2d;
+            border-color: #404040;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #333333;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+
+        #searchResults {
+            background-color: #2d2d2d;
+            border: 1px solid #404040;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .list-group-item {
+            background-color: #2d2d2d;
+            border-color: #404040;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #363636;
+            transform: translateX(5px);
+        }
+
+        .result-card {
+            background-color: #2d2d2d;
+            border-left: 4px solid var(--primary-color);
+            color: var(--text-primary);
+        }
+
+        .badge-neonatal {
+            background-color: #6f42c1;
+            font-size: 0.75em;
+        }
+
+        .alert-warning {
+            background-color: #664d03;
+            border-color: #ffda6a;
+            color: #ffda6a;
+        }
+
+        .loading-spinner {
+            color: var(--primary-color);
+        }
+
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center">
+    <div class="container py-5">
+        <div class="calculator-card card">
+            <div class="card-header bg-dark">
+                <h3 class="mb-0 text-success">
+                    <i class="fas fa-calculator me-2"></i>Pediatric Dose Calculator
+                </h3>
+            </div>
+            
+            <div class="card-body">
+                <form id="doseCalculator">
+                    <!-- Patient Details -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Weight (kg)</label>
+                            <input type="number" class="form-control" 
+                                   id="weight" step="0.1" min="0" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Age (days)</label>
+                            <input type="number" class="form-control" 
+                                   id="ageDays" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Medication Search -->
+                    <div class="mb-4 position-relative">
+                        <label class="form-label">Search Medication</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   id="drugSearch" placeholder="Start typing..."
+                                   autocomplete="off">
+                            <span class="input-group-text bg-dark border-dark">
+                                <i class="fas fa-search text-success"></i>
+                            </span>
+                        </div>
+                        <div id="searchResults" class="list-group mt-1 position-absolute w-100 d-none"></div>
+                    </div>
+
+                    <!-- Medication Selection -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Medication</label>
+                            <select class="form-select" id="medication" required>
+                                <option value="">Select medication</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Form</label>
+                            <select class="form-select" id="medicationForm" required disabled>
+                                <option value="">Select form</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Calculation Button -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-calculator me-2"></i>Calculate Dose
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Display -->
+                <div id="result" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner spinner-border" role="status" style="display: none;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Enhanced JavaScript -->
+    <script>
+        const drugDatabase = { /* Full drug database from previous answer */
+      
+    // ANTIBIOTICS
+    ampicillin: {
+        name: 'Ampicillin',
+        tradeNames: ['Ampexin', 'Acmeicillin', 'Ficillin'],
+        category: 'Antibiotic',
+        forms: {
+            vial: { strength: '250mg/2.5ml', dosePerKg: 33.3, concentration: '100mg/ml' },
+            capsule: { strength: '250mg', dosePerKg: 33.3 },
+            syrup: { strength: '125mg/5ml', dosePerKg: 33.3, concentration: '25mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        notes: 'Neonates: 12 hourly dosing'
+    },
+
+    gentamicin: {
+        name: 'Gentamicin',
+        tradeNames: ['Gentin', 'Genacyn', 'Invigen'],
+        category: 'Antibiotic',
+        forms: {
+            vial: { strength: '20mg/2ml', dosePerKg: 1.67, concentration: '10mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        notes: 'Once daily dosing for neonates'
+    },
+
+    ceftriaxone: {
+        name: 'Ceftriaxone',
+        tradeNames: ['Ceftron', 'Dicephin', 'Roficin'],
+        category: 'Antibiotic',
+        forms: {
+            vial: { strength: '1g/10ml', dosePerKg: 50, concentration: '100mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Meningitis dose: 100mg/kg/day'
+    },
+
+    // ANTICONVULSANTS
+    phenobarbitone: {
+        name: 'Phenobarbitone',
+        tradeNames: ['Barbit', 'Epinal'],
+        category: 'Anticonvulsant',
+        forms: {
+            injection: { 
+                strength: '200mg/ml',
+                loadingDose: 20,
+                maintenanceDose: 5,
+                concentration: '200mg/ml' 
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Loading dose: 20mg/kg followed by 5mg/kg/day'
+    },
+
+    diazepam: {
+        name: 'Diazepam',
+        tradeNames: ['Sedil', 'Easium'],
+        category: 'Anticonvulsant',
+        forms: {
+            rectal: { strength: '5mg/ml', dosePerKg: 0.5, concentration: '5mg/ml' },
+            iv: { strength: '10mg/2ml', dosePerKg: 0.3 }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: 'PRN',
+        notes: 'Respiratory monitoring required'
+    },
+
+    // BRONCHODILATORS
+    salbutamol: {
+        name: 'Salbutamol',
+        tradeNames: ['Ventolin', 'Sultolin', 'Asthalin'],
+        category: 'Bronchodilator',
+        forms: {
+            syrup: {
+                strength: '2mg/5ml',
+                standardDose: {
+                    '<2years': '2.5ml',
+                    '2-5years': '5ml',
+                    '>5years': '10ml'
+                }
+            },
+            nebulization: {
+                strength: '5mg/ml',
+                standardDose: {
+                    '<2years': '0.25ml',
+                    '2-5years': '0.5ml',
+                    '>5years': '1ml'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 4,
+        interval: '6-8'
+    },
+
+    // ANTIHELMINTHICS
+    albendazole: {
+        name: 'Albendazole',
+        tradeNames: ['Zentel', 'Almex', 'Albend'],
+        category: 'Antihelminthic',
+        forms: {
+            syrup: { 
+                strength: '200mg/5ml',
+                standardDose: {
+                    '<2years': '200mg',
+                    '>2years': '400mg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Single dose, repeat after 2 weeks'
+    },
+
+    // ANTIHISTAMINES
+    chlorpheniramine: {
+        name: 'Chlorpheniramine',
+        tradeNames: ['Piriton', 'Alergin', 'Histacin'],
+        category: 'Antihistamine',
+        forms: {
+            syrup: {
+                strength: '2mg/5ml',
+                standardDose: {
+                    '2-5years': '5ml',
+                    '6-12years': '10ml'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 4,
+        interval: '6'
+    },
+
+    // CORTICOSTEROIDS
+    prednisolone: {
+        name: 'Prednisolone',
+        tradeNames: ['Predone', 'Predo', 'Deltacortril'],
+        category: 'Corticosteroid',
+        forms: {
+            syrup: { strength: '5mg/5ml', dosePerKg: 1, concentration: '1mg/ml' },
+            tablet: { strength: '5mg', dosePerKg: 1 }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12-24',
+        notes: 'Taper dose gradually'
+    },
+
+    // ANTIFUNGALS
+    fluconazole: {
+        name: 'Fluconazole',
+        tradeNames: ['Diflucan', 'Flugal', 'Forcan'],
+        category: 'Antifungal',
+        forms: {
+            syrup: { strength: '50mg/5ml', dosePerKg: 6, concentration: '10mg/ml' },
+            capsule: { strength: '150mg', dosePerKg: 6 }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24'
+    },
+
+    // ANTIMALARIALS
+    chloroquine: {
+        name: 'Chloroquine',
+        tradeNames: ['Avloquin', 'Jesochlor'],
+        category: 'Antimalarial',
+        forms: {
+            tablet: { strength: '250mg', dosePerKg: 10 },
+            syrup: { strength: '80mg/5ml', dosePerKg: 10, concentration: '16mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Day 1: 10mg/kg, Days 2-3: 5mg/kg'
+    },
+
+    // IV FLUIDS
+    ivig: {
+        name: 'IV Immunoglobulin',
+        tradeNames: ['Octagam', 'Pentaglobulin'],
+        category: 'Immunomodulator',
+        forms: {
+            iv: { 
+                strength: '5g/100ml',
+                standardDose: {
+                    'general': '1g/kg',
+                    'itp': '400mg/kg'
+                }
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Infuse slowly over 4-6 hours'
+    },
+
+    // GASTROINTESTINAL
+    omeprazole: {
+        name: 'Omeprazole',
+        tradeNames: ['Losec', 'Omez', 'Prilosec'],
+        category: 'PPI',
+        forms: {
+            capsule: { strength: '20mg', dosePerKg: 1 },
+            suspension: { strength: '20mg/5ml', dosePerKg: 1, concentration: '4mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24'
+    },
+
+    // ANALGESICS
+    ibuprofen: {
+        name: 'Ibuprofen',
+        tradeNames: ['Brufen', 'Profen', 'Nurofen'],
+        category: 'NSAID',
+        forms: {
+            syrup: { strength: '100mg/5ml', dosePerKg: 10, concentration: '20mg/ml' },
+            tablet: { strength: '200mg', dosePerKg: 10 }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '6-8',
+        notes: 'Take with food'
+    },
+
+    // ANTIVIRALS
+    acyclovir: {
+        name: 'Acyclovir',
+        tradeNames: ['Zovirax', 'Xovir', 'Virux'],
+        category: 'Antiviral',
+        forms: {
+            iv: { strength: '250mg/10ml', dosePerKg: 10, concentration: '25mg/ml' },
+            syrup: { strength: '200mg/5ml', dosePerKg: 20, concentration: '40mg/ml' }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8'
+    },
+
+    // CARDIOVASCULAR
+    furosemide: {
+        name: 'Furosemide',
+        tradeNames: ['Lasix', 'Fusid'],
+        category: 'Diuretic',
+        forms: {
+            iv: { strength: '20mg/2ml', dosePerKg: 1, concentration: '10mg/ml' },
+            tablet: { strength: '40mg', dosePerKg: 1 }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12'
+    }
+};
+
+// Add remaining calculation logic and event handlers below...
+
+        // Improved Search Function
+        function searchDrugs(query) {
+            const searchTerm = query.toLowerCase().trim();
+            if (!searchTerm) return [];
+            
+            return Object.entries(drugDatabase).filter(([key, drug]) => {
+                const searchFields = [
+                    drug.name.toLowerCase(),
+                    ...drug.tradeNames.map(t => t.toLowerCase()),
+                    drug.category.toLowerCase(),
+                    key.toLowerCase()
+                ];
+                return searchFields.some(field => field.includes(searchTerm));
+            });
+        }
+
+        // Enhanced Search Handling
+        document.getElementById('drugSearch').addEventListener('input', function(e) {
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
+            
+            if (this.value.length > 1) {
+                const results = searchDrugs(this.value);
+                resultsContainer.classList.toggle('d-none', results.length === 0);
+                
+                results.forEach(([key, drug]) => {
+                    const item = document.createElement('a');
+                    item.className = 'list-group-item';
+                    item.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>${drug.name}</strong>
+                                <div class="text-muted small">${drug.tradeNames.join(', ')}</div>
+                            </div>
+                            <span class="badge bg-secondary">${drug.category}</span>
+                        </div>
+                    `;
+                    
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.getElementById('medication').value = key;
+                        document.getElementById('medication').dispatchEvent(new Event('change'));
+                        this.value = '';
+                        resultsContainer.classList.add('d-none');
+                    });
+                    
+                    resultsContainer.appendChild(item);
+                });
+            } else {
+                resultsContainer.classList.add('d-none');
+            }
+        });
+
+        // Form Change Handling
+        document.getElementById('medication').addEventListener('change', function(e) {
+            const formSelect = document.getElementById('medicationForm');
+            formSelect.innerHTML = '<option value="">Select form</option>';
+            
+            if (this.value && drugDatabase[this.value]) {
+                Object.entries(drugDatabase[this.value].forms).forEach(([form, details]) => {
+                    const option = document.createElement('option');
+                    option.value = form;
+                    option.textContent = `${form.charAt(0).toUpperCase() + form.slice(1)} (${details.strength})`;
+                    formSelect.appendChild(option);
+                });
+                formSelect.disabled = false;
+            } else {
+                formSelect.disabled = true;
+            }
+        });
+
+        // Initialize Medications
+        function initializeMedications() {
+            const select = document.getElementById('medication');
+            Object.entries(drugDatabase).forEach(([key, drug]) => {
+                const option = new Option(`${drug.name} (${drug.tradeNames[0]})`, key);
+                select.add(option);
+            });
+        }
+
+        // Initialize when ready
+        document.addEventListener('DOMContentLoaded', initializeMedications);
+    </script>
+</body>
+</html>
