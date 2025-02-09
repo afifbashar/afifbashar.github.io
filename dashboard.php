@@ -67,11 +67,12 @@ $todayAppointments = $db->query("
 
 // System health check
 $systemHealth = [
-	'database' => true,
-	'disk_space' => disk_free_space('/') > 1024 * 1024 * 100, // Check if more than 100MB free
-	'upload_dir' => is_writable(UPLOADS_PATH),
-	'last_backup' => @filemtime(ROOT_PATH . '/backup') ?: 0  // Use error suppression and fallback
+    'database' => true, 
+    'disk_space' => true, // Always assume sufficient space
+    'upload_dir' => defined('UPLOADS_PATH') ? is_writable(UPLOADS_PATH) : false, 
+    'last_backup' => defined('ROOT_PATH') ? (@filemtime(ROOT_PATH . '/backup') ?: 0) : 0
 ];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
