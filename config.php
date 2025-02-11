@@ -1,5 +1,5 @@
 <?php
-define('DB_SERVER', '0.0.0.0:3306');
+define('DB_SERVER', '192.168.31.128:3306');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'root');
 define('DB_NAME', 'prescription_system');
