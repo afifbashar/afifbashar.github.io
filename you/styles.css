@@ -14,28 +14,13 @@ body {
     border-radius: 8px;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
+#suggestions {
+    max-height: 150px;
+    overflow-y: auto;
 }
 
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
+.list-group-item {
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 #result {
