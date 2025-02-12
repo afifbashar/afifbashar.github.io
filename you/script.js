@@ -143,7 +143,7 @@ const drugData = {
         generic: "Cefuroxime",
         brand: ["Cefotil", "Kilbac", "Sefur", "Cefobac", "Rofurox", "Sefurox", "Cerox-A", "Furocef"],
         dose: {
-            tablet: "20-30mg/kg/day",
+            tablet: "20mg/kg/day",
             syrup: "125mg/5ml",
             drops: "Not available"
         },
