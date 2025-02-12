@@ -504,10 +504,9 @@ const drugData = {
         brand: ["Ace", "Napa", "Renova", "Fast", "Reset"],
         dose: {
             tablet: "15mg/kg/dose",
-            syrup: "120mg/5ml",
-            drops: "Not available"
+            syrup: "120mg/5ml"
         },
-        notes: "Duration: 4-6h"
+        notes: "Duration: 4-6h. Max dose: 60mg/kg/day"
     },
     Ranitidine: {
         generic: "Ranitidine",
@@ -862,8 +861,8 @@ function calculateDose() {
         const totalMg = mgPerKg * weight;
         result = `Dose: ${totalMg.toFixed(2)} mg`;
     } else if (doseForm === "syrup") {
-        const mgPerMl = parseFloat(dose.split("mg/")[0]);
-        const totalMg = (mgPerMl / 5) * weight; // Calculate total mg needed
+        const mgPerMl = parseFloat(dose.split("mg/")[0]) / 5; // Calculate mg per ml
+        const totalMg = (mgPerMl * 5) * weight; // Calculate total mg needed
         const totalMl = totalMg / mgPerMl; // Calculate total ml needed
         const tsf = totalMl / 5; // Convert ml to teaspoonfuls
         result = `Dose: ${totalMg.toFixed(2)} mg, ${totalMl.toFixed(2)} ml (${tsf.toFixed(2)} TSF)`;
