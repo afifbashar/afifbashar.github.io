@@ -505,7 +505,7 @@ const drugData = {
         dose: {
             tablet: "15mg/kg/dose",
             syrup: "120mg/5ml",
-            drops: "80mg"
+            drops: "Not available"
         },
         notes: "Duration: 4-6h"
     },
@@ -811,7 +811,6 @@ const drugData = {
     }
 };
 
-
 function showSuggestions() {
     const search = document.getElementById('drugSearch').value.toLowerCase();
     const suggestions = document.getElementById('suggestions');
@@ -864,9 +863,10 @@ function calculateDose() {
         result = `Dose: ${totalMg.toFixed(2)} mg`;
     } else if (doseForm === "syrup") {
         const mgPerMl = parseFloat(dose.split("mg/")[0]);
-        const totalMl = (weight * mgPerMl) / 100;
-        const tsf = totalMl / 5;
-        result = `Dose: ${totalMl.toFixed(2)} ml (${tsf.toFixed(2)} TSF)`;
+        const totalMg = (mgPerMl / 5) * weight; // Calculate total mg needed
+        const totalMl = totalMg / mgPerMl; // Calculate total ml needed
+        const tsf = totalMl / 5; // Convert ml to teaspoonfuls
+        result = `Dose: ${totalMg.toFixed(2)} mg, ${totalMl.toFixed(2)} ml (${tsf.toFixed(2)} TSF)`;
     } else if (doseForm === "drops") {
         const mgPerDrop = parseFloat(dose.split("mg/")[0]);
         const totalDrops = (weight * mgPerDrop) / 100;
