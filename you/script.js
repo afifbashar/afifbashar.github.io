@@ -811,6 +811,27 @@ const drugData = {
     }
 };
 
+
+function showSuggestions() {
+    const search = document.getElementById('drugSearch').value.toLowerCase();
+    const suggestions = document.getElementById('suggestions');
+    suggestions.innerHTML = '';
+
+    for (const key in drugData) {
+        if (drugData[key].generic.toLowerCase().includes(search) || drugData[key].brand.some(b => b.toLowerCase().includes(search))) {
+            const suggestion = document.createElement('a');
+            suggestion.href = '#';
+            suggestion.className = 'list-group-item list-group-item-action';
+            suggestion.textContent = drugData[key].generic;
+            suggestion.onclick = function() {
+                document.getElementById('drugSearch').value = drugData[key].generic;
+                showSuggestions();
+            };
+            suggestions.appendChild(suggestion);
+        }
+    }
+}
+
 function calculateDose() {
     const search = document.getElementById('drugSearch').value.toLowerCase();
     const weight = parseFloat(document.getElementById('weight').value);
@@ -818,7 +839,7 @@ function calculateDose() {
     const resultDiv = document.getElementById('result');
 
     if (isNaN(weight) || weight <= 0) {
-        resultDiv.innerHTML = "Please enter a valid weight.";
+        resultDiv.innerHTML = "<div class='alert alert-danger'>Please enter a valid weight.</div>";
         return;
     }
 
@@ -831,7 +852,7 @@ function calculateDose() {
     }
 
     if (!drug) {
-        resultDiv.innerHTML = "Drug not found.";
+        resultDiv.innerHTML = "<div class='alert alert-danger'>Drug not found.</div>";
         return;
     }
 
@@ -844,12 +865,19 @@ function calculateDose() {
     } else if (doseForm === "syrup") {
         const mgPerMl = parseFloat(dose.split("mg/")[0]);
         const totalMl = (weight * mgPerMl) / 100;
-        result = `Dose: ${totalMl.toFixed(2)} ml (${dose})`;
+        const tsf = totalMl / 5;
+        result = `Dose: ${totalMl.toFixed(2)} ml (${tsf.toFixed(2)} TSF)`;
     } else if (doseForm === "drops") {
         const mgPerDrop = parseFloat(dose.split("mg/")[0]);
         const totalDrops = (weight * mgPerDrop) / 100;
-        result = `Dose: ${totalDrops.toFixed(2)} drops (${dose})`;
+        result = `Dose: ${totalDrops.toFixed(2)} drops`;
+    } else if (doseForm === "suppository") {
+        const mg = parseFloat(dose.split("mg")[0]);
+        result = `Dose: ${mg} mg`;
+    } else if (doseForm === "inhaler") {
+        const mg = parseFloat(dose.split("mg")[0]);
+        result = `Dose: ${mg} mg`;
     }
 
-    resultDiv.innerHTML = `<strong>${drug.generic}</strong><br>${result}<br><small>${drug.notes}</small>`;
+    resultDiv.innerHTML = `<div class='alert alert-success'><strong>${drug.generic}</strong><br>${result}<br><small>${drug.notes}</small></div>`;
 }
