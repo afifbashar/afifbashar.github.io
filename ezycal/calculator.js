@@ -1,600 +1,4 @@
 const drugDatabase = {
-    // Existing drugs remain unchanged
-    // ... 
-    // ... Previous entries remain unchanged ...
-    // ANTIEMETICS
-    domperidone: {
-        name: 'Domperidone',
-        tradeNames: ['Domin', 'Omidon', 'Motigut'],
-        category: 'Antiemetic',
-        forms: {
-            syrup: {
-                strength: '5mg/5ml',
-                dosePerKg: 0.4,
-                concentration: '1mg/ml'
-            },
-            tablet: {
-                strength: '10mg',
-                dosePerKg: 0.4
-            },
-            drops: {
-                strength: '5mg/ml',
-                dosePerKg: 0.4,
-                dropsPerMl: 20
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 4,
-        interval: '6-8',
-        notes: 'Administer 15-30 minutes before meals'
-    },
-
-    ondansetron: {
-        name: 'Ondansetron',
-        tradeNames: ['Emeset', 'Onaseron', 'Ofran'],
-        category: 'Antiemetic',
-        forms: {
-            syrup: {
-                strength: '4mg/5ml',
-                dosePerKg: 0.15,
-                concentration: '0.8mg/ml'
-            },
-            tablet: {
-                strength: '4mg',
-                dosePerKg: 0.15
-            },
-            injection: {
-                strength: '2mg/ml',
-                dosePerKg: 0.15
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '8',
-        notes: 'Monitor for QT prolongation'
-    },
-
-    // ANTICONVULSANTS
-    diazepam: {
-        name: 'Diazepam',
-        tradeNames: ['Sedil', 'Easium'],
-        category: 'Anticonvulsant',
-        forms: {
-            rectal: {
-                strength: '5mg/ml',
-                dosePerKg: 0.5,
-                concentration: '5mg/ml'
-            },
-            injection: {
-                strength: '10mg/2ml',
-                dosePerKg: 0.3
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: 'PRN',
-        notes: 'Respiratory monitoring required'
-    },
-
-    sodiumValproate: {
-        name: 'Sodium Valproate',
-        tradeNames: ['Valex', 'Valpro', 'Convules'],
-        category: 'Anticonvulsant',
-        forms: {
-            syrup: {
-                strength: '200mg/5ml',
-                dosePerKg: 5,
-                concentration: '40mg/ml'
-            },
-            tablet: {
-                strength: '200mg',
-                dosePerKg: 5
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        notes: 'Monitor liver function tests'
-    },
-
-    // ANTIHELMINTHICS
-    mebendazole: {
-        name: 'Mebendazole',
-        tradeNames: ['Ermox', 'Solas', 'Meben'],
-        category: 'Antihelminthic',
-        forms: {
-            tablet: {
-                strength: '100mg',
-                standardDose: {
-                    '1-12years': '100mg'
-                }
-            },
-            syrup: {
-                strength: '100mg/5ml',
-                standardDose: {
-                    '1-12years': '5ml'
-                }
-            }
-        },
-        weightBased: false,
-        maxDosePerDay: 2,
-        interval: '12',
-        notes: 'Administer for 3 consecutive days'
-    },
-
-    pyrantelPamoate: {
-        name: 'Pyrantel Pamoate',
-        tradeNames: ['Delentin', 'Melphin'],
-        category: 'Antihelminthic',
-        forms: {
-            syrup: {
-                strength: '250mg/5ml',
-                dosePerKg: 10,
-                concentration: '50mg/ml'
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 1,
-        interval: '24',
-        notes: 'Repeat dose after 2 weeks'
-    },
-
-    // GASTROINTESTINAL
-    ranitidine: {
-        name: 'Ranitidine',
-        tradeNames: ['Ranison', 'Neotak', 'Ranidine'],
-        category: 'Antacid',
-        forms: {
-            syrup: {
-                strength: '75mg/5ml',
-                dosePerKg: 2,
-                concentration: '15mg/ml'
-            },
-            injection: {
-                strength: '50mg/2ml',
-                dosePerKg: 2
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        notes: 'Adjust dose in renal impairment'
-    },
-
-    // RESPIRATORY
-    aminophylline: {
-        name: 'Aminophylline',
-        tradeNames: ['Phyllocontin', 'Truphylline'],
-        category: 'Bronchodilator',
-        forms: {
-            injection: {
-                strength: '125mg/5ml',
-                dosePerKg: 5,
-                concentration: '25mg/ml'
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '8',
-        notes: 'Monitor serum theophylline levels'
-    },
-
-    // EMERGENCY MEDICATIONS
-    adrenaline: {
-        name: 'Adrenaline',
-        tradeNames: ['Epinephrine'],
-        category: 'Emergency',
-        forms: {
-            injection: {
-                strength: '1mg/ml (1:1000)',
-                standardDose: {
-                    'neonates': '0.01mg/kg',
-                    'children': '0.01mg/kg'
-                }
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: 'PRN',
-        notes: 'IV/IM use for anaphylaxis'
-    },
-
-    // ANTIBIOTICS (Additional)
-    cefixime: {
-        name: 'Cefixime',
-        tradeNames: ['Cef-3', 'Denver', 'T-Cef'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: {
-                strength: '100mg/5ml',
-                dosePerKg: 4,
-                concentration: '20mg/ml'
-            },
-            tablet: {
-                strength: '200mg',
-                dosePerKg: 4
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        notes: 'Administer with or without food'
-    },
-
-    azithromycin: {
-        name: 'Azithromycin',
-        tradeNames: ['Zimax', 'Azith', 'Zithromax'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: {
-                strength: '200mg/5ml',
-                dosePerKg: 10,
-                concentration: '40mg/ml'
-            },
-            tablet: {
-                strength: '250mg',
-                dosePerKg: 10
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 1,
-        interval: '24',
-        notes: '3-day course for most infections'
-    }
-};
-
-// ... Rest of the JavaScript code remains unchanged ...
-        paracetamol: {
-        name: 'Paracetamol',
-        tradeNames: ['Ace', 'Napa', 'Tylenol'],
-        category: 'Antipyretic/Analgesic',
-        forms: {
-            syrup: { 
-                strength: '120mg/5ml', 
-                dosePerKg: 15,
-                concentration: '24mg/ml'
-            },
-            tablet: { 
-                strength: '500mg', 
-                dosePerKg: 15 
-            },
-            drops: { 
-                strength: '80mg/ml', 
-                dosePerKg: 15,
-                dropsPerMl: 15
-            },
-            suppository: { 
-                strength: '125mg', 
-                dosePerKg: 15 
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 4,
-        interval: '4-6',
-        maxDailyDose: 60,
-        notes: 'Do not exceed 4g per day in adults'
-    },
-    ibuprofen: {
-        name: 'Ibuprofen',
-        tradeNames: ['Brufen', 'Profen', 'Nurofen'],
-        category: 'NSAID',
-        forms: {
-            syrup: { 
-                strength: '100mg/5ml',
-                dosePerKg: 10,
-                concentration: '20mg/ml'
-            },
-            tablet: { 
-                strength: '200mg',
-                dosePerKg: 10 
-            },
-            drops: { 
-                strength: '40mg/ml',
-                dosePerKg: 10,
-                dropsPerMl: 15
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '6-8',
-        maxDailyDose: 30,
-        notes: 'Take with food. Avoid if asthmatic'
-    },
-    amoxicillin: {
-        name: 'Amoxicillin',
-        tradeNames: ['Moxacil', 'Tycil', 'Amoxil'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: { 
-                strength: '250mg/5ml',
-                dosePerKg: 20,
-                concentration: '50mg/ml'
-            },
-            tablet: { 
-                strength: '500mg',
-                dosePerKg: 20 
-            },
-            drops: { 
-                strength: '100mg/ml',
-                dosePerKg: 20,
-                dropsPerMl: 15
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '8',
-        maxDailyDose: 60,
-        notes: 'Complete full course as prescribed'
-    },
-    azithromycin: {
-        name: 'Azithromycin',
-        tradeNames: ['Zithromax', 'Azith', 'Zimax'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: { 
-                strength: '200mg/5ml',
-                dosePerKg: 10,
-                concentration: '40mg/ml'
-            },
-            tablet: { 
-                strength: '250mg',
-                dosePerKg: 10 
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 1,
-        interval: '24',
-        maxDailyDose: 10,
-        notes: 'Take on empty stomach'
-    },
-    cefixime: {
-        name: 'Cefixime',
-        tradeNames: ['Cef-3', 'Fixim', 'Suprax'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: { 
-                strength: '100mg/5ml',
-                dosePerKg: 8,
-                concentration: '20mg/ml'
-            },
-            tablet: { 
-                strength: '200mg',
-                dosePerKg: 8 
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        maxDailyDose: 16,
-        notes: 'Can be taken with or without food'
-    },
-    salbutamol: {
-        name: 'Salbutamol',
-        tradeNames: ['Ventolin', 'Sultolin', 'Asthalin'],
-        category: 'Bronchodilator',
-        forms: {
-            syrup: { 
-                strength: '2mg/5ml',
-                standardDose: {
-                    '<2years': '2.5ml',
-                    '2-5years': '5ml',
-                    '>5years': '10ml'
-                }
-            },
-            nebulization: { 
-                strength: '5mg/ml',
-                standardDose: {
-                    '<2years': '0.25ml',
-                    '2-5years': '0.5ml',
-                    '>5years': '1ml'
-                }
-            },
-            inhaler: { strength: '100mcg/puff' }
-        },
-        weightBased: false,
-        maxDosePerDay: 4,
-        interval: '6-8',
-        notes: 'Monitor heart rate during nebulization'
-    },
-    domperidone: {
-        name: 'Domperidone',
-        tradeNames: ['Motilium', 'Domstal', 'Omidon'],
-        category: 'Antiemetic',
-        forms: {
-            syrup: { 
-                strength: '5mg/5ml',
-                dosePerKg: 0.25,
-                concentration: '1mg/ml'
-            },
-            tablet: { 
-                strength: '10mg',
-                dosePerKg: 0.25 
-            },
-            drops: { 
-                strength: '5mg/ml',
-                dosePerKg: 0.25,
-                dropsPerMl: 15
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '8',
-        maxDailyDose: 1,
-        notes: 'Take before meals'
-    },
-    ondansetron: {
-        name: 'Ondansetron',
-        tradeNames: ['Zofran', 'Emeset', 'Ondan'],
-        category: 'Antiemetic',
-        forms: {
-            syrup: { 
-                strength: '4mg/5ml',
-                dosePerKg: 0.15,
-                concentration: '0.8mg/ml'
-            },
-            tablet: { 
-                strength: '4mg',
-                dosePerKg: 0.15 
-            },
-            injection: { 
-                strength: '2mg/ml',
-                dosePerKg: 0.15 
-            }
-        },
-        weightBased: true,
-        maxDosePerDay: 3,
-        interval: '8',
-        maxDailyDose: 0.5,
-        notes: 'Can cause headache'
-    },
-    cetirizine: {
-        name: 'Cetirizine',
-        tradeNames: ['Zyrtec', 'Alatrol', 'Cetrin'],
-        category: 'Antihistamine',
-        forms: {
-            syrup: { 
-                strength: '5mg/5ml',
-                standardDose: {
-                    '6-12months': '2.5ml',
-                    '1-2years': '2.5ml',
-                    '2-5years': '5ml',
-                    '>5years': '10ml'
-                }
-            },
-            tablet: { strength: '10mg' }
-        },
-        weightBased: false,
-        maxDosePerDay: 1,
-        interval: '24',
-        notes: 'May cause drowsiness'
-    },
-    chlorpheniramine: {
-        name: 'Chlorpheniramine',
-        tradeNames: ['Piriton', 'Alergin', 'Histacin'],
-        category: 'Antihistamine',
-        forms: {
-            syrup: { 
-                strength: '2mg/5ml',
-                standardDose: {
-                    '2-5years': '5ml',
-                    '6-12years': '10ml'
-                }
-            },
-            tablet: { strength: '4mg' }
-        },
-        weightBased: false,
-        maxDosePerDay: 4,
-        interval: '6',
-        notes: 'May cause significant drowsiness'
-    },
-    dextromethorphan: {
-        name: 'Dextromethorphan',
-        tradeNames: ['Robitussin', 'Dextrogen', 'Tussidex'],
-        category: 'Antitussive',
-        forms: {
-            syrup: { 
-                strength: '15mg/5ml',
-                standardDose: {
-                    '6-12years': '5-10ml',
-                    '>12years': '10ml'
-                }
-            }
-        },
-        weightBased: false,
-        maxDosePerDay: 4,
-        interval: '6-8',
-        notes: 'For dry cough only'
-    },
-    prednisolone: {
-        name: 'Prednisolone',
-        tradeNames: ['Predone', 'Predo', 'Deltacortril'],
-        category: 'Corticosteroid',
-        forms: {
-            syrup: { strength: '5mg/5ml', dosePerKg: 1 },
-            tablet: { strength: '5mg', dosePerKg: 1 }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12-24',
-        maxDailyDose: 2,
-        notes: 'Take with food. Do not stop abruptly'
-    },
-    albendazole: {
-        name: 'Albendazole',
-        tradeNames: ['Zentel', 'Almex', 'Albend'],
-        category: 'Antihelminthic',
-        forms: {
-            syrup: { 
-                strength: '200mg/5ml',
-                standardDose: {
-                    '<2years': '200mg',
-                    '>2years': '400mg'
-                }
-            },
-            tablet: { strength: '400mg' }
-        },
-        weightBased: false,
-        maxDosePerDay: 1,
-        interval: '24',
-        duration: 'Single dose, may repeat after 2 weeks',
-        notes: 'Take with fatty meal for better absorption'
-    },
-    ironSulfate: {
-        name: 'Iron Sulfate',
-        tradeNames: ['Ferous', 'Feromin', 'Fersolate'],
-        category: 'Iron Supplement',
-        forms: {
-            syrup: { strength: '60mg/5ml', dosePerKg: 6 },
-            drops: { strength: '75mg/ml', dosePerKg: 6, dropsPerMl: 15 }
-        },
-        weightBased: true,
-        maxDosePerDay: 1,
-        interval: '24',
-        notes: 'Take on empty stomach. May cause dark stools'
-    },
-    fluconazole: {
-        name: 'Fluconazole',
-        tradeNames: ['Diflucan', 'Flugal', 'Forcan'],
-        category: 'Antifungal',
-        forms: {
-            syrup: { strength: '50mg/5ml', dosePerKg: 6 },
-            capsule: { strength: '150mg', dosePerKg: 6 }
-        },
-        weightBased: true,
-        maxDosePerDay: 1,
-        interval: '24',
-        maxDailyDose: 12,
-        notes: 'Duration depends on infection type'
-    },
-    clarithromycin: {
-        name: 'Clarithromycin',
-        tradeNames: ['Klacid', 'Claricin', 'Klaricid'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: { strength: '125mg/5ml', dosePerKg: 7.5 },
-            tablet: { strength: '250mg', dosePerKg: 7.5 }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        maxDailyDose: 15,
-        notes: 'Take with or without food'
-    },
-    cefuroxime: {
-        name: 'Cefuroxime',
-        tradeNames: ['Zinacef', 'Cefurim', 'Zinnat'],
-        category: 'Antibiotic',
-        forms: {
-            syrup: { strength: '125mg/5ml', dosePerKg: 10 },
-            tablet: { strength: '250mg', dosePerKg: 10 }
-        },
-        weightBased: true,
-        maxDosePerDay: 2,
-        interval: '12',
-        maxDailyDose: 20,
-        notes: 'Take with food for better absorption'
-    }
-    // New entries from PDF
     ampicillin: {
         name: 'Ampicillin',
         tradeNames: ['Ampexin', 'Acmeicillin', 'Ficillin', 'Pen-A'],
@@ -602,7 +6,7 @@ const drugDatabase = {
         forms: {
             vial: {
                 strength: '250mg/2.5ml',
-                dosePerKg: 33.3, // 100mg/kg/day ÷ 3 doses
+                dosePerKg: 33.3,
                 concentration: '100mg/ml'
             },
             capsule: {
@@ -626,15 +30,14 @@ const drugDatabase = {
         maxDailyDose: 100,
         notes: 'Neonates: 12 hourly dosing'
     },
-
-    gentamycin: {
+    gentamicin: {
         name: 'Gentamycin',
         tradeNames: ['Gentin', 'Genacyn', 'Invigen'],
         category: 'Antibiotic',
         forms: {
             vial: {
                 strength: '20mg/2ml',
-                dosePerKg: 1.67, // 5mg/kg/day ÷ 3 doses
+                dosePerKg: 1.67,
                 concentration: '10mg/ml'
             }
         },
@@ -644,15 +47,65 @@ const drugDatabase = {
         maxDailyDose: 5,
         notes: 'Monitor renal function'
     },
-
-    ceftriaxone: {
-        name: 'Ceftriaxone',
-        tradeNames: ['Ceftron', 'Dicephin', 'Roficin'],
+    amikacin: {
+        name: 'Amikacin',
+        tradeNames: ['Kacin', 'Amibac', 'Amistar'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '100mg/2ml',
+                dosePerKg: 5,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 15,
+        notes: 'Caution: Renal impairment'
+    },
+    ceftazidime: {
+        name: 'Ceftazidime',
+        tradeNames: ['Tazid', 'Zitum', 'Serozid', 'Sidobac', 'Trum-3', 'Cefazid'],
         category: 'Antibiotic',
         forms: {
             vial: {
                 strength: '1g/10ml',
-                dosePerKg: 50, // Standard 50-100mg/kg/day
+                dosePerKg: 50,
+                concentration: '100mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 150,
+        notes: 'For meningitis: 150mg/kg/day'
+    },
+    cefotaxime: {
+        name: 'Cefotaxime',
+        tradeNames: ['Maxcef', 'Cefotime', 'Taxim', 'Cefotex'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '1g/10ml',
+                dosePerKg: 50,
+                concentration: '100mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 150,
+        notes: 'For meningitis: 150mg/kg/day'
+    },
+    ceftriaxone: {
+        name: 'Ceftriaxone',
+        tradeNames: ['Ceftron', 'Dicephin', 'Roficin', 'Oricef', 'Arixon', 'Axon', 'Traxef', 'Ceftizone'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '1g/10ml',
+                dosePerKg: 50,
                 concentration: '100mg/ml'
             }
         },
@@ -662,10 +115,847 @@ const drugDatabase = {
         maxDailyDose: 100,
         notes: 'Meningitis dose: 100mg/kg/day'
     },
-
-    paracetamol: { // Enhanced from PDF
+    imepenem: {
+        name: 'Imipenem',
+        tradeNames: ['Imenem', 'Cispenam'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '500mg/10ml',
+                dosePerKg: 20,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 60,
+        notes: 'Dilute with 10ml of IV fluid'
+    },
+    meropenem: {
+        name: 'Meropenem',
+        tradeNames: ['Spacbac', 'I-Penem', 'Fulspec', 'Ropenam', 'Neopenam', 'Merocon', 'Meropen'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '500mg/10ml',
+                dosePerKg: 20,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 60,
+        notes: 'Dilute with 10ml of IV fluid'
+    },
+    vancomycin: {
+        name: 'Vancomycin',
+        tradeNames: ['Vancomycin', 'Vanmycin', 'Vancomin', 'Covan'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '500mg/10ml',
+                dosePerKg: 7.5,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 15,
+        notes: '<7 days: 15mg/kg/dose 12 hourly/BD, >7 days: 15mg/kg/dose 8 hourly/TDS'
+    },
+    flucloxacillin: {
+        name: 'Flucloxacillin',
+        tradeNames: ['Fluclox', 'Phylopen', 'Phylopen Forte DS Flux', 'Flubex', 'Flupen', 'Flubac'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 25,
+                concentration: '25mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 25
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 100,
+        notes: 'Infant: 50mg/kg/day (oral). Duration: QDS'
+    },
+    cephradine: {
+        name: 'Cephradine',
+        tradeNames: ['Dicef', 'Cephran'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 20,
+                concentration: '25mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 20
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 100,
+        notes: 'Duration: QDS'
+    },
+    piperacillintazobactam: {
+        name: 'Piperacillin+Tazobactam',
+        tradeNames: ['Megacillin', 'Tazopen'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '4.5g/20ml',
+                dosePerKg: 100,
+                concentration: '225mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 300,
+        notes: 'Duration: 8 hourly'
+    },
+    amoxicillin: {
+        name: 'Amoxicillin',
+        tradeNames: ['Moxacil', 'Moxin', 'Tycil', 'Fimoxyl'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 40,
+                concentration: '25mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 40
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 120,
+        notes: 'Duration: TDS'
+    },
+    amoxicillinclavulanicacid: {
+        name: 'Amoxicillin+Clavulanic Acid',
+        tradeNames: ['Moxaclav', 'Fimoxyclav', 'Ticlav'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '156mg/5ml',
+                dosePerKg: 40,
+                concentration: '31.2mg/ml'
+            },
+            tablet: {
+                strength: '375mg',
+                dosePerKg: 40
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 120,
+        notes: 'Neonate: 30mg/kg/day. Duration: TDS (Neonate: BD)'
+    },
+    cefuroxime: {
+        name: 'Cefuroxime',
+        tradeNames: ['Cefotil', 'Kilbac', 'Sefur', 'Cefobac', 'Rofurox', 'Sefurox', 'Cerox-A', 'Furocef'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '250mg/2.5ml',
+                dosePerKg: 20,
+                concentration: '100mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 60,
+        notes: 'Duration: 12 hourly'
+    },
+    ciprofloxacin: {
+        name: 'Ciprofloxacin',
+        tradeNames: ['Ciprocin', 'Neofloxin', 'Flontin', 'Beuflox', 'Ciprox', 'Cipro-A', 'X-bac'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '250mg/5ml',
+                dosePerKg: 15,
+                concentration: '50mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 15
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 30,
+        notes: 'Duration: BD'
+    },
+    azithromycin: {
+        name: 'Azithromycin',
+        tradeNames: ['Zimax', 'Azith', 'Zithromax'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 10,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 10
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        maxDailyDose: 10,
+        notes: '3-day course for most infections'
+    },
+    cefixime: {
+        name: 'Cefixime',
+        tradeNames: ['Cef-3', 'Denver', 'T-Cef'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '100mg/5ml',
+                dosePerKg: 4,
+                concentration: '20mg/ml'
+            },
+            tablet: {
+                strength: '200mg',
+                dosePerKg: 4
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 16,
+        notes: 'Administer with or without food'
+    },
+    cefepime: {
+        name: 'Cefepime',
+        tradeNames: ['Ceftipime', 'Maxipime', 'Xenim', 'Ultrapime'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '500mg/10ml',
+                dosePerKg: 50,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 100,
+        notes: '<14 days: 30 mg/kg/day, >14 days: 50 mg/kg/day'
+    },
+    cephalexin: {
+        name: 'Cephalexin',
+        tradeNames: ['Ceftipime', 'Cephalen', 'Ceporin', 'Neorex'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 25,
+                concentration: '25mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 25
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 100,
+        notes: '<7 days: 12 hourly dosing, >7 days: 8 hourly dosing'
+    },
+    cefpodoxime: {
+        name: 'Cefpodoxime',
+        tradeNames: ['Vanprox', 'Ximprox', 'Vercef', 'Kidcef', 'Roxitil', 'Trucef'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '100mg/5ml',
+                dosePerKg: 10,
+                concentration: '20mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 20,
+        notes: 'Duration: BD'
+    },
+    netilmicin: {
+        name: 'Netilmicin',
+        tradeNames: ['Netromycin'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '100mg/2ml',
+                dosePerKg: 5,
+                concentration: '50mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 15,
+        notes: 'Used in neonates after first week'
+    },
+    colomycin: {
+        name: 'Colomycin',
+        tradeNames: ['Colistin'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '1 million units/2ml',
+                dosePerKg: 25000,
+                concentration: '500000 units/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 75000,
+        notes: 'Duration: 8 hourly'
+    },
+    clindamycin: {
+        name: 'Clindamycin',
+        tradeNames: ['Clindex', 'Clindacin', 'Climycin'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '75mg/5ml',
+                dosePerKg: 3,
+                concentration: '15mg/ml'
+            },
+            tablet: {
+                strength: '150mg',
+                dosePerKg: 3
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 12,
+        notes: '0-14 days: 8 hourly/TDS, 15 days-12 yrs: 6 hourly/QDS'
+    },
+    erythromycin: {
+        name: 'Erythromycin',
+        tradeNames: ['Eromycin', 'A-mycin', 'Erythrox'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 50,
+                concentration: '25mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 50
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 200,
+        notes: 'Duration: QDS'
+    },
+    metronidazole: {
+        name: 'Metronidazole',
+        tradeNames: ['Amodis', 'Flamyd', 'Flazyl', 'Metro', 'Menz', 'Metryl', 'Filmet'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 20,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '250mg',
+                dosePerKg: 20
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 60,
+        notes: 'Duration: TDS'
+    },
+    acyclovir: {
+        name: 'Acyclovir',
+        tradeNames: ['Zovirux', 'Xovir', 'Virux', 'Novirux'],
+        category: 'Antiviral',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 10,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '200mg',
+                dosePerKg: 10
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 30,
+        notes: 'Duration: TDS'
+    },
+    ganciclovir: {
+        name: 'Ganciclovir',
+        tradeNames: ['Cymevene', 'Cytovene'],
+        category: 'Antiviral',
+        forms: {
+            injection: {
+                strength: '5mg/ml',
+                dosePerKg: 6,
+                concentration: '5mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 18,
+        notes: 'Duration: 12 hourly'
+    },
+    fluconazole: {
+        name: 'Fluconazole',
+        tradeNames: ['Diflucan', 'Flugal', 'Forcan'],
+        category: 'Antifungal',
+        forms: {
+            syrup: {
+                strength: '100mg/5ml',
+                dosePerKg: 12,
+                concentration: '20mg/ml'
+            },
+            tablet: {
+                strength: '100mg',
+                dosePerKg: 12
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 36,
+        notes: 'Administer once daily'
+    },
+    nystatin: {
+        name: 'Nystatin',
+        tradeNames: ['Nystat', 'Candex', 'Fungistin', 'Naf'],
+        category: 'Antifungal',
+        forms: {
+            suspension: {
+                strength: '100,000 units/ml',
+                standardDose: {
+                    '<2months': '1ml',
+                    '2-12months': '1.5ml',
+                    '>1year': '2ml'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 4,
+        interval: '6',
+        notes: 'Duration: TDS/QDS'
+    },
+    chloroquine: {
+        name: 'Chloroquine',
+        tradeNames: ['Avloquin', 'Jesochlor', 'Base'],
+        category: 'Antimalarial',
+        forms: {
+            tablet: {
+                strength: '100mg',
+                standardDose: {
+                    'day1': '10mg/kg',
+                    'days2-3': '5mg/kg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Not for pediatric use without supervision'
+    },
+    primaquin: {
+        name: 'Primaquin',
+        tradeNames: ['Primaquin'],
+        category: 'Antimalarial',
+        forms: {
+            tablet: {
+                strength: '7.5mg',
+                standardDose: {
+                    'adults': '0.9mg/kg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For adjunctive therapy'
+    },
+    cotrimoxazole: {
+        name: 'Cotrimoxazole',
+        tradeNames: ['Bactrim', 'Septra'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '240mg (S) + 120mg (T)/5ml',
+                standardDose: {
+                    '<2months': '1ml/kg',
+                    '2-12months': '1.5ml/kg'
+                }
+            },
+            tablet: {
+                strength: '800mg (S) + 400mg (T)',
+                standardDose: {
+                    'adults': '1 tablet BD'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 2,
+        interval: '12',
+        notes: 'Used in HIV-positive patients'
+    },
+    quinine: {
+        name: 'Quinine',
+        tradeNames: ['Quinsulf', 'Quinimax'],
+        category: 'Antimalarial',
+        forms: {
+            injection: {
+                strength: '300mg/10ml',
+                dosePerKg: 20,
+                concentration: '30mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 60,
+        notes: 'Monitor ECG for QT prolongation'
+    },
+    pentaglobulin: {
+        name: 'Pentaglobulin',
+        tradeNames: ['Pentaglobulin'],
+        category: 'Immunoglobulin',
+        forms: {
+            vial: {
+                strength: '1g',
+                standardDose: {
+                    'total': '0.25g/kg or 5ml/kg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Administered for bleeding disorders'
+    },
+    nitrazoxanide: {
+        name: 'Nitrazoxanide',
+        tradeNames: ['Zox Nitazox'],
+        category: 'Antiparasitic',
+        forms: {
+            syrup: {
+                strength: '100mg/5ml',
+                standardDose: {
+                    '6-12months': '1ml (50mg) QD',
+                    '1-4years': '2ml (100mg) QD',
+                    '4-11years': '4ml (200mg) QD'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For treatment of Giardia and Cryptosporidium'
+    },
+    ivig: {
+        name: 'IVIG',
+        tradeNames: ['IVIG'],
+        category: 'Immunoglobulin',
+        forms: {
+            vial: {
+                strength: '50mg/ml',
+                standardDose: {
+                    'total': '1g/kg over 3 days'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Used in immune thrombocytopenic purpura'
+    },
+    clarithromycin: {
+        name: 'Clarithromycin',
+        tradeNames: ['Biaxin', 'Klaricid'],
+        category: 'Antibiotic',
+        forms: {
+            syrup: {
+                strength: '125mg/5ml',
+                dosePerKg: 15,
+                concentration: '25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 30,
+        notes: 'May interact with other drugs'
+    },
+    chloramphenicol: {
+        name: 'Chloramphenicol',
+        tradeNames: ['Chloromycetin'],
+        category: 'Antibiotic',
+        forms: {
+            vial: {
+                strength: '250mg/ml',
+                dosePerKg: 25,
+                concentration: '250mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 100,
+        notes: 'Gray baby syndrome risk'
+    },
+    domperidone: {
+        name: 'Domperidone',
+        tradeNames: ['Domin', 'Omidon', 'Motigut'],
+        category: 'Antiemetic',
+        forms: {
+            syrup: {
+                strength: '5mg/5ml',
+                dosePerKg: 0.4,
+                concentration: '1mg/ml'
+            },
+            tablet: {
+                strength: '10mg',
+                dosePerKg: 0.4
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6-8',
+        notes: 'Administer 15-30 minutes before meals'
+    },
+    ondansetron: {
+        name: 'Ondansetron',
+        tradeNames: ['Zofran', 'Ondaz', 'Anzemet'],
+        category: 'Antiemetic',
+        forms: {
+            syrup: {
+                strength: '4mg/5ml',
+                dosePerKg: 0.15,
+                concentration: '0.8mg/ml'
+            },
+            tablet: {
+                strength: '4mg',
+                dosePerKg: 0.15
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        notes: 'For chemotherapy-induced vomiting'
+    },
+    diazepam: {
+        name: 'Diazepam',
+        tradeNames: ['Valium'],
+        category: 'Antianxiety',
+        forms: {
+            injection: {
+                strength: '5mg/ml',
+                dosePerKg: 0.3,
+                concentration: '5mg/ml'
+            },
+            oral: {
+                strength: '5mg',
+                dosePerKg: 0.5
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '12',
+        maxDailyDose: 5,
+        notes: 'Not for pediatric use without supervision'
+    },
+    phenobarbitone: {
+        name: 'Phenobarbitone',
+        tradeNames: ['Luminal'],
+        category: 'Anticonvulsant',
+        forms: {
+            syrup: {
+                strength: '20mg/5ml',
+                dosePerKg: 3,
+                concentration: '4mg/ml'
+            },
+            tablet: {
+                strength: '30mg',
+                dosePerKg: 3
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 12,
+        notes: 'Duration: BD'
+    },
+    fosphenytoin: {
+        name: 'Fosphenytoin',
+        tradeNames: ['Cerebyx'],
+        category: 'Anticonvulsant',
+        forms: {
+            injection: {
+                strength: '20mg/ml',
+                dosePerKg: 15,
+                concentration: '10mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 30,
+        notes: 'Used as prodrug for phenytoin'
+    },
+    midazolam: {
+        name: 'Midazolam',
+        tradeNames: ['Hypnovel', 'Dormicum'],
+        category: 'Sedative',
+        forms: {
+            injection: {
+                strength: '5mg/ml',
+                dosePerKg: 0.1,
+                concentration: '5mg/ml'
+            },
+            syrup: {
+                strength: '2.5mg/ml',
+                dosePerKg: 0.1,
+                concentration: '1mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 4,
+        notes: 'For procedural sedation'
+    },
+    clonazepam: {
+        name: 'Clonazepam',
+        tradeNames: ['Klonopin'],
+        category: 'Anticonvulsant',
+        forms: {
+            tablet: {
+                strength: '0.5mg',
+                dosePerKg: 0.02,
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.06,
+        notes: 'Administer with caution in infants'
+    },
+    sodiumvalproate: {
+        name: 'Sodium Valproate',
+        tradeNames: ['Depakote', 'Convulex'],
+        category: 'Anticonvulsant',
+        forms: {
+            syrup: {
+                strength: '200mg/5ml',
+                dosePerKg: 10,
+                concentration: '40mg/ml'
+            },
+            tablet: {
+                strength: '200mg',
+                dosePerKg: 10
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 30,
+        notes: 'Monitor liver function tests'
+    },
+    pyrantalpamoet: {
+        name: 'Pyrantal Pamoet',
+        tradeNames: ['Eimox', 'Delentin'],
+        category: 'Antihelminthic',
+        forms: {
+            orally: {
+                strength: '100mg/kg',
+                standardDose: {
+                    '<1year': 'Not recommended',
+                    '1-5years': '100mg once',
+                    '5-15years': '200mg once'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For pinworm infestation'
+    },
+    mebendazole: {
+        name: 'Mebendazole',
+        tradeNames: ['Vermox', 'G(blob)'],
+        category: 'Antihelminthic',
+        forms: {
+            orally: {
+                strength: '100mg',
+                standardDose: {
+                    '2-12years': '100mg once',
+                    '>12years': '200mg once'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For roundworm infestation'
+    },
+    albendazole: {
+        name: 'Albendazole',
+        tradeNames: ['Albenza', 'Zentel'],
+        category: 'Antihelminthic',
+        forms: {
+            orally: {
+                strength: '400mg',
+                standardDose: {
+                    '<2years': '200mg single dose',
+                    '>2years': '400mg single dose'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For tapeworm infestation'
+    },
+    paracetamol: {
         name: 'Paracetamol',
-        tradeNames: ['Ace', 'Napa', 'Renova'],
+        tradeNames: ['Tylenol', 'Pamol', 'Panado'],
         category: 'Analgesic',
         forms: {
             syrup: {
@@ -673,13 +963,8 @@ const drugDatabase = {
                 dosePerKg: 15,
                 concentration: '24mg/ml'
             },
-            drops: {
-                strength: '80mg/ml',
-                dosePerKg: 15,
-                dropsPerMl: 15
-            },
-            suppository: {
-                strength: '125mg',
+            tablet: {
+                strength: '500mg',
                 dosePerKg: 15
             }
         },
@@ -687,85 +972,625 @@ const drugDatabase = {
         maxDosePerDay: 4,
         interval: '4-6',
         maxDailyDose: 60,
-        notes: 'Max 4g/day in adults'
+        notes: 'Do not exceed 4g/day in adults'
     },
-
-    albendazole: { // Enhanced from PDF
-        name: 'Albendazole',
-        tradeNames: ['Zentel', 'Almex', 'Albend'],
-        category: 'Antihelminthic',
+    ranitidine: {
+        name: 'Ranitidine',
+        tradeNames: ['Zantac'],
+        category: 'Antacid',
         forms: {
             syrup: {
-                strength: '200mg/5ml',
-                standardDose: {
-                    '<2years': '200mg',
-                    '>2years': '400mg'
-                }
+                strength: '75mg/5ml',
+                dosePerKg: 2,
+                concentration: '15mg/ml'
             },
-            tablet: { strength: '400mg' }
-        },
-        weightBased: false,
-        maxDosePerDay: 1,
-        interval: '24',
-        notes: 'Take with fatty meal'
-    },
-
-    salbutamol: { // Enhanced from PDF
-        name: 'Salbutamol',
-        tradeNames: ['Ventolin', 'Sultolin', 'Asthalin'],
-        category: 'Bronchodilator',
-        forms: {
-            syrup: {
-                strength: '2mg/5ml',
-                standardDose: {
-                    '<2years': '2.5ml',
-                    '2-5years': '5ml',
-                    '>5years': '10ml'
-                }
-            },
-            nebulization: {
-                strength: '5mg/ml',
-                standardDose: {
-                    '<2years': '0.25ml',
-                    '2-5years': '0.5ml',
-                    '>5years': '1ml'
-                }
-            }
-        },
-        weightBased: false,
-        maxDosePerDay: 4,
-        interval: '6-8',
-        notes: 'Monitor heart rate'
-    },
-
-    phenobarbitone: {
-        name: 'Phenobarbitone',
-        tradeNames: ['Barbit', 'Epinal'],
-        category: 'Anticonvulsant',
-        forms: {
-            injection: {
-                strength: '200mg/ml',
-                standardDose: {
-                    'loading': '20mg/kg',
-                    'maintenance': '2.5mg/kg'
-                }
-            },
-            syrup: {
-                strength: '20mg/5ml',
-                standardDose: {
-                    'maintenance': '2.5mg/kg'
-                }
+            tablet: {
+                strength: '150mg',
+                dosePerKg: 2
             }
         },
         weightBased: true,
         maxDosePerDay: 2,
         interval: '12',
-        notes: 'Do not dilute injection'
+        maxDailyDose: 4,
+        notes: 'Adjust dose in renal impairment'
     },
-
-    // Add more drugs following the same pattern...
+    aminophylline: {
+        name: 'Aminophylline',
+        tradeNames: ['Phyllocontin'],
+        category: 'Bronchodilator',
+        forms: {
+            injection: {
+                strength: '125mg/5ml',
+                dosePerKg: 5,
+                concentration: '25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 15,
+        notes: 'Monitor serum theophylline levels'
+    },
+    adrenaline: {
+        name: 'Adrenaline',
+        tradeNames: ['Epinephrine'],
+        category: 'Resuscitation',
+        forms: {
+            injection: {
+                strength: '1mg/ml',
+                standardDose: {
+                    'neonates': '0.01mg/kg',
+                    'children': '0.01mg/kg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: 'PRN',
+        notes: 'For anaphylaxis or cardiac arrest'
+    },
+    dopamine: {
+        name: 'Dopamine',
+        tradeNames: ['Intropin'],
+        category: 'Vasopressor',
+        forms: {
+            injection: {
+                strength: '400mg/10ml',
+                dosePerKg: 5,
+                concentration: '40mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 15,
+        notes: 'For hypotension'
+    },
+    digoxin: {
+        name: 'Digoxin',
+        tradeNames: ['Lanoxin'],
+        category: 'Cardiac Glycoside',
+        forms: {
+            injection: {
+                strength: '250mcg/ml',
+                dosePerKg: 0.04,
+                concentration: '0.25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '6',
+        maxDailyDose: 0.12,
+        notes: 'Monitor serum digoxin levels'
+    },
+    calciumgluconate: {
+        name: 'Calcium Gluconate',
+        tradeNames: ['Calgluconate'],
+        category: 'Electrolyte',
+        forms: {
+            injection: {
+                strength: '10ml/5ml',
+                standardDose: {
+                    'total': '1-2ml/kg'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'For hypocalcemia'
+    },
+    sodiumbicarbonate: {
+        name: 'Sodium Bicarbonate',
+        tradeNames: ['Bicarbonate'],
+        category: 'Electrolyte',
+        forms: {
+            injection: {
+                strength: '10ml/10ml',
+                dosePerKg: 1,
+                concentration: '1mEq/kg'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 3,
+        notes: 'For metabolic acidosis'
+    },
+    frusemide: {
+        name: 'Frusemide',
+        tradeNames: ['Lasix'],
+        category: 'Diuretic',
+        forms: {
+            injection: {
+                strength: '10mg/ml',
+                dosePerKg: 1,
+                concentration: '10mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 3,
+        notes: 'For fluid overload'
+    },
+    dexamethasone: {
+        name: 'Dexamethasone',
+        tradeNames: ['Decadron'],
+        category: 'Corticosteroid',
+        forms: {
+            injection: {
+                strength: '4mg/ml',
+                dosePerKg: 0.2,
+                concentration: '4mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 2,
+        interval: '12',
+        maxDailyDose: 0.4,
+        notes: 'For allergic reactions'
+    },
+    hydrocortisone: {
+        name: 'Hydrocortisone',
+        tradeNames: ['Hydrocortone'],
+        category: 'Corticosteroid',
+        forms: {
+            injection: {
+                strength: '50mg/2ml',
+                dosePerKg: 2,
+                concentration: '25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 4,
+        interval: '6',
+        maxDailyDose: 8,
+        notes: 'For adrenal insufficiency'
+    },
+    prednisolone: {
+        name: 'Prednisolone',
+        tradeNames: ['Prednisone'],
+        category: 'Corticosteroid',
+        forms: {
+            syrup: {
+                strength: '5mg/5ml',
+                dosePerKg: 1,
+                concentration: '1mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 3,
+        notes: 'For asthma exacerbations'
+    },
+    folicacid: {
+        name: 'Folic Acid',
+        tradeNames: ['Folvite'],
+        category: 'Vitamin',
+        forms: {
+            tablet: {
+                strength: '1mg',
+                dosePerKg: 0.05
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 1,
+        interval: '24',
+        maxDailyDose: 0.1,
+        notes: 'For megaloblastic anemia'
+    },
+    mannitol: {
+        name: 'Mannitol',
+        tradeNames: ['Osmitrol'],
+        category: 'Diuretic',
+        forms: {
+            injection: {
+                strength: '10g/20ml',
+                dosePerKg: 0.25,
+                concentration: '500mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.75,
+        notes: 'For increased intracranial pressure'
+    },
+    iron: {
+        name: 'Iron',
+        tradeNames: ['Ferrous Fumarate'],
+        category: 'Vitamin',
+        forms: {
+            syrup: {
+                strength: '40mg/ml',
+                dosePerKg: 3,
+                concentration: '8mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 9,
+        notes: 'For iron-deficiency anemia'
+    },
+    chlorpheniramine: {
+        name: 'Chlorpheniramine',
+        tradeNames: ['Chlor-Trimeton'],
+        category: 'Antihistamine',
+        forms: {
+            syrup: {
+                strength: '2mg/ml',
+                dosePerKg: 0.18,
+                concentration: '1mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '6',
+        maxDailyDose: 0.54,
+        notes: 'For allergic rhinitis'
+    },
+    longactingmorphine: {
+        name: 'Long-Acting Morphine',
+        tradeNames: ['OxyContin'],
+        category: 'Analgesic',
+        forms: {
+            tablet: {
+                strength: '10mg',
+                standardDose: {
+                    'children': 'Not recommended'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Not for pediatric use'
+    },
+    oxcarbazepine: {
+        name: 'Oxcarbazepine',
+        tradeNames: ['Trileptal'],
+        category: 'Anticonvulsant',
+        forms: {
+            tablet: {
+                strength: '150mg',
+                dosePerKg: 0.7,
+                loadingDose: 10
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 21,
+        notes: 'Adjust dose gradually'
+    },
+    midazolam: {
+        name: 'Midazolam',
+        tradeNames: ['Hypnovel'],
+        category: 'Sedative',
+        forms: {
+            syrup: {
+                strength: '2.5mg/ml',
+                dosePerKg: 0.2,
+                concentration: '0.5mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 0.6,
+        notes: 'For conscious sedation'
+    },
+    temlar: {
+        name: 'Temlar',
+        category: 'Analgesic',
+        forms: {
+            syrup: {
+                strength: '7.5mg/ml',
+                dosePerKg: 0.1,
+                concentration: '1.5mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.3,
+        notes: 'Not recommended for children under 6 months'
+    },
+    prednisolone: {
+        name: 'Prednisolone',
+        tradeNames: ['Prednisolone'],
+        category: 'Corticosteroid',
+        forms: {
+            syrup: {
+                strength: '15mg/5ml',
+                dosePerKg: 1,
+                concentration: '3mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 3,
+        notes: 'For inflammatory conditions'
+    },
+    ranitidine: {
+        name: 'Ranitidine',
+        tradeNames: ['Zantac'],
+        category: 'Antacid',
+        forms: {
+            syrup: {
+                strength: '75mg/5ml',
+                dosePerKg: 2,
+                concentration: '15mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 6,
+        notes: 'For gastroesophageal reflux disease'
+    },
+    aminophylline: {
+        name: 'Aminophylline',
+        tradeNames: ['Phyllocontin'],
+        category: 'Bronchodilator',
+        forms: {
+            injection: {
+                strength: '125mg/5ml',
+                dosePerKg: 5,
+                concentration: '25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 15,
+        notes: 'For asthma exacerbations'
+    },
+    adrenaline: {
+        name: 'Adrenaline',
+        tradeNames: ['Epinephrine'],
+        category: 'Resuscitation',
+        forms: {
+            injection: {
+                strength: '1mg/ml',
+                dosePerKg: 0.1,
+                concentration: '1mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 0.3,
+        notes: 'For cardiac arrest'
+    },
+    dopamine: {
+        name: 'Dopamine',
+        tradeNames: ['Intropin'],
+        category: 'Vasopressor',
+        forms: {
+            injection: {
+                strength: '400mg/10ml',
+                dosePerKg: 5,
+                concentration: '40mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 15,
+        notes: 'For hypotension'
+    },
+    digoxin: {
+        name: 'Digoxin',
+        tradeNames: ['Lanoxin'],
+        category: 'Cardiac Glycoside',
+        forms: {
+            injection: {
+                strength: '250mcg/ml',
+                dosePerKg: 0.04,
+                concentration: '0.25mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '6',
+        maxDailyDose: 0.12,
+        notes: 'For heart failure'
+    },
+    calciumgluconate: {
+        name: 'Calcium Gluconate',
+        tradeNames: ['Calglu'],
+        category: 'Electrolyte',
+        forms: {
+            injection: {
+                strength: '10ml/5ml',
+                dosePerKg: 1,
+                concentration: '20ml/5ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '24',
+        maxDailyDose: 3,
+        notes: 'For hypocalcemia'
+    },
+    sodiumbicarbonate: {
+        name: 'Sodium Bicarbonate',
+        tradeNames: ['Bicarbonate'],
+        category: 'Electrolyte',
+        forms: {
+            injection: {
+                strength: '5ml/ml',
+                dosePerKg: 1,
+                concentration: '1mEq/kg'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '1',
+        maxDailyDose: 3,
+        notes: 'For metabolic acidosis'
+    },
+    frusemide: {
+        name: 'Frusemide',
+        tradeNames: ['Lasix'],
+        category: 'Diuretic',
+        forms: {
+            injection: {
+                strength: '10mg/ml',
+                dosePerKg: 1,
+                concentration: '10mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 3,
+        notes: 'For edema'
+    },
+    dexamethasone: {
+        name: 'Dexamethasone',
+        tradeNames: ['Decadron'],
+        category: 'Corticosteroid',
+        forms: {
+            injection: {
+                strength: '4mg/ml',
+                dosePerKg: 0.2,
+                concentration: '4mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.6,
+        notes: 'For allergic reactions'
+    },
+    hydrocortisone: {
+        name: 'Hydrocortisone',
+        tradeNames: ['Solu-Cortef'],
+        category: 'Corticosteroid',
+        forms: {
+            injection: {
+                strength: '100mg/ml',
+                dosePerKg: 1,
+                concentration: '100mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '8',
+        maxDailyDose: 3,
+        notes: 'For adrenal insufficiency'
+    },
+    prednisolone: {
+        name: 'Prednisolone',
+        tradeNames: ['Pediapred'],
+        category: 'Corticosteroid',
+        forms: {
+            syrup: {
+                strength: '15mg/5ml',
+                dosePerKg: 1,
+                concentration: '3mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 3,
+        notes: 'For asthma'
+    },
+    folicacid: {
+        name: 'Folic Acid',
+        tradeNames: ['Fol Acid'],
+        category: 'Vitamin',
+        forms: {
+            tablet: {
+                strength: '5mg',
+                dosePerKg: 0.1
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '24',
+        maxDailyDose: 0.3,
+        notes: 'For anemia'
+    },
+    mannitol: {
+        name: 'Mannitol',
+        tradeNames: ['Osmitrol'],
+        category: 'Diuretic',
+        forms: {
+            injection: {
+                strength: '10g/20ml',
+                dosePerKg: 0.25,
+                concentration: '500mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.75,
+        notes: 'For cerebral edema'
+    },
+    iron: {
+        name: 'Iron',
+        tradeNames: ['Fer-In-Sol'],
+        category: 'Vitamin',
+        forms: {
+            syrup: {
+                strength: '40mg/ml',
+                dosePerKg: 3,
+                concentration: '8mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 9,
+        notes: 'For iron deficiency'
+    },
+    chlorpheniramine: {
+        name: 'Chlorpheniramine',
+        tradeNames: ['Chlor-Trimeton'],
+        category: 'Antihistamine',
+        forms: {
+            syrup: {
+                strength: '2mg/mL',
+                dosePerKg: 0.18,
+                concentration: '1mg/ml'
+            }
+        },
+        weightBased: true,
+        maxDosePerDay: 3,
+        interval: '12',
+        maxDailyDose: 0.54,
+        notes: 'For allergies'
+    },
+    longactingmorphine: {
+        name: 'Long-Acting Morphine',
+        tradeNames: ['Kadian'],
+        category: 'Analgesic',
+        forms: {
+            capsule: {
+                strength: '10mg',
+                standardDose: {
+                    'children': 'Not recommended'
+                }
+            }
+        },
+        weightBased: false,
+        maxDosePerDay: 1,
+        interval: '24',
+        notes: 'Not for pediatric use'
+    }
 };
-// Enhanced Search Function
+
+// Helper function to search for drugs
 function searchDrug(query) {
     const results = [];
     const searchTerm = query.toLowerCase().trim();
@@ -789,17 +1614,17 @@ function searchDrug(query) {
     return results;
 }
 
-// Dynamic Form Handling
+// Dynamic form handling
 document.getElementById('medication').addEventListener('change', function(e) {
-    const medicationKey = e.target.value;
     const formSelect = document.getElementById('medicationForm');
     formSelect.innerHTML = '<option value="">Select form</option>';
     
-    if (medicationKey && drugDatabase[medicationKey]) {
-        Object.entries(drugDatabase[medicationKey].forms).forEach(([formName, formData]) => {
+    if (this.value) {
+        const drug = drugDatabase[this.value];
+        Object.entries(drug.forms).forEach(([formName, formData]) => {
             const option = document.createElement('option');
             option.value = formName;
-            option.textContent = `${formName.charAt(0).toUpperCase() + formName.slice(1)} (${formData.strength})`;
+            option.text = `${formName.charAt(0).toUpperCase()}${formName.slice(1)} (${formData.strength})`;
             formSelect.appendChild(option);
         });
         formSelect.disabled = false;
@@ -808,113 +1633,91 @@ document.getElementById('medication').addEventListener('change', function(e) {
     }
 });
 
-// Enhanced Dose Calculation
-function calculateDose(weight, age, medicationKey, form) {
-    const drug = drugDatabase[medicationKey];
-    const formData = drug.forms[form];
-    let resultHTML = '';
-    
-    if (!drug || !formData) return 'Invalid selection';
+// Dose calculation
+function calculateDose(weight, age, drugKey, form) {
+    const drug = drugDatabase[drugKey];
+    if (!drug || !weight || !form) return '';
 
+    const formData = drug.forms[form];
+    if (!formData) return `Invalid form for ${drug.name}`;
+
+    let dosePerKg = formData.dosePerKg;
+    let concentration = formData.concentration;
+
+    // Handle standard dose if not weight-based
     if (drug.weightBased) {
-        if (!weight) return 'Weight required for this medication';
+        const totalPerDay = weight * dosePerKg;
+        const dose = totalPerDay / parseInt(drug.maxDosePerDay);
         
-        const singleDoseMg = (weight * formData.dosePerKg).toFixed(1);
-        let administration = '';
-        
+        let quantity = dose;
+        let unit = 'mg';
+
         if (formData.concentration) {
-            const doseMl = (singleDoseMg / parseFloat(formData.concentration)).toFixed(1);
-            administration = `${doseMl}ml`;
-            
-            if (form === 'syrup') {
-                const tsp = (doseMl / 5).toFixed(1);
-                administration += ` (${tsp} teaspoons)`;
-            }
+            const divisor = parseFloat(concentration) || 0;
+            quantity = dose / divisor;
+            unit = 'ml';
         }
-        
-        resultHTML = `
-            <div class="alert alert-info result-card">
-                <h5 class="alert-heading">${drug.name} Dosing</h5>
-                <p>Single dose: <strong>${singleDoseMg}mg</strong></p>
-                ${administration ? `<p>Administration: ${administration}</p>` : ''}
-                <p>Frequency: Every ${drug.interval} hours</p>
-                <p>Max daily dose: ${weight * drug.maxDailyDose}mg</p>
-                ${drug.notes ? `<div class="mt-2 text-danger"><strong>Note:</strong> ${drug.notes}</div>` : ''}
-            </div>
-        `;
+
+        return [
+            `\nDose: ${quantity.toFixed(1)} ${unit} per dose`,
+            `Administer every ${drug.interval} hours`,
+            drug.notes ? `\nNotes: ${drug.notes}` : '',
+        ].join('\n');
     } else {
-        if (!age) return 'Age required for this medication';
-        
-        let ageGroup = Object.keys(formData.standardDose).find(range => {
-            const [min, max] = range.split('-').map(n => parseInt(n));
-            return age >= min && age <= max;
-        });
-        
-        resultHTML = `
-            <div class="alert alert-info result-card">
-                <h5 class="alert-heading">${drug.name} Dosing</h5>
-                <p>Standard dose: <strong>${formData.standardDose[ageGroup]}</strong></p>
-                <p>Frequency: Every ${drug.interval} hours</p>
-                <p>Max daily doses: ${drug.maxDosePerDay}</p>
-                ${drug.notes ? `<div class="mt-2 text-danger"><strong>Note:</strong> ${drug.notes}</div>` : ''}
-            </div>
-        `;
+        let standardDose;
+        if (age) {
+            const ageStr = `${Math.floor(age)}-${Math.ceil(age)}`;
+            standardDose = formData.standardDose[ageStr];
+        }
+        return [
+            `\nStandard Dose: ${standardDose}`,
+            `Administer every ${drug.interval} hours`,
+            drug.notes ? `\nNotes: ${drug.notes}` : '',
+        ].join('\n');
     }
-    
-    return resultHTML;
 }
 
-// Form Submission Handler
-document.getElementById('doseCalculator').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const weight = parseFloat(document.getElementById('weight').value);
-    const age = parseFloat(document.getElementById('age').value);
-    const medication = document.getElementById('medication').value;
-    const form = document.getElementById('medicationForm').value;
-    
-    document.getElementById('result').innerHTML = calculateDose(weight, age, medication, form);
+// Populate medication dropdown
+const medicationSelect = document.getElementById('medication');
+Object.keys(drugDatabase).forEach(key => {
+    const drug = drugDatabase[key];
+    const option = new Option(`${drug.name} (${drug.tradeNames.join(', ')})`, key);
+    medicationSelect.add(option);
 });
 
-// Search Implementation
-document.getElementById('drugSearch').addEventListener('input', function(e) {
+// Handle form submission
+document.getElementById('doseCalculator').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const weight = parseFloat(document.getElementById('weight').value);
+    const age = parseFloat(document.getElementById('age').value);
+    const medicationKey = document.getElementById('medication').value;
+    const form = document.getElementById('medicationForm').value;
+
+    document.getElementById('result').textContent = calculateDose(weight, age, medicationKey, form);
+});
+
+// Autocomplete functionality
+document.getElementById('drugSearch').addEventListener('input', function() {
     const resultsContainer = document.getElementById('searchResults');
     resultsContainer.innerHTML = '';
     
-    if (this.value.length > 2) {
-        const results = searchDrug(this.value);
-        
-        results.forEach(drug => {
-            const item = document.createElement('a');
-            item.className = 'list-group-item list-group-item-action';
-            item.innerHTML = `
-                <div class="d-flex justify-content-between">
-                    <span class="drug-name">${drug.name}</span>
-                    <small class="text-muted">${drug.category}</small>
-                </div>
-                <small class="text-secondary">Trade names: ${drug.tradeNames.join(', ')}</small>
-            `;
-            
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById('medication').value = drug.key;
-                document.getElementById('medication').dispatchEvent(new Event('change'));
-                resultsContainer.innerHTML = '';
-                this.value = '';
-            });
-            
-            resultsContainer.appendChild(item);
-        });
-    }
+    const searchTerm = this.value.toLowerCase();
+    if (searchTerm.length < 2) return;
+
+    const results = searchDrug(searchTerm);
+    results.forEach(drug => {
+        const option = new Option(drug.name, drug.key);
+        resultsContainer.appendChild(option);
+    });
+
+    resultsContainer.style.display = results.length ? 'block' : 'none';
 });
 
-// Initialization
-document.addEventListener('DOMContentLoaded', () => {
-    // Populate initial medication list
-    const medSelect = document.getElementById('medication');
-    Object.entries(drugDatabase).forEach(([key, drug]) => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = `${drug.name} (${drug.tradeNames[0]})`;
-        medSelect.appendChild(option);
-    });
+// Handle autocomplete selection
+document.getElementById('searchResults').addEventListener('change', function() {
+    const selectedKey = this.value;
+    document.getElementById('medication').value = selectedKey;
+    document.getElementById('medication').dispatchEvent(new Event('change'));
+    this.innerHTML = '';
 });
