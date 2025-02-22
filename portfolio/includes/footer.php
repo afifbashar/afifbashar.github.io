@@ -17,7 +17,7 @@ $social_media = $stmt->fetchAll();
             <p>© <?php echo date('Y'); ?> Dr. Afif Bashar. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/wvphkdvgmdk55fmogokwsk045tmmtdfmml8465d8arx85axz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
