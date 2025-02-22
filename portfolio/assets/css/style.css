@@ -22,6 +22,15 @@ header {
     @apply text-blue-400;
 }
 
+.social-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+    color: #60a5fa; /* Light blue hover color */
+}
+
 @media (max-width: 768px) {
     #nav-menu {
         @apply absolute top-16 left-0 w-full bg-gray-900 p-4 flex-col;
