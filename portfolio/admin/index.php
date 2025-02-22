@@ -16,6 +16,7 @@ $visits = $pdo->query("SELECT visit_count FROM site_visits WHERE id = 1")->fetch
         <a href="manage_appointments.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">Manage Appointments</a>
         <a href="manage_health_tips.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">Manage Health Tips</a>
         <a href="manage_youtube.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">Manage YouTube Videos</a>
+        <a href="manage_social_media.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">Manage Social Media</a>
         <a href="manage_seo.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">SEO Settings</a>
         <a href="analytics.php" class="bg-gray-800 p-6 rounded-lg text-center hover:bg-gray-700 transition">Analytics (Visits: <?php echo $visits; ?>)</a>
         <a href="logout.php" class="bg-red-600 p-6 rounded-lg text-center hover:bg-red-700 transition">Logout</a>
