@@ -1,0 +1,32 @@
+body.dark-mode {
+    @apply bg-gray-900 text-white;
+}
+
+body.light-mode {
+    @apply bg-gray-100 text-gray-900;
+}
+
+header {
+    transition: background-color 0.3s ease;
+}
+
+.animate__animated {
+    animation-duration: 1s;
+}
+
+.prose-invert {
+    color: #fff;
+}
+
+.prose-invert a {
+    @apply text-blue-400;
+}
+
+@media (max-width: 768px) {
+    #nav-menu {
+        @apply absolute top-16 left-0 w-full bg-gray-900 p-4 flex-col;
+    }
+    #nav-menu.hidden {
+        @apply hidden;
+    }
+}
