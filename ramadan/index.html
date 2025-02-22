@@ -11,12 +11,13 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f5f7fa;
+            background: linear-gradient(to bottom, #e8f5e9, #f5f7fa);
             color: #2c3e50;
             transition: all 0.3s ease;
+            min-height: 100vh;
         }
         .dark-mode {
-            background-color: #1a2530;
+            background: linear-gradient(to bottom, #1a2530, #2e3b4e);
             color: #d4d9e0;
         }
         header {
@@ -25,10 +26,11 @@
             border-radius: 15px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
         }
         .dark-mode header {
-            background: linear-gradient(135deg, #2e3b4e, #1a2530);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
         }
         header .animation {
             position: absolute;
@@ -50,52 +52,63 @@
             100% { transform: translateX(calc(100% + 100px)); }
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         .card {
-            margin-bottom: 20px;
             transition: transform 0.3s ease, opacity 0.5s ease;
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
             overflow: hidden;
         }
         .dark-mode .card {
             background-color: #2e3b4e;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
         .card:hover {
-            transform: scale(1.03);
+            transform: translateY(-5px);
         }
         .card-header {
-            background: #2ecc71;
+            background: linear-gradient(to right, #2ecc71, #27ae60);
             color: white;
             cursor: pointer;
             padding: 15px;
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
+            font-weight: 500;
         }
         .dark-mode .card-header {
-            background: #34495e;
+            background: linear-gradient(to right, #34495e, #2c3e50);
         }
         .card-body {
             padding: 20px;
         }
         .btn {
             transition: transform 0.2s ease, background-color 0.3s ease;
-            border-radius: 8px;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
         }
         .btn:active {
             transform: scale(0.95);
         }
         .btn-primary {
-            background-color: #27ae60;
-            border-color: #27ae60;
+            background: linear-gradient(to right, #27ae60, #219653);
+            border: none;
         }
         .btn-primary:hover {
-            background-color: #219653;
-            border-color: #219653;
+            background: linear-gradient(to right, #219653, #1b8047);
+        }
+        .btn-secondary {
+            background: linear-gradient(to right, #7f8c8d, #6c7374);
+            border: none;
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(to right, #6c7374, #5a6263);
         }
         .sehri-iftar {
             font-weight: bold;
@@ -136,26 +149,37 @@
             color: #a1b1c1;
         }
         .countdown {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #2980b9;
-            font-weight: 500;
+            font-weight: 600;
+            text-align: center;
             transition: color 0.3s ease;
         }
         .dark-mode .countdown {
             color: #3498db;
         }
+        .time-display {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
         @media (max-width: 768px) {
-            .card {
-                margin-bottom: 15px;
+            .container {
+                padding: 15px;
             }
             .card-header {
-                padding: 10px;
+                padding: 12px;
             }
             .card-body {
                 padding: 15px;
             }
             .countdown {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
+            }
+            .time-display {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 8px 16px;
             }
         }
     </style>
@@ -204,7 +228,7 @@
         <!-- District Selection and Countdown -->
         <div class="card">
             <div class="card-header" data-bs-toggle="collapse" data-bs-target="#districtCollapse">
-                <h3><i class="fas fa-map-marker-alt"></i> <span class="lang" data-bn="জেলা ও কাউন্টডাউন" data-en="District & Countdown">জেলা ও কাউন্টডাউন</span></h3>
+                <h3><i class="fas fa-map-marker-alt"></i> <span class="lang" data-bn="জেলা ও পরবর্তী নামাজ" data-en="District & Next Prayer">জেলা ও পরবর্তী নামাজ</span></h3>
             </div>
             <div id="districtCollapse" class="card-body collapse show">
                 <label for="districtSelect" class="lang" data-bn="জেলা নির্বাচন করুন:" data-en="Select District:">জেলা নির্বাচন করুন:</label>
@@ -218,7 +242,7 @@
                     <option value="rangpur">Rangpur</option>
                     <option value="mymensingh">Mymensingh</option>
                 </select>
-                <p class="countdown" id="prayerCountdown">Countdown to next event: Calculating...</p>
+                <p class="countdown" id="prayerCountdown">Countdown to next prayer: Calculating...</p>
             </div>
         </div>
 
@@ -228,7 +252,7 @@
                 <h3><i class="fas fa-pray"></i> <span class="lang" data-bn="আজকের নামাজের সময়" data-en="Today's Prayer Times">আজকের নামাজের সময়</span></h3>
             </div>
             <div id="todayCollapse" class="card-body collapse show">
-                <div id="todayPrayerTimes">Fetching prayer times...</div>
+                <div id="todayPrayerTimes" class="time-display">Fetching prayer times...</div>
             </div>
         </div>
 
@@ -254,7 +278,7 @@
             <div id="lookupCollapse" class="card-body collapse show">
                 <input type="date" id="specificDate" class="form-control mb-2">
                 <button id="lookupDate" class="btn btn-primary lang" data-bn="অনুসন্ধান" data-en="Lookup">অনুসন্ধান</button>
-                <div id="specificDateResult" class="mt-3">Select a date to see prayer times</div>
+                <div id="specificDateResult" class="mt-3 time-display">Select a date to see prayer times</div>
             </div>
         </div>
 
@@ -331,7 +355,7 @@
         });
         updateLanguage();
 
-        // Clock
+        // Clock in AM/PM
         function updateClock() {
             const date = new Date();
             let hours = date.getHours();
@@ -357,6 +381,17 @@
             document.body.classList.toggle('dark-mode');
         });
 
+        // Convert Time to AM/PM Format
+        function toAMPM(time) {
+            if (!time) return "N/A";
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours, 10);
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            minutes = minutes.padStart(2, '0');
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
         // Fetch Prayer Times with Retry Logic
         async function fetchPrayerTimes(date, district) {
             const coords = districtData[district];
@@ -367,7 +402,7 @@
                     if (!response.ok) throw new Error(`API error: ${response.status}`);
                     const data = await response.json();
                     if (data.code === 200 && data.data.timings) {
-                        console.log(`Fetched timings for ${date}:`, data.data.timings); // Debug log
+                        console.log(`Fetched timings for ${date}:`, data.data.timings);
                         return data.data.timings;
                     }
                     throw new Error('Invalid API response');
@@ -377,27 +412,28 @@
                         console.error('All attempts failed.');
                         return null;
                     }
-                    await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                 }
             }
         }
 
-        // Prayer Times Labels
+        // Prayer Times Labels in AM/PM
         function updatePrayerTimesLabels(timings) {
             if (!timings) return null;
             return {
-                sehri: isBangla ? `সেহরি (ইমসাক): ${timings.Imsak}` : `Sehri (Imsak): ${timings.Imsak}`,
-                fajr: isBangla ? `ফজর: ${timings.Fajr}` : `Fajr: ${timings.Fajr}`,
-                dhuhr: isBangla ? `যোহর: ${timings.Dhuhr}` : `Dhuhr: ${timings.Dhuhr}`,
-                asr: isBangla ? `আসর: ${timings.Asr}` : `Asr: ${timings.Asr}`,
-                iftar: isBangla ? `ইফতার (মাগরিব): ${timings.Maghrib}` : `Iftar (Maghrib): ${timings.Maghrib}`,
-                isha: isBangla ? `ইশা: ${timings.Isha}` : `Isha: ${timings.Isha}`
+                sehri: isBangla ? `সেহরি (ইমসাক): ${toAMPM(timings.Imsak)}` : `Sehri (Imsak): ${toAMPM(timings.Imsak)}`,
+                fajr: isBangla ? `ফজর: ${toAMPM(timings.Fajr)}` : `Fajr: ${toAMPM(timings.Fajr)}`,
+                dhuhr: isBangla ? `যোহর: ${toAMPM(timings.Dhuhr)}` : `Dhuhr: ${toAMPM(timings.Dhuhr)}`,
+                asr: isBangla ? `আসর: ${toAMPM(timings.Asr)}` : `Asr: ${toAMPM(timings.Asr)}`,
+                iftar: isBangla ? `ইফতার (মাগরিব): ${toAMPM(timings.Maghrib)}` : `Iftar (Maghrib): ${toAMPM(timings.Maghrib)}`,
+                isha: isBangla ? `ইশা: ${toAMPM(timings.Isha)}` : `Isha: ${toAMPM(timings.Isha)}`
             };
         }
 
         // Today's Prayer Times and Smart Countdown
         let todayTimings = null;
         let lastFetchDate = null;
+        let lastNotifiedPrayer = null;
         async function loadTodayPrayerTimes() {
             const district = document.getElementById('districtSelect').value;
             const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
@@ -406,6 +442,7 @@
             if (!lastFetchDate || lastFetchDate !== todayStr || !todayTimings) {
                 todayTimings = await fetchPrayerTimes(today, district);
                 lastFetchDate = todayStr;
+                lastNotifiedPrayer = null; // Reset on new fetch
             }
 
             const labels = updatePrayerTimesLabels(todayTimings);
@@ -429,65 +466,66 @@
         loadTodayPrayerTimes();
         document.getElementById('districtSelect').addEventListener('change', loadTodayPrayerTimes);
 
-        // Smart Countdown with Notifications
+        // Smart Countdown for Next Prayer Only with Alarm
         function updateCountdown() {
             const countdownDiv = document.getElementById('prayerCountdown');
             const audio = document.getElementById('prayerSound');
             if (!todayTimings) {
-                countdownDiv.textContent = isBangla ? 'কাউন্টডাউন ডেটা পাওয়া যায়নি।' : 'Countdown data unavailable.';
+                countdownDiv.textContent = isBangla ? 'পরবর্তী নামাজের ডেটা পাওয়া যায়নি।' : 'Next prayer data unavailable.';
                 return;
             }
 
             const now = new Date();
             const todayStr = now.toISOString().split('T')[0];
-            const times = [
-                { name: isBangla ? 'সেহরি' : 'Sehri', time: todayTimings.Imsak },
+            const salahTimes = [
                 { name: isBangla ? 'ফজর' : 'Fajr', time: todayTimings.Fajr },
                 { name: isBangla ? 'যোহর' : 'Dhuhr', time: todayTimings.Dhuhr },
                 { name: isBangla ? 'আসর' : 'Asr', time: todayTimings.Asr },
-                { name: isBangla ? 'ইফতার' : 'Iftar', time: todayTimings.Maghrib },
+                { name: isBangla ? 'মাগরিব' : 'Maghrib', time: todayTimings.Maghrib },
                 { name: isBangla ? 'ইশা' : 'Isha', time: todayTimings.Isha }
             ];
 
-            let nextEvent = null;
-            for (const event of times) {
-                if (!event.time) continue;
-                const [hours, minutes] = event.time.split(':');
-                const eventTime = new Date(`${todayStr}T${hours}:${minutes}:00`);
-                eventTime.setSeconds(0);
-                if (eventTime > now) {
-                    nextEvent = { name: event.name, time: eventTime };
+            let nextPrayer = null;
+            for (const prayer of salahTimes) {
+                if (!prayer.time) continue;
+                const [hours, minutes] = prayer.time.split(':');
+                const prayerTime = new Date(`${todayStr}T${hours}:${minutes}:00`);
+                prayerTime.setSeconds(0);
+                if (prayerTime > now) {
+                    nextPrayer = { name: prayer.name, time: prayerTime };
                     break;
                 }
             }
 
-            if (!nextEvent) {
-                countdownDiv.textContent = isBangla ? 'আজকের সব ইভেন্ট শেষ।' : 'All events for today are done.';
+            if (!nextPrayer) {
+                countdownDiv.textContent = isBangla ? 'আজকের সব নামাজ শেষ।' : 'All prayers for today are done.';
                 if (new Date().toISOString().split('T')[0] !== lastFetchDate) {
                     loadTodayPrayerTimes();
                 }
                 return;
             }
 
-            const diff = nextEvent.time - now;
-            times.forEach(event => {
-                if (!event.time) return;
-                const [hours, minutes] = event.time.split(':');
-                const eventTime = new Date(`${todayStr}T${hours}:${minutes}:00`);
-                eventTime.setSeconds(0);
-                const eventDiff = eventTime - now;
-                if (eventDiff >= 0 && eventDiff <= 60000 && !window.alertShown) {
-                    audio.play().catch(err => console.error('Audio play failed:', err));
-                    alert(`${isBangla ? `${event.name} সময় এসে গেছে!` : `${event.name} time has arrived!`}`);
-                    window.alertShown = true;
-                    setTimeout(() => window.alertShown = false, 60000);
-                }
-            });
-
+            const diff = nextPrayer.time - now;
             const hours = Math.floor(diff / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
-            countdownDiv.textContent = `${isBangla ? 'পরবর্তী ইভেন্ট পর্যন্ত:' : 'Countdown to next event:'} ${nextEvent.name} in ${hours}h ${minutes}m ${seconds}s`;
+            countdownDiv.textContent = `${isBangla ? 'পরবর্তী নামাজ পর্যন্ত:' : 'Countdown to next prayer:'} ${nextPrayer.name} in ${hours}h ${minutes}m ${seconds}s`;
+
+            // Alarm Logic
+            salahTimes.forEach(prayer => {
+                if (!prayer.time) return;
+                const [hours, minutes] = prayer.time.split(':');
+                const prayerTime = new Date(`${todayStr}T${hours}:${minutes}:00`);
+                prayerTime.setSeconds(0);
+                const prayerDiff = prayerTime - now;
+                const isAlertEnabled = document.getElementById('prayerAlerts').checked;
+                if (isAlertEnabled && prayerDiff >= 0 && prayerDiff <= 10000 && lastNotifiedPrayer !== prayer.name) { // Within 10 seconds
+                    audio.play().catch(err => console.error('Audio play failed:', err));
+                    alert(`${isBangla ? `${prayer.name} নামাজের সময় এসে গেছে!` : `${prayer.name} prayer time has arrived!`}`);
+                    lastNotifiedPrayer = prayer.name;
+                    console.log(`Alarm triggered for ${prayer.name} at ${new Date().toISOString()}`);
+                }
+            });
         }
         setInterval(() => {
             updateCountdown();
@@ -495,7 +533,7 @@
             if (now !== lastFetchDate) loadTodayPrayerTimes();
         }, 1000);
 
-        // 30-Day Ramadan Schedule
+        // 30-Day Ramadan Schedule in AM/PM
         document.getElementById('generateSchedule').addEventListener('click', async () => {
             const district = document.getElementById('districtSelect').value;
             const startDate = new Date(document.getElementById('ramadanStart').value);
@@ -513,12 +551,12 @@
                     tbody.innerHTML += `
                         <tr>
                             <td>${currentDate.toLocaleDateString()}</td>
-                            <td class="sehri-iftar">${timings.Imsak}</td>
-                            <td>${timings.Fajr}</td>
-                            <td>${timings.Dhuhr}</td>
-                            <td>${timings.Asr}</td>
-                            <td class="sehri-iftar">${timings.Maghrib}</td>
-                            <td>${timings.Isha}</td>
+                            <td class="sehri-iftar">${toAMPM(timings.Imsak)}</td>
+                            <td>${toAMPM(timings.Fajr)}</td>
+                            <td>${toAMPM(timings.Dhuhr)}</td>
+                            <td>${toAMPM(timings.Asr)}</td>
+                            <td class="sehri-iftar">${toAMPM(timings.Maghrib)}</td>
+                            <td>${toAMPM(timings.Isha)}</td>
                         </tr>
                     `;
                 } else {
@@ -529,7 +567,7 @@
             document.getElementById('downloadPdf').style.display = 'block';
         });
 
-        // Specific Date Lookup
+        // Specific Date Lookup in AM/PM
         document.getElementById('lookupDate').addEventListener('click', async () => {
             const district = document.getElementById('districtSelect').value;
             const date = document.getElementById('specificDate').value.replace(/-/g, '');
