@@ -6,27 +6,6 @@
     <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
     <meta name="keywords" content="Dr. Afif Bashar, MBBS, MRCS Part A, Medical Services, Pediatric Care, Dermatology, Chronic Disease Management">
     <meta name="author" content="Dr. Afif Bashar">
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta name="keywords" content="Dr. Afif Bashar, MBBS, MRCS Part A, Medical Services, Pediatric Care, Dermatology, Chronic Disease Management">
-    <meta name="author" content="Dr. Afif Bashar">
-    <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="aLeDHVwndVcrDjri-yU6PBB_GRy-toYXv1O7BA3JV8w" />
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Dr. Afif Bashar | Medical Services & Consultations">
-    <meta property="og:description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta property="og:image" content="Profile.jpg">
-    <meta property="og:url" content="https://example.com">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:title" content="Dr. Afif Bashar | Medical Services & Consultations">
-    <meta name="twitter:description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta name="twitter:image" content="Profile.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-
     <title>Dr. Afif Bashar | Medical Services & Consultations</title>
 
     <!-- Bootstrap CSS -->
@@ -52,10 +31,11 @@
 
         body {
             font-family: var(--font-family);
-            padding-top: 76px;
+            padding-top: 60px;
             background-color: var(--dark-bg);
             color: var(--text-primary);
             overflow-x: hidden;
+            word-wrap: break-word;
         }
 
         /* Preloader */
@@ -72,8 +52,8 @@
             z-index: 9999;
         }
         .heart {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: #ff0000;
             position: relative;
             transform: rotate(-45deg);
@@ -82,19 +62,19 @@
         .heart:before,
         .heart:after {
             content: '';
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: #ff0000;
             border-radius: 50%;
             position: absolute;
         }
         .heart:before {
-            left: 25px;
+            left: 20px;
             top: 0;
         }
         .heart:after {
             left: 0;
-            top: -25px;
+            top: -20px;
         }
         @keyframes pulse {
             0% { transform: rotate(-45deg) scale(1); }
@@ -110,12 +90,14 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: var(--card-bg);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
             z-index: 10000;
             color: var(--text-primary);
             text-align: center;
+            width: 90%;
+            max-width: 300px;
         }
         #socialPopup a {
             color: var(--primary-color);
@@ -139,7 +121,7 @@
             color: var(--primary-color) !important;
         }
         .navbar-brand small {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.9;
             display: block;
             margin-top: -5px;
@@ -154,24 +136,22 @@
         .bengali-text {
             font-family: 'Noto Sans Bengali', sans-serif;
             color: var(--secondary-color);
+            font-size: 0.9rem;
         }
 
         /* Hero Section */
         #hero {
             background: linear-gradient(135deg, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.9) 100%);
-            padding: 8rem 0;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        #clock, #date {
+            padding: 6rem 0;
             color: var(--text-primary);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
         #clock {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
         }
         #date {
-            font-size: 1.2rem;
+            font-size: 1rem;
             opacity: 0.9;
         }
 
@@ -180,60 +160,155 @@
             background-color: var(--card-bg);
             border: 1px solid rgba(0, 180, 216, 0.2);
             transition: transform 0.3s ease;
+            color: var(--text-primary);
         }
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         /* Video Section */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .video-grid iframe {
+            width: 100%;
+            height: 150px;
         }
 
         /* Buttons */
         .btn-primary {
             background-color: var(--primary-color);
             border: none;
+            color: var(--text-primary);
         }
         .btn-primary:hover {
             background-color: var(--secondary-color);
+            color: var(--text-primary);
         }
 
         /* Calculator Section */
-        #calculator .form-control {
+        #calculator {
             background-color: var(--card-bg);
+        }
+        #calculator .card {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+        }
+        #calculator .form-label {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        #calculator .form-control {
+            background-color: #2a2a2a;
             border: 1px solid rgba(0, 180, 216, 0.2);
             color: var(--text-primary);
+            font-size: 0.9rem;
         }
         #calculator .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 180, 216, 0.25);
+        }
+        #bmiResult {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        #calculator .alert {
+            color: var(--text-primary);
+            background-color: rgba(0, 180, 216, 0.2);
+            border-color: rgba(0, 180, 216, 0.4);
         }
 
         /* Footer */
         footer {
             background-color: var(--darker-bg);
             border-top: 1px solid rgba(0, 180, 216, 0.2);
+            color: var(--text-primary);
+            font-size: 0.9rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                padding-top: 50px;
+            }
             #hero {
-                padding: 4rem 0;
+                padding: 3rem 0;
             }
             .display-4 {
-                font-size: 2.5rem;
+                font-size: 1.8rem;
+            }
+            #clock {
+                font-size: 1.5rem;
+            }
+            #date {
+                font-size: 0.9rem;
+            }
+            .navbar-brand {
+                font-size: 1rem;
+            }
+            .navbar-brand small {
+                font-size: 0.5rem;
+            }
+            .nav-link {
+                font-size: 0.9rem;
             }
             .video-grid {
                 grid-template-columns: 1fr;
             }
-            .navbar-brand small {
-                font-size: 0.6rem;
+            .video-grid iframe {
+                height: 200px;
+            }
+            .card {
+                margin-bottom: 1rem;
             }
             #calculator .row {
                 flex-direction: column;
+            }
+            #calculator .col {
+                margin-bottom: 0.5rem;
+            }
+            #calculator .form-label {
+                font-size: 0.8rem;
+            }
+            #calculator .form-control {
+                font-size: 0.8rem;
+            }
+            #bmiResult {
+                font-size: 0.8rem;
+            }
+            #socialPopup {
+                padding: 10px;
+                max-width: 250px;
+            }
+            #socialPopup h4 {
+                font-size: 1rem;
+            }
+            #socialPopup a {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+            .lead {
+                font-size: 1rem;
+            }
+            .btn-lg {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+            .card-body {
+                padding: 0.75rem;
+            }
+            .card-title {
+                font-size: 1rem;
+            }
+            .card-text {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -241,7 +316,7 @@
 <body>
     <!-- Preloader -->
     <div id="preloader">
-        <div class="heart">Welcome to Dr Afif Bashar</div>
+        <div class="heart"></div>
     </div>
 
     <!-- Social Popup -->
@@ -282,7 +357,7 @@
     <div class="notice-bar">
         <div class="container">
             <marquee class="bengali-text">
-                গ্যাস্ট্রিকের সমস্যা কমাতে চাইলে এই নিয়মগুলো মেনে চলুন: খাদ্যাভ্যাস ঠিক করুন - বেশি মশলাদার খাবার, চা, কফি, কোমল পানীয় কম খান। ফলমূল, শাকসবজি আর হালকা খাবার বেশি খান। সময় মতো খাবার খান - দিনে অল্প অল্প করে কয়েকবার খাবার খান। রাতে খাবার ঘুমানোর অন্তত ২ ঘণ্টা আগে শেষ করুন।
+                গ্যাস্ট্রিকের সমস্যা কমাতে চাইলে এই নিয়মগুলো মেনে চলুন: খাদ্যাভ্যাস ঠিক করুন - বেশি মশলাদার খাবার, চা, কফি, কোমল পানীয় কম খান। ফলমূল, শাকসবজি আর হালকা খাবার বেশি খান। সময় মতো খাবার খান - দিনে অল্প অল্প করে কয়েকবার খাবার খান।
             </marquee>
         </div>
     </div>
@@ -305,12 +380,12 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6" data-aos="fade-right">
-                    <img src="Profile.jpg" alt="Dr. Afif Bashar" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
+                    <img src="Profile.jpg" alt="Dr. Afif Bashar" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <h2 class="mb-4">About Me</h2>
                     <p class="lead">MBBS, MRCS Part A (England)</p>
-                    <p>Dedicated medical professional with expertise in Medicine, Surgery, pediatric care, and dermatology. Committed to providing quality healthcare through personalized attention and advanced medical practices.</p>
+                    <p>Dedicated medical professional with expertise in Medicine, Surgery, pediatric care, and dermatology.</p>
                 </div>
             </div>
         </div>
@@ -329,7 +404,6 @@
                 <div class="col-md-6" data-aos="fade-left">
                     <h4>Bachelor of Medicine and Bachelor of Surgery</h4>
                     <p>University of Dhaka, Bangladesh</p>
-                    <p>Enam Medical College, Dhaka</p>
                     <p>Pass May, 2022</p>
                 </div>
             </div>
@@ -344,7 +418,6 @@
                 <li>Advanced Cardiac Life Support & Basic Life Support, Via Medtigo, 2022</li>
                 <li>International Summer Course on Public Health, Universitas Muhammadiyah Kalimantan Timur, 2023</li>
                 <li>Certificate Course on Diabetes, Genesis Online University, 2021</li>
-                <li>Understanding Clinical Research, University of Cape Town via Coursera, 2020</li>
             </ul>
         </div>
     </section>
@@ -354,8 +427,8 @@
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">Latest Videos</h2>
             <div class="video-grid" id="videoGrid" data-aos="fade-up">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/fr6fFCAdJbU" frameborder="0" allowfullscreen></iframe>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/sHv4L_GT6XY" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/fr6fFCAdJbU" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/sHv4L_GT6XY" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </section>
@@ -370,7 +443,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-user-md fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Medical Consultation</h5>
-                            <p class="card-text">Comprehensive medical consultations for various health conditions.</p>
+                            <p class="card-text">Comprehensive medical consultations.</p>
                         </div>
                     </div>
                 </div>
@@ -379,7 +452,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-baby fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Pediatric Care</h5>
-                            <p class="card-text">Specialized healthcare services for children and adolescents.</p>
+                            <p class="card-text">Healthcare services for children.</p>
                         </div>
                     </div>
                 </div>
@@ -388,7 +461,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-allergies fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Dermatology</h5>
-                            <p class="card-text">Diagnosis and treatment of skin conditions.</p>
+                            <p class="card-text">Treatment of skin conditions.</p>
                         </div>
                     </div>
                 </div>
@@ -397,7 +470,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-procedures fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Surgical Consultations</h5>
-                            <p class="card-text">Pre and post-operative care guidance.</p>
+                            <p class="card-text">Pre and post-operative care.</p>
                         </div>
                     </div>
                 </div>
@@ -410,7 +483,7 @@
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">BMI Calculator</h2>
             <div class="row justify-content-center">
-                <div class="col-md-6" data-aos="fade-up">
+                <div class="col-md-6 col-11" data-aos="fade-up">
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="mb-3">
@@ -451,7 +524,7 @@
                             <input type="email" class="form-control" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" name="message" rows="5" placeholder="Your Message" required></textarea>
+                            <textarea class="form-control" name="message" rows="4" placeholder="Your Message" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
