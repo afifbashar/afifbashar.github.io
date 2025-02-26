@@ -1,6 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
+    <meta name="keywords" content="Dr. Afif Bashar, MBBS, MRCS Part A, Medical Services, Pediatric Care, Dermatology, Chronic Disease Management">
+    <meta name="author" content="Dr. Afif Bashar">
+        <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
     <meta name="keywords" content="Dr. Afif Bashar, MBBS, MRCS Part A, Medical Services, Pediatric Care, Dermatology, Chronic Disease Management">
@@ -23,55 +29,239 @@
 
     <title>Dr. Afif Bashar | Medical Services & Consultations</title>
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Dr. Afif Bashar",
-      "jobTitle": "General Physician",
-      "url": "https://example.com",
-      "sameAs": [
-        "https://www.linkedin.com/in/afifbashar",
-        "https://youtube.com/@drafifbashar"
-      ],
-      "alumniOf": {
-        "@type": "EducationalOrganization",
-        "name": "University of Dhaka"
-      },
-      "medicalSpecialty": ["Surgery", "Medicine", "Pediatrics", "Dermatology", "General Physician"]
-    }
-                    
-    </script>
-
-    <!-- Stylesheets -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-    <!-- Preloader & Animation Styles -->
     <style>
-        #preloader { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .spinner { display: flex; gap: 10px; }
-        .spinner div { width: 15px; height: 15px; background-color: #3498db; border-radius: 50%; animation: bounce 1.5s infinite ease-in-out; }
-        .spinner div:nth-child(2) { animation-delay: 0.3s; }
-        .spinner div:nth-child(3) { animation-delay: 0.6s; }
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-    <!-- Add this within the head tag -->
-    
+        :root {
+            --primary-color: #00b4d8;
+            --secondary-color: #90e0ef;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #000000;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            padding-top: 76px;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .heart {
+            width: 50px;
+            height: 50px;
+            background: #ff0000;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: pulse 1s infinite;
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            background: #ff0000;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart:before {
+            left: 25px;
+            top: 0;
+        }
+        .heart:after {
+            left: 0;
+            top: -25px;
+        }
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.2); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+
+        /* Popup */
+        #socialPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
+            z-index: 10000;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        #socialPopup a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 5px 0;
+            display: block;
+        }
+        #socialPopup a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+        .navbar-brand, .nav-link {
+            color: var(--text-primary) !important;
+        }
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        .navbar-brand small {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            display: block;
+            margin-top: -5px;
+        }
+
+        /* Notice Bar */
+        .notice-bar {
+            background-color: rgba(0, 180, 216, 0.1);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        .bengali-text {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.9) 100%);
+            padding: 8rem 0;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        #clock, #date {
+            color: var(--text-primary);
+        }
+        #clock {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        #date {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Video Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Calculator Section */
+        #calculator .form-control {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            color: var(--text-primary);
+        }
+        #calculator .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker-bg);
+            border-top: 1px solid rgba(0, 180, 216, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #hero {
+                padding: 4rem 0;
+            }
+            .display-4 {
+                font-size: 2.5rem;
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar-brand small {
+                font-size: 0.6rem;
+            }
+            #calculator .row {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="heart"></div>
+    </div>
+
+    <!-- Social Popup -->
+    <div id="socialPopup">
+        <h4>Follow Dr. Afif Bashar</h4>
+        <a href="https://facebook.com/drafifbashar" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://x.com/afifbashar" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="https://linkedin.com/in/afifbashar" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://instagram.com/drafifbashar" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://youtube.com/@drafifbashar" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://tiktok.com/@drafifbashar" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a href="http://afifbashar.free.nf" target="_blank">Visit My Other Website</a>
+        <button class="btn btn-primary mt-3" onclick="document.getElementById('socialPopup').style.display='none'">Close</button>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">Dr. Afif Bashar<br><small>MBBS, MRCS Part A (England)</small></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -92,21 +282,7 @@
     <div class="notice-bar">
         <div class="container">
             <marquee class="bengali-text">
-                গ্যাস্ট্রিকের সমস্যা কমাতে চাইলে এই নিয়মগুলো মেনে চলুন:
-
-খাদ্যাভ্যাস ঠিক করুন:
-বেশি মশলাদার খাবার, চা, কফি, কোমল পানীয় কম খান।
-ফলমূল, শাকসবজি আর হালকা খাবার বেশি খান।
-সময় মতো খাবার খান:
-দিনে অল্প অল্প করে কয়েকবার খাবার খান।
-রাতে খাবার ঘুমানোর অন্তত ২ ঘণ্টা আগে শেষ করুন।
-জীবনযাত্রা ঠিক করুন:
-ধূমপান ও মদ্যপান বন্ধ করুন।
-নিয়মিত ব্যায়াম করুন।
-স্ট্রেস কমান।
-প্রাকৃতিক পদ্ধতি ব্যবহার করুন:
-সকালে খালি পেটে হালকা গরম পানি খান।
-আদা বা মৌরি চা পান করলে গ্যাস্ট্রিকের সমস্যা কমে।
+                গ্যাস্ট্রিকের সমস্যা কমাতে চাইলে এই নিয়মগুলো মেনে চলুন: খাদ্যাভ্যাস ঠিক করুন - বেশি মশলাদার খাবার, চা, কফি, কোমল পানীয় কম খান। ফলমূল, শাকসবজি আর হালকা খাবার বেশি খান। সময় মতো খাবার খান - দিনে অল্প অল্প করে কয়েকবার খাবার খান। রাতে খাবার ঘুমানোর অন্তত ২ ঘণ্টা আগে শেষ করুন।
             </marquee>
         </div>
     </div>
@@ -116,10 +292,7 @@
         <div class="container">
             <h1 class="display-4 mb-4" data-aos="fade-up">Dr. Afif Bashar</h1>
             <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">MBBS, MRCS Part A (England)</p>
-            <p class="lead mb-4" id="autoText" data-aos="fade-up" data-aos-delay="130"></p>
-            <a href="#contact" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="200">
-                Schedule Consultation
-            </a>
+            <a href="#contact" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="200">Schedule Consultation</a>
             <div class="mt-4" data-aos="fade-up" data-aos-delay="250">
                 <div id="clock" class="display-6 mb-2"></div>
                 <div id="date" class="lead"></div>
@@ -132,7 +305,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6" data-aos="fade-right">
-                    <img src="Profile.jpg" alt="Dr. Afif Bashar" class="img-fluid profile-image">
+                    <img src="Profile.jpg" alt="Dr. Afif Bashar" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <h2 class="mb-4">About Me</h2>
@@ -144,7 +317,7 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="py-5">
+    <section id="education" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">Education</h2>
             <div class="row">
@@ -157,14 +330,14 @@
                     <h4>Bachelor of Medicine and Bachelor of Surgery</h4>
                     <p>University of Dhaka, Bangladesh</p>
                     <p>Enam Medical College, Dhaka</p>
-                    <p>Pass (without any referred) May, 2022</p>
+                    <p>Pass May, 2022</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Courses & Certifications Section -->
-    <section id="certifications" class="py-5 bg-light">
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-5">
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">Courses & Certifications</h2>
             <ul class="list-unstyled" data-aos="fade-up">
@@ -172,8 +345,6 @@
                 <li>International Summer Course on Public Health, Universitas Muhammadiyah Kalimantan Timur, 2023</li>
                 <li>Certificate Course on Diabetes, Genesis Online University, 2021</li>
                 <li>Understanding Clinical Research, University of Cape Town via Coursera, 2020</li>
-                <li>Diabetes- a Global Challenge, University of Copenhagen via Coursera, 2020</li>
-                <li>Basic Surgical Skill, Enam Medical College Hospital, 2023</li>
             </ul>
         </div>
     </section>
@@ -182,18 +353,9 @@
     <section id="videos" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">Latest Videos</h2>
-            <div class="row">
-                <!-- Featured Video -->
-                <div class="col-lg-8 mx-auto mb-5" data-aos="fade-up">
-                    <div class="ratio ratio-16x9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/fr6fFCAdJbU?si=ptRWUsjerWYhCZtE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div id="latestVideo" class="text-center"></div>
-                <!-- Video Grid -->
-                <div class="video-grid" id="videoGrid" data-aos="fade-up">
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/sHv4L_GT6XY?si=Oa8AQtkh7KN7kpZL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
+            <div class="video-grid" id="videoGrid" data-aos="fade-up">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/fr6fFCAdJbU" frameborder="0" allowfullscreen></iframe>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/sHv4L_GT6XY" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </section>
@@ -215,22 +377,13 @@
                 <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="card h-100">
                         <div class="card-body text-center">
-                            <i class="fas fa-clipboard-check fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Second Opinion</h5>
-                            <p class="card-text">Expert second opinions for complex medical cases.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
                             <i class="fas fa-baby fa-3x mb-3 text-primary"></i>
                             <h5 class="card-title">Pediatric Care</h5>
                             <p class="card-text">Specialized healthcare services for children and adolescents.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-allergies fa-3x mb-3 text-primary"></i>
@@ -239,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3" data-aos="fade-up">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-procedures fa-3x mb-3 text-primary"></i>
@@ -248,99 +401,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-chalkboard-teacher fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Patient Education</h5>
-                            <p class="card-text">Comprehensive health education and lifestyle guidance.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-building fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Corporate Health</h5>
-                            <p class="card-text">Healthcare solutions for organizations and businesses.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-microscope fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Research Collaboration</h5>
-                            <p class="card-text">Partnership opportunities in medical research.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Calculator Section -->
+    <!-- BMI Calculator Section -->
     <section id="calculator" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Pediatric Dose Calculator</h2>
+            <h2 class="text-center mb-5" data-aos="fade-up">BMI Calculator</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6" data-aos="fade-up">
                     <div class="card shadow">
                         <div class="card-body">
-                            <form id="doseCalculator" class="card p-4 bg-light">
+                            <div class="mb-3">
+                                <label class="form-label">Height</label>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Weight (kg)</label>
-                                        <input type="number" class="form-control" id="weight" step="0.1" min="0" required>
+                                    <div class="col">
+                                        <input type="number" class="form-control" id="heightFeet" placeholder="Feet" min="0">
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Age (optional)</label>
-                                        <input type="number" class="form-control" id="age" min="0" max="18">
+                                    <div class="col">
+                                        <input type="number" class="form-control" id="heightInch" placeholder="Inch" min="0">
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Search Medication</label>
-                                    <input type="text" class="form-control" id="drugSearch" placeholder="Search by generic or trade name">
-                                    <div id="searchResults" class="list-group mt-2"></div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Medication</label>
-                                    <select class="form-select" id="medication" required>
-                                        <option value="">Select medication</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Form</label>
-                                    <select class="form-select" id="medicationForm" required disabled>
-                                        <option value="">Select form</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Calculate Dose</button>
-                                <div id="result" class="mt-3"></div>
-                            <!-- New BMI Calculator Elements -->
-                                <div class="container mt-5">
-        <h3 class="text-center mb-4">BMI Calculator</h3>
-        <div class="mb-3">
-            <label class="form-label">Height</label>
-            <div class="row">
-                <div class="col">
-                    <input type="number" class="form-control" id="heightFeet" placeholder="Feet" min="0">
-                </div>
-                <div class="col">
-                    <input type="number" class="form-control" id="heightInch" placeholder="Inch" min="0">
-                </div>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Weight (kg)</label>
-            <input type="number" class="form-control" id="weightKg" step="0.1" min="0" placeholder="Enter your weight">
-        </div>
-        <button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI</button>
-        <div id="bmiResult" class="mt-4"></div>
-    </div>
-
-
-                            </form>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Weight (kg)</label>
+                                <input type="number" class="form-control" id="weightKg" step="0.1" min="0" placeholder="Enter your weight">
+                            </div>
+                            <button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI</button>
+                            <div id="bmiResult" class="mt-4"></div>
                         </div>
                     </div>
                 </div>
@@ -349,11 +438,11 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-5">
+    <section id="contact" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5" data-aos="fade-up">Contact Me</h2>
             <div class="row">
-                <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+                <div class="col-md-6 mb-4" data-aos="fade-right">
                     <form action="https://formspree.io/f/mgveelyo" method="POST">
                         <div class="mb-3">
                             <input type="text" class="form-control" name="name" placeholder="Your Name" required>
@@ -371,23 +460,8 @@
                     <div class="d-flex flex-column h-100">
                         <div class="consultation-links mb-4">
                             <h4>Quick Consultation</h4>
-                            <a href="https://wa.me/+8801794519139" class="btn btn-whatsapp mb-2 w-100">
-                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
-                            </a>
-                            <a href="https://m.me/drafifbashar" class="btn btn-messenger w-100">
-                                <i class="fab fa-facebook-messenger me-2"></i>Messenger
-                            </a>
-                        </div>
-                        <div class="social-links mt-auto">
-                            <h4>Follow Me</h4>
-                            <ul class="list-unstyled d-flex gap-3">
-                                <li><a href="https://facebook.com/drafifbashar" class="fs-4"><i class="fab fa-facebook"></i></a></li>
-                                <li><a href="https://x.com/afifbashar" class="fs-4"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="https://linkedin.com/in/afifbashar" class="fs-4"><i class="fab fa-linkedin"></i></a></li>
-                                <li><a href="https://instagram.com/drafifbashar" class="fs-4"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="https://youtube.com/@drafifbashar" class="fs-4"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="https://tiktok.com/@drafifbashar" class="fs-4"><i class="fab fa-tiktok"></i></a></li>
-                            </ul>
+                            <a href="https://wa.me/+8801794519139" class="btn btn-primary mb-2 w-100"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+                            <a href="https://m.me/drafifbashar" class="btn btn-primary w-100"><i class="fab fa-facebook-messenger me-2"></i>Messenger</a>
                         </div>
                     </div>
                 </div>
@@ -395,27 +469,87 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; 2024 Dr. Afif Bashar. All rights reserved.</p>
+            <p class="mb-0">© 2025 Dr. Afif Bashar. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle with Popper from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- AOS Library from CDN -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="calculator.js"></script>
-    <script src="videos.js"></script>
-    <script src="main.js"></script>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('socialPopup').style.display = 'block';
+                }, 5000); // Popup after 5 seconds
+            }, 2000); // Preloader for 2 seconds
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Clock and Date
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('clock').textContent = now.toLocaleTimeString();
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // BMI Calculator
+        function calculateBMI() {
+            const feet = parseFloat(document.getElementById('heightFeet').value) || 0;
+            const inches = parseFloat(document.getElementById('heightInch').value) || 0;
+            const weight = parseFloat(document.getElementById('weightKg').value) || 0;
+            const resultDiv = document.getElementById('bmiResult');
+
+            if (feet <= 0 && inches <= 0) {
+                resultDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid height.</div>';
+                return;
+            }
+            if (weight <= 0) {
+                resultDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid weight.</div>';
+                return;
+            }
+
+            const totalInches = (feet * 12) + inches;
+            const heightMeters = totalInches * 0.0254; // Convert inches to meters
+            const bmi = (weight / (heightMeters * heightMeters)).toFixed(1);
+
+            let category = '';
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'Normal weight';
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'Overweight';
+            } else {
+                category = 'Obese';
+            }
+
+            resultDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <h5>Your BMI: ${bmi}</h5>
+                    <p>Category: ${category}</p>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
