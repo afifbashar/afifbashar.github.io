@@ -1,0 +1,600 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orthopedics Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@7.24.7/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const questions = [
+      {
+        id: 1,
+        type: "tf",
+        question: "Following limps are found in corresponding pathological conditions:",
+        options: [
+          { text: "Antalgic: Hip joint arthritis", correct: true },
+          { text: "Ataxic: Cerebral palsy", correct: false, explanation: "Ataxic: Cerebellar pathology" },
+          { text: "High Stepping gait: Common peroneal nerve palsy", correct: true },
+          { text: "Trendelenburg: Weakness of hip Adductors", correct: false, explanation: "Trendelenburg: Weakness of hip Abductors" },
+          { text: "Spastic: Cerebellar pathology", correct: false, explanation: "Spastic: Cerebral Palsy" }
+        ],
+        reference: "Bailey & Love's/28th/P-473"
+      },
+      {
+        id: 2,
+        type: "tf",
+        question: "Correct root levels for the corresponding reflexes are:",
+        options: [
+          { text: "L4: Achilles", correct: false, explanation: "L4: Knee jerk" },
+          { text: "S1: Knee jerk", correct: false, explanation: "S1: Achilles" },
+          { text: "C5: Biceps", correct: true },
+          { text: "C6: Brachioradialis", correct: true },
+          { text: "C7: Triceps", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-475"
+      },
+      {
+        id: 3,
+        type: "tf",
+        question: "Common bony deformities found in osteoarthritis are:",
+        options: [
+          { text: "Heberden's node", correct: true },
+          { text: "Ulnar drift", correct: false, explanation: "Associated with Rheumatoid arthritis" },
+          { text: "Bouchard's node", correct: true },
+          { text: "Swan neck deformity", correct: false, explanation: "Associated with Rheumatoid arthritis" },
+          { text: "Z deformity of thumb", correct: false, explanation: "Associated with Rheumatoid arthritis" }
+        ],
+        reference: "Bailey & Love's/28th/P-480"
+      },
+      {
+        id: 4,
+        type: "tf",
+        question: "Following criteria differentiate rheumatoid arthritis from osteoarthritis:",
+        options: [
+          { text: "Joint space narrowing", correct: false, explanation: "Common for both" },
+          { text: "Marginal erosion", correct: true },
+          { text: "More ankylosis", correct: true },
+          { text: "Less pronounced soft-tissue swelling", correct: false, explanation: "Periarticular soft tissue swelling" },
+          { text: "More Joint malalignment", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-543"
+      },
+      {
+        id: 5,
+        type: "tf",
+        question: "Common presentations of cauda equina syndrome are:",
+        options: [
+          { text: "Most commonly occurs in 10-25 years age group", correct: false, explanation: "20-45 years age group" },
+          { text: "Lower limb motor weakness", correct: true },
+          { text: "Initially bladder overflow incontinence", correct: false, explanation: "Initially Bladder sensory changes" },
+          { text: "Sexual dysfunction", correct: true },
+          { text: "Bilateral sciatica", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-513"
+      },
+      {
+        id: 6,
+        type: "tf",
+        question: "In which levels lumbar disc herniation commonly occurs?",
+        options: [
+          { text: "L4/5", correct: true },
+          { text: "L3/4", correct: false },
+          { text: "L2/3", correct: false },
+          { text: "L5/S1", correct: true },
+          { text: "L1/2", correct: false }
+        ],
+        reference: "Bailey & Love's/28th/P-514"
+      },
+      {
+        id: 7,
+        type: "tf",
+        question: "Osteolytic metastatic lesions are:",
+        options: [
+          { text: "Prostate carcinoma", correct: false, explanation: "Osteoblastic lesion" },
+          { text: "Multiple myeloma", correct: true },
+          { text: "Breast carcinoma", correct: false, explanation: "Osteoblastic lesion" },
+          { text: "Renal cell carcinoma", correct: true },
+          { text: "Medulloblastoma", correct: false, explanation: "Osteoblastic lesion" }
+        ],
+        reference: "Bailey & Love's/28th/P-516"
+      },
+      {
+        id: 8,
+        type: "tf",
+        question: "Correct clinical examinations to diagnose carpal tunnel syndrome are:",
+        options: [
+          { text: "Tinel's test", correct: true },
+          { text: "Phalen's test", correct: true },
+          { text: "Simmond's test", correct: false, explanation: "Tests patency of tendoachilles" },
+          { text: "Thompson's test", correct: false, explanation: "Tests patency of tendoachilles" },
+          { text: "Durkan's test", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-547"
+      },
+      {
+        id: 9,
+        type: "tf",
+        question: "Following congenital malformation of hand and wrist are correct with corresponding defects:",
+        options: [
+          { text: "Hyperplasia: Macrodactyly", correct: true },
+          { text: "Hypoplasia: Marfan Syndrome", correct: false, explanation: "Generalised skeletal anomalies: Marfan syndrome" },
+          { text: "Defects in separation: Camptodactyly", correct: true },
+          { text: "Skeletal anomaly: Simple amniotic band syndrome", correct: false, explanation: "Constricting bands: Simple amniotic band syndrome" },
+          { text: "Duplication: Polydactyly", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-549"
+      },
+      {
+        id: 10,
+        type: "tf",
+        question: "Ponseti method for treatment of club foot includes:",
+        options: [
+          { text: "Correction of forefoot cavus by elevation of first ray", correct: true },
+          { text: "Gradual forefoot adduction to 60°", correct: false, explanation: "Gradual forefoot abduction to 60°" },
+          { text: "Correction of hindfoot valgus", correct: false, explanation: "Correction of hindfoot varus" },
+          { text: "Correction of hindfoot equinus", correct: true },
+          { text: "Percutaneous Achilles tenotomy", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-626"
+      },
+      {
+        id: 11,
+        type: "tf",
+        question: "In case of pes cavus:",
+        options: [
+          { text: "Collapse of the medial arch", correct: false, explanation: "Pes planus" },
+          { text: "Increased medial arch", correct: true },
+          { text: "May occur after compartment syndrome", correct: true },
+          { text: "May occur in tibialis posterior dysfunction", correct: false, explanation: "Pes planus" },
+          { text: "Spina bifida is an important cause", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-495"
+      },
+      {
+        id: 12,
+        type: "tf",
+        question: "Regarding shoulder injuries:",
+        options: [
+          { text: "Anterior dislocations are initially treated with surgery", correct: false, explanation: "Initially treated with physiotherapy" },
+          { text: "Recurrent dislocations will require surgical stabilisation", correct: true },
+          { text: "Overuse injuries are common in throwing sport", correct: true },
+          { text: "Rotator cuff impingement is uncommon", correct: false, explanation: "Rotator cuff impingement is common" },
+          { text: "Torn rotator cuffs should be repaired in young patients", correct: true }
+        ],
+        reference: "Bailey & Love's/28th/P-529"
+      },
+      {
+        id: 13,
+        type: "tf",
+        question: "Non-operative management of acute sports injury:",
+        options: [
+          { text: "Protection", correct: true },
+          { text: "Rest", correct: true },
+          { text: "Water", correct: false, explanation: "Ice" },
+          { text: "Compression", correct: true },
+          { text: "Dressing", correct: false, explanation: "Elevation" }
+        ],
+        reference: "Bailey & Love's/27th/P-470"
+      },
+      {
+        id: 14,
+        type: "tf",
+        question: "Ganglion cysts are found:",
+        options: [
+          { text: "Dorsal and volar surface of the wrist", correct: true },
+          { text: "Ventral of DIP joint", correct: false },
+          { text: "Within flexor tendon sheath at the base of finger", correct: true },
+          { text: "At dorsum of the DIP joint", correct: true },
+          { text: "At tip of finger", correct: false }
+        ],
+        reference: "Bailey & Love's/28th/P-548"
+      },
+      {
+        id: 15,
+        type: "tf",
+        question: "Aetiology of avascular necrosis of the femoral head:",
+        options: [
+          { text: "Steroids", correct: true },
+          { text: "Chronic liver disease", correct: true },
+          { text: "Alcohol excess", correct: true },
+          { text: "Perthes' disease", correct: true },
+          { text: "CMV", correct: false }
+        ],
+        reference: "Bailey & Love's/28th/P-551"
+      },
+      {
+        id: 16,
+        type: "sba",
+        question: "A 32-year-old male patient presented with hypothenar muscle wasting. Which nerve root is mainly affected?",
+        options: [
+          { text: "C7", correct: false },
+          { text: "C8", correct: true },
+          { text: "T1", correct: false },
+          { text: "T2", correct: false },
+          { text: "T3", correct: false }
+        ],
+        explanation: "Thenar muscle is associated with ulnar nerve palsy (C8)",
+        reference: "Bailey & Love's/28th/P-479"
+      },
+      {
+        id: 17,
+        type: "sba",
+        question: "A 33-year-old male butcher presented with numbness in both hands which progressively got worse with activity. Which test should be performed to exclude carpal tunnel syndrome?",
+        options: [
+          { text: "Tinel's test", correct: false },
+          { text: "Froment's test", correct: false },
+          { text: "Simond's test", correct: false },
+          { text: "Phalen's test", correct: true },
+          { text: "Allen's test", correct: false }
+        ],
+        explanation: "To exclude carpal tunnel syndrome, median nerve palsy must be excluded which is done by Phalen's test",
+        reference: "Bailey & Love's/28th/P-481"
+      },
+      {
+        id: 18,
+        type: "sba",
+        question: "A 25-year-old male lost sensation in the base of the thumb on the dorsum aspect of his left hand following a cut injury. Which nerve is damaged?",
+        options: [
+          { text: "Ulnar", correct: false },
+          { text: "Median", correct: false },
+          { text: "Musculocutaneous", correct: false },
+          { text: "Anterior Interosseous", correct: false },
+          { text: "Radial", correct: true }
+        ],
+        explanation: "Base of the thumb on the dorsum aspect of the left hand is supplied by the radial nerve",
+        reference: "Bailey & Love's/28th/P-480"
+      },
+      {
+        id: 19,
+        type: "sba",
+        question: "A 27-year-old female presented with increased carrying angle of the right elbow joint 8 months following a distal humeral fracture. The most probable diagnosis is?",
+        options: [
+          { text: "Non-union of elbow joint", correct: false },
+          { text: "Cubitus varus", correct: false },
+          { text: "Cubitus valgus", correct: true },
+          { text: "Hyperextension elbow joint", correct: false },
+          { text: "Epicondylitis", correct: false }
+        ],
+        explanation: "This is a case of cubitus valgus where the carrying angle is increased following malunion of a distal humeral fracture",
+        reference: "Bailey & Love's/28th/P-484"
+      },
+      {
+        id: 20,
+        type: "sba",
+        question: "Commonest malignancy that metastasizes to the spine is:",
+        options: [
+          { text: "Lung", correct: false },
+          { text: "Prostate", correct: false },
+          { text: "Renal", correct: false },
+          { text: "Thyroid", correct: false },
+          { text: "Breast", correct: true }
+        ],
+        explanation: "Breast: 21% (commonest malignancy metastasizing to the spine)",
+        reference: "Bailey & Love's/28th/P-516"
+      },
+      {
+        id: 21,
+        type: "sba",
+        question: "A 52-year-old female patient presented with complaints of painful restricted movement of the right shoulder following waking up from bed. What is the pathognomonic sign to diagnose her condition as adhesive capsulitis?",
+        options: [
+          { text: "Painful passive movement", correct: false },
+          { text: "Loss of active internal rotation", correct: false },
+          { text: "Loss of active external rotation", correct: true },
+          { text: "Painful abduction of shoulder joint", correct: false },
+          { text: "Painful adduction of shoulder joint", correct: false }
+        ],
+        explanation: "Loss of active external rotation is the pathognomonic sign of frozen shoulder or adhesive capsulitis",
+        reference: "Bailey & Love's/28th/P-531"
+      },
+      {
+        id: 22,
+        type: "sba",
+        question: "A 57-year-old male patient presented with palmar nodules, skin puckering on the dorsum of both hands, and flexion contractures of the digits especially on the ulnar side of both hands. What is the most likely diagnosis?",
+        options: [
+          { text: "Trigger digit", correct: false },
+          { text: "De Quervain's disease", correct: false },
+          { text: "Carpal tunnel syndrome", correct: false },
+          { text: "Guyon's tunnel syndrome", correct: false },
+          { text: "Dupuytren's contracture", correct: true }
+        ],
+        explanation: "This is a case of Dupuytren's contracture, characterized by palmar nodules, skin puckering, cords, and flexion contractures, commonest on the ulnar side",
+        reference: "Bailey & Love's/28th/P-480"
+      },
+      {
+        id: 23,
+        type: "sba",
+        question: "A 16-year-old boy heard a popping sound from his right knee during a twisting injury while playing football, he was unable to continue the game. Which structure of the knee joint is most likely injured?",
+        options: [
+          { text: "ACL", correct: true },
+          { text: "PCL", correct: false },
+          { text: "Medial meniscus", correct: false },
+          { text: "Lateral meniscus", correct: false },
+          { text: "Both ACL and lateral meniscus", correct: false }
+        ],
+        explanation: "This is a case of ACL injury, caused by twisting, associated with an audible 'pop,' immediate swelling, and inability to continue",
+        reference: "Bailey & Love's/28th/P-564"
+      },
+      {
+        id: 24,
+        type: "sba",
+        question: "A 67-year-old male patient diagnosed with prostate cancer recently came to a follow-up visit with pain in his spine. His tumor cells metastasized to the spine via:",
+        options: [
+          { text: "Epidural venous plexus", correct: false },
+          { text: "Batson's venous plexus", correct: true },
+          { text: "Vertebral venous plexus", correct: false },
+          { text: "Pterygoid plexus", correct: false },
+          { text: "Basilar plexus", correct: false }
+        ],
+        explanation: "Tumor cells commonly metastasize to the spine via Batson's venous plexus, which allows retrograde embolic spread",
+        reference: "Bailey & Love's/28th/P-582"
+      },
+      {
+        id: 25,
+        type: "sba",
+        question: "Which is the commonest site of acute osteomyelitis for adults?",
+        options: [
+          { text: "Upper end of humerus", correct: false },
+          { text: "Lower end of femur", correct: false },
+          { text: "Vertebral column", correct: true },
+          { text: "Upper end of tibia", correct: false },
+          { text: "Lower end of fibula", correct: false }
+        ],
+        explanation: "In adults, the vertebral column is the commonest site for acute osteomyelitis",
+        reference: "Bailey & Love's/28th/P-603"
+      },
+      {
+        id: 26,
+        type: "sba",
+        question: "Which is the best assessment of acute or chronic osteomyelitis?",
+        options: [
+          { text: "CT of bone", correct: false },
+          { text: "MRI", correct: true },
+          { text: "X-ray", correct: false },
+          { text: "CRP", correct: false },
+          { text: "WBC", correct: false }
+        ],
+        explanation: "MRI is the best assessment for acute or chronic osteomyelitis",
+        reference: "Bailey & Love's/28th/P-557"
+      },
+      {
+        id: 27,
+        type: "sba",
+        question: "A child presented in orthopedic outpatient with widened physes with cupped, flared metaphyses in radiograph. What is the most likely diagnosis?",
+        options: [
+          { text: "Hereditary multiple exostoses", correct: false },
+          { text: "Enchondromatosis", correct: false },
+          { text: "Achondroplasia", correct: false },
+          { text: "Rickets", correct: true },
+          { text: "Fibrous dysplasia", correct: false }
+        ],
+        explanation: "Rickets is characterized by widened physes with cupped, flared metaphyses in radiographs",
+        reference: "Bailey & Love's/28th/P-614"
+      },
+      {
+        id: 28,
+        type: "sba",
+        question: "A 30-year-old tennis player presented with partial rupture of calf muscle at the time of playing tennis. Which muscle is involved regarding this?",
+        options: [
+          { text: "Lateral head of gastrocnemius", correct: false },
+          { text: "Soleus", correct: false },
+          { text: "Medial head of gastrocnemius", correct: true },
+          { text: "Gluteus maximus", correct: false },
+          { text: "Popliteus", correct: false }
+        ],
+        explanation: "Partial ruptures of the medial head of the gastrocnemius are found in tennis players (called tennis leg)",
+        reference: "Bailey & Love's/28th/P-506"
+      },
+      {
+        id: 29,
+        type: "sba",
+        question: "Which tumor arises from the epiphysis of bone?",
+        options: [
+          { text: "Adamantinoma", correct: false },
+          { text: "Fibrous dysplasia", correct: false },
+          { text: "Ewing's sarcoma", correct: false },
+          { text: "Eosinophilic granuloma", correct: false },
+          { text: "Clear cell chondrosarcoma", correct: true }
+        ],
+        explanation: "Clear cell chondrosarcoma arises from the epiphysis of bone",
+        reference: "Bailey & Love's/28th/P-588"
+      },
+      {
+        id: 30,
+        type: "sba",
+        question: "In early stages of AVN of hip, which one is the most sensitive & specific investigation for diagnosis?",
+        options: [
+          { text: "X-ray", correct: false },
+          { text: "MRI", correct: true },
+          { text: "CT Scan", correct: false },
+          { text: "MRA", correct: false },
+          { text: "Bone scintigraphy", correct: false }
+        ],
+        explanation: "MRI is the most sensitive and specific investigation for early-stage AVN of the hip",
+        reference: "Bailey & Love's/28th/P-553"
+      }
+    ];
+
+    function Quiz() {
+      const [answers, setAnswers] = React.useState({});
+      const [submitted, setSubmitted] = React.useState(false);
+      const [score, setScore] = React.useState(0);
+      const [results, setResults] = React.useState({});
+
+      const handleTFChange = (questionId, optionIndex, value) => {
+        setAnswers(prev => ({
+          ...prev,
+          [questionId]: {
+            ...prev[questionId],
+            [optionIndex]: value
+          }
+        }));
+      };
+
+      const handleSBAChange = (questionId, value) => {
+        setAnswers(prev => ({
+          ...prev,
+          [questionId]: value
+        }));
+      };
+
+      const calculateScore = () => {
+        let totalScore = 0;
+        const results = {};
+
+        questions.forEach(question => {
+          results[question.id] = { correct: [], incorrect: [] };
+          if (question.type === "tf") {
+            question.options.forEach((option, index) => {
+              const userAnswer = answers[question.id]?.[index];
+              if (userAnswer === undefined) return;
+              if (userAnswer === option.correct) {
+                totalScore += 0.2;
+                results[question.id].correct.push(index);
+              } else {
+                results[question.id].incorrect.push({ index, explanation: option.explanation });
+              }
+            });
+          } else {
+            const userAnswer = answers[question.id];
+            const correctOption = question.options.find(opt => opt.correct);
+            if (userAnswer === correctOption.text) {
+              totalScore += 1;
+              results[question.id].correct.push(0);
+            } else {
+              results[question.id].incorrect.push({ index: 0, explanation: question.explanation });
+            }
+          }
+        });
+
+        setScore(totalScore);
+        setResults(results);
+        setSubmitted(true);
+      };
+
+      return (
+        <div className="max-w-4xl mx-auto p-6 bg-gray-100 min-h-screen">
+          <h1 className="text-3xl font-bold mb-6 text-center">Orthopedics Quiz</h1>
+          {questions.map(question => (
+            <div key={question.id} className="mb-8 p-4 bg-white rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold mb-2">{question.id}. {question.question}</h2>
+              {question.type === "tf" ? (
+                <div>
+                  {question.options.map((option, index) => (
+                    <div key={index} className="mb-2">
+                      <label className="flex items-center">
+                        <span className="mr-2">{String.fromCharCode(97 + index)}) {option.text}</span>
+                        <select
+                          className="border p-1 rounded"
+                          onChange={e => handleTFChange(question.id, index, e.target.value === "true")}
+                          disabled={submitted}
+                        >
+                          <option value="">Select</option>
+                          <option value="true">True</option>
+                          <option value="false">False</option>
+                        </select>
+                      </label>
+                      {submitted && results[question.id]?.incorrect.some(item => item.index === index) && (
+                        <p className="text-red-500 text-sm">{results[question.id].incorrect.find(item => item.index === index).explanation}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div>
+                  {question.options.map((option, index) => (
+                    <label key={index} className="flex items-center mb-2">
+                      <input
+                        type="radio"
+                        name={`question-${question.id}`}
+                        value={option.text}
+                        onChange={() => handleSBAChange(question.id, option.text)}
+                        disabled={submitted}
+                        className="mr-2"
+                      />
+                      {String.fromCharCode(97 + index)}) {option.text}
+                    </label>
+                  ))}
+                  {submitted && results[question.id]?.incorrect.length > 0 && (
+                    <p className="text-red-500 text-sm">{results[question.id].incorrect[0].explanation}</p>
+                  )}
+                </div>
+              )}
+              <p className="text-sm text-gray-600">Reference: {question.reference}</p>
+            </div>
+          ))}
+          {!submitted ? (
+            <button
+              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              onClick={calculateScore}
+            >
+              Submit
+            </button>
+          ) : (
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-4">Your Score: {score.toFixed(2)} / 25</h2>
+              <button
+                className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+                onClick={() => {
+                  setAnswers({});
+                  setSubmitted(false);
+                  setScore(0);
+                  setResults({});
+                }}
+              >
+                Retake Quiz
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<Quiz />, document.getElementById('root'));
+  </script>
+</body>
+</html>
