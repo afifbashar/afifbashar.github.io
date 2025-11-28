@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DART Mission Impact Effect</title>
+
+<style>
+    body {
+        overflow: hidden;
+        margin: 0;
+        background: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+    }
+
+    #page {
+        padding: 40px;
+        transition: 0.4s;
+    }
+
+    /* Satellite style */
+    #satellite {
+        position: fixed;
+        top: -200px;
+        left: -200px;
+        width: 150px;
+        transition: 2s linear;
+        z-index: 10;
+    }
+
+    #satellite img {
+        width: 100%;
+    }
+
+    /* Explosion */
+    #explosion {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 0px;
+        height: 0px;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: 0.4s ease-out;
+        z-index: 20;
+    }
+
+    #explosion img {
+        width: 100%;
+    }
+
+    /* Shake animation */
+    .shake {
+        animation: shake 0.25s ease-in-out 8;
+    }
+
+    @keyframes shake {
+        0% { transform: translate(0px); }
+        25% { transform: translate(-12px, 8px); }
+        50% { transform: translate(12px, -12px); }
+        75% { transform: translate(-12px, -8px); }
+        100% { transform: translate(0px); }
+    }
+</style>
+</head>
+
+<body>
+
+    <div id="satellite">
+        <!-- Satellite PNG -->
+        <img src="https://icons.iconarchive.com/icons/icons-land/space/256/Satellite-icon.png">
+    </div>
+
+    <div id="explosion">
+        <!-- Explosion PNG -->
+        <img src="https://pngimg.com/d/explosion_PNG60.png">
+    </div>
+
+    <!-- Boom Sound -->
+    <audio id="boomSound" src="https://www.soundjay.com/explosion/sounds/explosion-01.mp3"></audio>
+
+    <div id="page">
+        <h1>DART Mission Simulation</h1>
+        <p>The satellite will hit the page and shake the screen!</p>
+    </div>
+
+<script>
+window.onload = function () {
+    const sat = document.getElementById("satellite");
+    const explosion = document.getElementById("explosion");
+    const boom = document.getElementById("boomSound");
+    const page = document.getElementById("page");
+
+    // Satellite flies into screen
+    sat.style.top = "40vh";
+    sat.style.left = "45vw";
+
+    // After 2 seconds → Impact
+    setTimeout(() => {
+
+        // Boom sound
+        boom.play();
+
+        // Explosion visible
+        explosion.style.width = "300px";
+        explosion.style.height = "300px";
+        explosion.style.opacity = "1";
+
+        // Page shake
+        page.classList.add("shake");
+
+        // Hide satellite
+        sat.style.opacity = "0";
+
+        // Remove explosion after a while
+        setTimeout(() => {
+            explosion.style.opacity = "0";
+        }, 600);
+
+    }, 2000);
+};
+</script>
+
+</body>
+</html>
