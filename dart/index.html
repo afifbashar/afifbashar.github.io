@@ -1,74 +1,171 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ইংরেজি শব্দ সিলেক্ট → বাংলা অর্থ আসবে</title>
+<title>Smart Popup Dictionary</title>
+
 <style>
-    body {font-family: 'Hind Siliguri', sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f8f9fa; line-height: 1.8;}
-    .article {background: white; padding: 35px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1);}
-    h1 {color: #d32f2f; text-align: center;}
-    #popup {
-        position: absolute; background: #1565c0; color: white; padding: 12px 16px; border-radius: 8px;
-        font-size: 15px; max-width: 340px; z-index: 999999; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        display: none; pointer-events: none; border-left: 5px solid #ff9800;
-    }
-    #popup::after {content: ""; position: absolute; top: 100%; left: 20px; border: 8px solid transparent; border-top-color: #1565c0;}
-</style>
-</head>
-<body>
-
-<div class="article">
-    <h1>Argentina Wins World Cup 2022</h1>
-    <p>Lionel Messi finally achieved his dream as Argentina defeated France in a thrilling final. The match ended 3-3 after extra time and Argentina won 4-2 on penalties. Kylian Mbappé scored a brilliant hat-trick, but goalkeeper Emiliano Martínez became the hero by saving two penalties.</p>
-
-    <p>Millions of fans celebrated across Argentina. This victory gave them their third World Cup title after 36 years.</p>
-</div>
-
-<div id="popup"></div>
-
-<script>
-// শুধু ইংরেজি শব্দ সিলেক্ট করলে বাংলা অর্থ আনবে (সবচেয়ে রিলায়েবল ফ্রি API)
-function show(word, bangla) {
-    const p = document.getElementById("popup");
-    p.innerHTML = `<strong>${word}</strong><br>${bangla}`;
-    const rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
-    p.style.left = (event.pageX + 10) + "px";
-    p.style.top = (rect.bottom + window.scrollY + 10) + "px";
-    p.style.display = "block";
+/* Popup box */
+#dictPopup {
+    position: absolute;
+    padding: 12px;
+    border-radius: 10px;
+    background: #1e1e1e;
+    color: white;
+    max-width: 280px;
+    font-size: 14px;
+    line-height: 1.4;
+    display: none;
+    z-index: 999999;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    backdrop-filter: blur(6px);
 }
 
-function hide() { document.getElementById("popup").style.display = "none"; }
+/* Word title */
+#dictPopup b {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 6px;
+}
 
-document.addEventListener("mouseup", function(e) {
-    setTimeout(() => {
-        const sel = window.getSelection().toString().trim();
+/* Section heading */
+.dict-label {
+    color: #00eaff;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
 
-        // শুধু ইংরেজি একটা শব্দ, 2-20 অক্ষর
-        if (sel && /^[a-zA-Z]+$/.test(sel) && sel.length >= 2 && sel.length <= 20) {
-            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(sel)}&langpair=en|bn`)
-                .then(r => r.json())
-                .then(data => {
-                    const translation = data.responseData.translatedText;
-                    if (translation && translation !== sel.toLowerCase()) {
-                        show(sel, translation);
-                    } else {
-                        hide();
-                    }
-                })
-                .catch(() => hide());
-        } else {
-            hide();
-        }
-    }, 100);
+/* Speaker icon */
+.speak-btn {
+    cursor: pointer;
+    margin-left: 6px;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body style="font-family: Arial; padding: 40px;">
+
+<h2>Select any word to see meaning</h2>
+<p>
+    This is a demonstration article. You can click any English word and get the Bangla meaning instantly.
+    The translation is automatic, fast and supports synonyms, examples, and pronunciation.
+</p>
+
+<!-- Popup -->
+<div id="dictPopup"></div>
+
+<script>
+// Free APIs
+const TRANSLATE_API = "https://api.mymemory.translated.net/get?q=";
+const DICT_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+
+// Convert English → Bangla
+async function translateToBangla(text) {
+    let res = await fetch(TRANSLATE_API + text + "&langpair=en|bn");
+    let data = await res.json();
+    return data.responseData.translatedText || "";
+}
+
+// Dictionary (synonyms, example, meaning)
+async function getDictionary(word) {
+    try {
+        let res = await fetch(DICT_API + word.toLowerCase());
+        let data = await res.json();
+        return data[0];
+    } catch {
+        return null;
+    }
+}
+
+// Pronounce audio
+function playAudio(url) {
+    let a = new Audio(url);
+    a.play().catch(()=>{});
+}
+
+// Main function
+async function showPopup(word, x, y) {
+    const popup = document.getElementById("dictPopup");
+    popup.innerHTML = "Loading...";
+
+    popup.style.left = x + 10 + "px";
+    popup.style.top = y + 10 + "px";
+    popup.style.display = "block";
+
+    let bn = await translateToBangla(word);
+    let dict = await getDictionary(word);
+
+    let meaning = "";
+    let example = "";
+    let synonymList = "";
+    let audioURL = "";
+
+    if (dict && dict.meanings) {
+        // English meaning
+        meaning = dict.meanings[0]?.definitions[0]?.definition || "";
+
+        // Example
+        example = dict.meanings[0]?.definitions[0]?.example || "";
+
+        // Synonyms
+        synonymList = dict.meanings[0]?.synonyms?.slice(0, 5).join(", ") || "";
+
+        // Audio
+        audioURL = dict.phonetics?.find(p => p.audio)?.audio || "";
+    }
+
+    popup.innerHTML = `
+        <b>${word} 
+            ${audioURL ? `<span class='speak-btn' onclick="playAudio('${audioURL}')">🔊</span>` : ""}
+        </b>
+
+        <div class="dict-label">Bangla Meaning</div>
+        ${bn || "Not found"}
+
+        ${meaning ? `
+            <div class="dict-label">English Meaning</div>
+            ${meaning}
+        ` : ""}
+
+        ${synonymList ? `
+            <div class="dict-label">Synonyms</div>
+            ${synonymList}
+        ` : ""}
+
+        ${example ? `
+            <div class="dict-label">Example</div>
+            "${example}"
+        ` : ""}
+    `;
+}
+
+// Text selection
+function getSelectedWord(e) {
+    let text = window.getSelection().toString().trim();
+
+    // Word only, no sentence
+    if (text.split(" ").length === 1 && /^[a-zA-Z]+$/.test(text)) {
+        showPopup(text, e.pageX, e.pageY);
+    } else {
+        document.getElementById("dictPopup").style.display = "none";
+    }
+}
+
+document.addEventListener("mouseup", getSelectedWord);
+
+// Mobile long-press
+let pressTimer;
+document.addEventListener("touchstart", function(e) {
+    pressTimer = setTimeout(() => {
+        let sel = window.getSelection().toString().trim();
+        if (sel) getSelectedWord(e.touches[0]);
+    }, 400);
 });
+document.addEventListener("touchend", () => clearTimeout(pressTimer));
 
-// অন্য কোথাও ক্লিক করলে লুকাবে
-document.addEventListener("mousedown", e => {
-    if (!e.target.closest("#popup")) hide();
-});
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 </body>
 </html>
