@@ -2,177 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Advanced DART Mission Impact</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Translate Selection Popup (Exactly like Daily Star)</title>
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #000;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-/* main text */
-#page {
-    padding: 40px;
-    position: relative;
-    z-index: 1;
-}
-
-/* METEOR */
-#meteor {
-    position: fixed;
-    top: -300px;
-    left: -300px;
-    width: 180px;
-    transition: 1.8s linear;
-    z-index: 10;
-}
-#meteor img {
-    width: 100%;
-}
-
-/* Explosion */
-#explosion {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: 0.4s ease-out;
-    z-index: 15;
-}
-#explosion img {
-    width: 100%;
-}
-
-/* Cracked screen overlay */
-#crack {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.4s;
-    z-index: 20;
-}
-#crack img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* DUST PARTICLES */
-.particle {
-    position: fixed;
-    background: rgba(255,255,255,0.7);
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0.8;
-    animation: rise 1.2s linear forwards;
-}
-@keyframes rise {
-    0% { transform: translateY(0) scale(1); opacity: 0.9;}
-    100% { transform: translateY(-120px) scale(0.2); opacity: 0; }
-}
-
-/* Shake Animation */
-.shake {
-    animation: shake 0.25s ease-in-out 12;
-}
-@keyframes shake {
-    0% { transform: translate(0,0); }
-    25% { transform: translate(-14px, 10px); }
-    50% { transform: translate(14px, -12px); }
-    75% { transform: translate(-12px, -10px); }
-    100% { transform: translate(0,0); }
-}
+    body {
+        font-family: Georgia, serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        line-height: 1.8;
+        background: #f9f9f9;
+    }
+    .article {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; color: #1a1a1a; }
 </style>
 </head>
-
 <body>
 
-<div id="meteor">
-    <img src="https://pngimg.com/d/meteor_PNG32.png">
+<div class="article">
+    <h1>Argentina Wins World Cup 2022 in Dramatic Final</h1>
+    <p>Lionel Messi finally won the World Cup as Argentina beat France in one of the greatest finals ever. The match ended 3-3 after extra time, with Argentina winning 4-2 on penalties. Kylian Mbappé scored a stunning hat-trick, but Emiliano Martínez saved two penalties to give Argentina their third World Cup.</p>
+
+    <p>Millions celebrated in Buenos Aires as Messi lifted the trophy he had dreamed of for years.</p>
 </div>
 
-<div id="explosion">
-    <img src="https://pngimg.com/d/explosion_PNG60.png">
-</div>
+<!-- Google Translate Magic (যেটা Daily Star ব্যবহার করে) -->
+<div id="google_translate_element" style="display:none"></div>
 
-<div id="crack">
-    <img src="https://pngimg.com/d/cracks_PNG36.png">
-</div>
-
-<audio id="boomSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5f54b3b1d4.mp3?filename=explosion-6085.mp3"></audio>
-
-<div id="page">
-    <h1>ADVANCED DART IMPACT SIMULATION</h1>
-    <p>Incoming meteor → explosion → cracked screen → dust → vibration</p>
-</div>
-
-<script>
-// Create dust effect
-function createDust(x, y) {
-    for (let i = 0; i < 30; i++) {
-        const p = document.createElement("div");
-        p.classList.add("particle");
-        p.style.left = x + (Math.random() * 80 - 40) + "px";
-        p.style.top = y + (Math.random() * 80 - 40) + "px";
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 1200);
-    }
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,bn,hi,es,fr,de,ar,zh-CN,ja,pt',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
 }
+</script>
 
-window.onload = () => {
-    const meteor = document.getElementById("meteor");
-    const explosion = document.getElementById("explosion");
-    const crack = document.getElementById("crack");
-    const boom = document.getElementById("boomSound");
-    const page = document.getElementById("page");
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    // Meteor comes flying in
-    meteor.style.top = "40vh";
-    meteor.style.left = "50vw";
+<!-- এই স্ক্রিপ্টটাই ম্যাজিক করে → শব্দ সিলেক্ট করলেই Google-এর পপআপ আসবে -->
+<script>
+// Hide the normal translate bar
+setInterval(function() {
+    var bar = document.querySelector(".goog-te-banner-frame");
+    if (bar) bar.style.display = "none";
+    
+    var gadget = document.querySelector(".goog-te-gadget-simple");
+    if (gadget) gadget.style.display = "none";
+}, 500);
 
-    setTimeout(() => {
-        // Vibration on mobile
-        if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 300]);
+// Main trick: Trigger Google Translate on text selection
+document.addEventListener("mouseup", function() {
+    var selectedText = window.getSelection().toString().trim();
+    if (selectedText.length > 0 && selectedText.length < 50 && selectedText.split(" ").length <= 5) {
+        setTimeout(function() {
+            var translateIcon = document.querySelector(".goog-te-menu-value span");
+            if (translateIcon) translateIcon.click();
+        }, 100);
+    }
+});
 
-        // Boom sound
-        boom.play();
-
-        // Explosion visible
-        explosion.style.width = "320px";
-        explosion.style.height = "320px";
-        explosion.style.opacity = "1";
-
-        // Dust particles
-        createDust(window.innerWidth/2, window.innerHeight/2);
-
-        // Shake page
-        page.classList.add("shake");
-
-        // Cracked screen overlay
-        crack.style.opacity = "1";
-
-        // Hide meteor
-        meteor.style.opacity = "0";
-
-        // Fade explosion after
-        setTimeout(() => {
-            explosion.style.opacity = "0";
-        }, 700);
-
-    }, 1800);
-};
+document.addEventListener("mousedown", function(e) {
+    // Click outside → close popup
+    setTimeout(function() {
+        var frame = document.querySelector(".goog-te-menu-frame");
+        if (frame && !frame.contains(e.target)) {
+            document.querySelector("body").click();
+        }
+    }, 100);
+});
 </script>
 
 </body>
