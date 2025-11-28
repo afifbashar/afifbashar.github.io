@@ -1,84 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Google Translate Selection Popup (Exactly like Daily Star)</title>
+<title>যেকোনো শব্দ সিলেক্ট করলেই অর্থ পপআপ</title>
 <style>
     body {
-        font-family: Georgia, serif;
+        font-family: 'Kalpurush', 'SolaimanLipi', sans-serif;
         max-width: 800px;
-        margin: 40px auto;
+        margin: 30px auto;
         padding: 20px;
+        background: #f4f4f4;
         line-height: 1.8;
-        background: #f9f9f9;
     }
     .article {
         background: white;
         padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
-    h1 { text-align: center; color: #1a1a1a; }
+    h1 { color: #d32f2f; text-align: center; }
+
+    /* পপআপ স্টাইল */
+    #dictPopup {
+        position: absolute;
+        background: #333;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        max-width: 300px;
+        z-index: 999999;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        display: none;
+        pointer-events: none;
+    }
+    #dictPopup::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 20px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+    }
 </style>
 </head>
 <body>
 
 <div class="article">
-    <h1>Argentina Wins World Cup 2022 in Dramatic Final</h1>
-    <p>Lionel Messi finally won the World Cup as Argentina beat France in one of the greatest finals ever. The match ended 3-3 after extra time, with Argentina winning 4-2 on penalties. Kylian Mbappé scored a stunning hat-trick, but Emiliano Martínez saved two penalties to give Argentina their third World Cup.</p>
+    <h1>বিশ্বকাপে আর্জেন্টিনার ঐতিহাসিক জয়</h1>
+    <p>গত রবিবার কাতারের লুসাইল স্টেডিয়ামে অনুষ্ঠিত হলো ফিফা বিশ্বকাপ ২০২২-এর ফাইনাল। আর্জেন্টিনা ও ফ্রান্সের মধ্যে এই মহারণ শেষ হয়েছে পেনাল্টি শ্যুটআউটে। লিওনেল মেসির নেতৃত্বে আর্জেন্টিনা ৪-২ ব্যবধানে জিতে ৩৬ বছর পর তৃতীয়বারের মতো বিশ্বচ্যাম্পিয়ন হয়েছে।</p>
 
-    <p>Millions celebrated in Buenos Aires as Messi lifted the trophy he had dreamed of for years.</p>
+    <p>ম্যাচে কিলিয়ান এমবাপ্পে হ্যাটট্রিক করলেও শেষ হাসি হেসেছে আর্জেন্টিনা। গোলকিপার এমিলিয়ানো মার্টিনেজ দুটি পেনাল্টি ঠেকিয়ে হিরো হয়েছেন। বুয়েন্স আয়ার্সে লাখো মানুষ রাস্তায় নেমে উদযাপন করছে।</p>
+
+    <p>এই জয়কে ফুটবল ইতিহাসের অন্যতম সেরা ফাইনাল বলা হচ্ছে।</p>
 </div>
 
-<!-- Google Translate Magic (যেটা Daily Star ব্যবহার করে) -->
-<div id="google_translate_element" style="display:none"></div>
+<!-- পপআপ ডিভ -->
+<div id="dictPopup"></div>
 
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,bn,hi,es,fr,de,ar,zh-CN,ja,pt',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-}
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<!-- এই স্ক্রিপ্টটাই ম্যাজিক করে → শব্দ সিলেক্ট করলেই Google-এর পপআপ আসবে -->
 <script>
-// Hide the normal translate bar
-setInterval(function() {
-    var bar = document.querySelector(".goog-te-banner-frame");
-    if (bar) bar.style.display = "none";
-    
-    var gadget = document.querySelector(".goog-te-gadget-simple");
-    if (gadget) gadget.style.display = "none";
-}, 500);
+// পপআপ দেখানোর ফাংশন
+function showMeaning(word, meaning, x, y) {
+    const popup = document.getElementById("dictPopup");
+    popup.innerHTML = `<strong>${word}</strong><br><small>${meaning}</small>`;
+    popup.style.display = "block";
+    popup.style.left = x + "px";
+    popup.style.top = (y + 20) + "px";
+}
 
-// Main trick: Trigger Google Translate on text selection
-document.addEventListener("mouseup", function() {
-    var selectedText = window.getSelection().toString().trim();
-    if (selectedText.length > 0 && selectedText.length < 50 && selectedText.split(" ").length <= 5) {
-        setTimeout(function() {
-            var translateIcon = document.querySelector(".goog-te-menu-value span");
-            if (translateIcon) translateIcon.click();
-        }, 100);
-    }
+// পপআপ লুকানো
+function hideMeaning() {
+    document.getElementById("dictPopup").style.display = "none";
+}
+
+// মাউস আপ হলে (সিলেকশন শেষ হলে)
+document.addEventListener("mouseup", function(e) {
+    setTimeout(() => {  // ছোট ডিলে দিলাম যাতে সিলেকশন পুরোপুরি হয়
+        let sel = window.getSelection();
+        let text = sel.toString().trim();
+
+        if (text && text.length > 0 && text.length < 30 && text.split(" ").length === 1) {  // শুধু একটা শব্দ
+            let rect = sel.getRangeAt(0).getBoundingClientRect();
+
+            // বাংলা না ইংরেজি চেক
+            if (/[\u0980-\u09FF]/.test(text)) {
+                // বাংলা শব্দ
+                fetch(`https://api.shabdkosh.com/v1/bn/${encodeURIComponent(text)}`)
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(d => showMeaning(text, d.meaning || d.def || "অর্থ পাওয়া যায়নি", e.pageX, rect.bottom + window.scrollY))
+                .catch(() => showMeaning(text, "ইন্টারনেট সংযোগ চেক করুন", e.pageX, rect.bottom + window.scrollY));
+            } else {
+                // ইংরেজি শব্দ
+                fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${text.toLowerCase()}`)
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(data => {
+                    let def = data[0]?.meanings[0]?.definitions[0]?.definition || "Meaning not found";
+                    showMeaning(text, def, e.pageX, rect.bottom + window.scrollY);
+                })
+                .catch(() => showMeaning(text, "Meaning not found", e.pageX, rect.bottom + window.scrollY));
+            }
+        } else {
+            hideMeaning();
+        }
+    }, 10);
 });
 
+// ক্লিক করলে বা অন্য কোথাও সিলেক্ট করলে পপআপ লুকাবে
 document.addEventListener("mousedown", function(e) {
-    // Click outside → close popup
-    setTimeout(function() {
-        var frame = document.querySelector(".goog-te-menu-frame");
-        if (frame && !frame.contains(e.target)) {
-            document.querySelector("body").click();
-        }
-    }, 100);
+    if (!e.target.closest("#dictPopup")) hideMeaning();
 });
 </script>
+
+<!-- বাংলা ফন্ট -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body { font-family: 'Hind Siliguri', sans-serif; }</style>
 
 </body>
 </html>
