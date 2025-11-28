@@ -2,123 +2,176 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DART Mission Impact Effect</title>
+<title>Advanced DART Mission Impact</title>
 
 <style>
-    body {
-        overflow: hidden;
-        margin: 0;
-        background: #000;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-    }
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-    #page {
-        padding: 40px;
-        transition: 0.4s;
-    }
+/* main text */
+#page {
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+}
 
-    /* Satellite style */
-    #satellite {
-        position: fixed;
-        top: -200px;
-        left: -200px;
-        width: 150px;
-        transition: 2s linear;
-        z-index: 10;
-    }
+/* METEOR */
+#meteor {
+    position: fixed;
+    top: -300px;
+    left: -300px;
+    width: 180px;
+    transition: 1.8s linear;
+    z-index: 10;
+}
+#meteor img {
+    width: 100%;
+}
 
-    #satellite img {
-        width: 100%;
-    }
+/* Explosion */
+#explosion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: 0.4s ease-out;
+    z-index: 15;
+}
+#explosion img {
+    width: 100%;
+}
 
-    /* Explosion */
-    #explosion {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 0px;
-        height: 0px;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: 0.4s ease-out;
-        z-index: 20;
-    }
+/* Cracked screen overlay */
+#crack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+    z-index: 20;
+}
+#crack img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-    #explosion img {
-        width: 100%;
-    }
+/* DUST PARTICLES */
+.particle {
+    position: fixed;
+    background: rgba(255,255,255,0.7);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: rise 1.2s linear forwards;
+}
+@keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0.9;}
+    100% { transform: translateY(-120px) scale(0.2); opacity: 0; }
+}
 
-    /* Shake animation */
-    .shake {
-        animation: shake 0.25s ease-in-out 8;
-    }
-
-    @keyframes shake {
-        0% { transform: translate(0px); }
-        25% { transform: translate(-12px, 8px); }
-        50% { transform: translate(12px, -12px); }
-        75% { transform: translate(-12px, -8px); }
-        100% { transform: translate(0px); }
-    }
+/* Shake Animation */
+.shake {
+    animation: shake 0.25s ease-in-out 12;
+}
+@keyframes shake {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(-14px, 10px); }
+    50% { transform: translate(14px, -12px); }
+    75% { transform: translate(-12px, -10px); }
+    100% { transform: translate(0,0); }
+}
 </style>
 </head>
 
 <body>
 
-    <div id="satellite">
-        <!-- Satellite PNG -->
-        <img src="https://icons.iconarchive.com/icons/icons-land/space/256/Satellite-icon.png">
-    </div>
+<div id="meteor">
+    <img src="https://pngimg.com/d/meteor_PNG32.png">
+</div>
 
-    <div id="explosion">
-        <!-- Explosion PNG -->
-        <img src="https://pngimg.com/d/explosion_PNG60.png">
-    </div>
+<div id="explosion">
+    <img src="https://pngimg.com/d/explosion_PNG60.png">
+</div>
 
-    <!-- Boom Sound -->
-    <audio id="boomSound" src="https://www.soundjay.com/explosion/sounds/explosion-01.mp3"></audio>
+<div id="crack">
+    <img src="https://pngimg.com/d/cracks_PNG36.png">
+</div>
 
-    <div id="page">
-        <h1>DART Mission Simulation</h1>
-        <p>The satellite will hit the page and shake the screen!</p>
-    </div>
+<audio id="boomSound" src="https://www.soundjay.com/explosion/sounds/explosion-01.mp3"></audio>
+
+<div id="page">
+    <h1>ADVANCED DART IMPACT SIMULATION</h1>
+    <p>Incoming meteor → explosion → cracked screen → dust → vibration</p>
+</div>
 
 <script>
-window.onload = function () {
-    const sat = document.getElementById("satellite");
+// Create dust effect
+function createDust(x, y) {
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        p.style.left = x + (Math.random() * 80 - 40) + "px";
+        p.style.top = y + (Math.random() * 80 - 40) + "px";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1200);
+    }
+}
+
+window.onload = () => {
+    const meteor = document.getElementById("meteor");
     const explosion = document.getElementById("explosion");
+    const crack = document.getElementById("crack");
     const boom = document.getElementById("boomSound");
     const page = document.getElementById("page");
 
-    // Satellite flies into screen
-    sat.style.top = "40vh";
-    sat.style.left = "45vw";
+    // Meteor comes flying in
+    meteor.style.top = "40vh";
+    meteor.style.left = "50vw";
 
-    // After 2 seconds → Impact
     setTimeout(() => {
+        // Vibration on mobile
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 300]);
 
         // Boom sound
         boom.play();
 
         // Explosion visible
-        explosion.style.width = "300px";
-        explosion.style.height = "300px";
+        explosion.style.width = "320px";
+        explosion.style.height = "320px";
         explosion.style.opacity = "1";
 
-        // Page shake
+        // Dust particles
+        createDust(window.innerWidth/2, window.innerHeight/2);
+
+        // Shake page
         page.classList.add("shake");
 
-        // Hide satellite
-        sat.style.opacity = "0";
+        // Cracked screen overlay
+        crack.style.opacity = "1";
 
-        // Remove explosion after a while
+        // Hide meteor
+        meteor.style.opacity = "0";
+
+        // Fade explosion after
         setTimeout(() => {
             explosion.style.opacity = "0";
-        }, 600);
+        }, 700);
 
-    }, 2000);
+    }, 1800);
 };
 </script>
 
