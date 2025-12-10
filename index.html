@@ -1,731 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
+    <!-- Basic Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta name="keywords" content="Dr. Afif Bashar, MBBS, MRCS Part A, Medical Services, Pediatric Care, Dermatology, Chronic Disease Management, bmi Calculator, বিএমআই ক্যালকুলেটর">
+    
+    <!-- SEO & AI Optimized -->
+    <title>ডাঃ আফিফ বাশার - MBBS, MRCS Part A(England) | অনলাইন ডাক্তার | Dr Live, Shukhee</title>
+    <meta name="description" content="ডাঃ আফিফ বাশার - মেডিসিন, শিশুরোগ ও চর্মরোগ বিশেষজ্ঞ। Dr Live ও Shukhee অ্যাপে ২৪ ঘণ্টা ভিডিও কল/অ্যাপয়েন্টমেন্ট। Messenger: m.me/drafifbashar">
+    <meta name="keywords" content="ডাঃ আফিফ বাশার, Dr Afif Bashar, অনলাইন ডাক্তার বাংলাদেশ, Dr Live ডাক্তার, Shukhee ডাক্তার, চর্মরোগ বিশেষজ্ঞ, শিশু বিশেষজ্ঞ, মেডিসিন ডাক্তার">
     <meta name="author" content="Dr. Afif Bashar">
-
     <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="aLeDHVwndVcrDjri-yU6PBB_GRy-toYXv1O7BA3JV8w" />
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Dr. Afif Bashar | Medical Services & Consultations">
-    <meta property="og:description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta property="og:image" content="Profile.jpg">
-    <meta property="og:url" content="https://example.com">
-    <meta property="og:type" content="website">
+    <!-- Google Search Console Verification (আপনার কোড বসান) -->
+    <meta name="google-site-verification" content="আপনার-ভেরিফিকেশন-কোড-এখানে-বসান" />
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:title" content="Dr. Afif Bashar | Medical Services & Consultations">
-    <meta name="twitter:description" content="Dr. Afif Bashar - MBBS, MRCS Part A (England). Expert in chronic disease management, pediatric care, and dermatology. Book an appointment today!">
-    <meta name="twitter:image" content="Profile.jpg">
+    <!-- Open Graph (Facebook, WhatsApp, Messenger) -->
+    <meta property="og:title" content="ডাঃ আফিফ বাশার - অনলাইন চিকিৎসা">
+    <meta property="og:description" content="Dr Live, Shukhee অ্যাপ ও Messenger এ সহজেই অ্যাপয়েন্টমেন্ট নিন">
+    <meta property="og:image" content="https://afifbashar.free.nf/Profile.jpg">
+    <meta property="og:url" content="https://afifbashar.free.nf">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="bn_BD">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ডাঃ আফিফ বাশার - অনলাইন ডাক্তার">
+    <meta name="twitter:description" content="Dr Live, Shukhee App ও Messenger এ সহজেই চিকিৎসা">
+    <meta name="twitter:image" content="https://afifbashar.free.nf/Profile.jpg">
 
-    <title>Dr. Afif Bashar | Medical Services & Consultations</title>
+    <!-- Structured Data (Google Rich Results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Physician",
+      "name": "ডাঃ আফিফ বাশার",
+      "url": "https://afifbashar.free.nf",
+      "image": "https://afifbashar.free.nf/Profile.jpg",
+      "telephone": "",
+      "address": {"@type": "PostalAddress", "addressCountry": "BD"},
+      "medicalSpecialty": ["Medicine", "Pediatrics", "Dermatology"],
+      "sameAs": [
+        "https://facebook.com/drafifbashar",
+        "https://instagram.com/drafifbashar",
+        "https://youtube.com/@drafifbashar"
+      ]
+    }
+    </script>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN + Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Hind Siliguri', 'sans-serif'] },
+            animation: { float: 'float 6s ease-in-out infinite' },
+            keyframes: { float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-15px)' } }}
+          }
+        }
+      }
+    </script>
 
     <style>
-        :root {
-            --primary-color: #00b4d8;
-            --secondary-color: #90e0ef;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #000000;
-            --card-bg: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            font-family: var(--font-family);
-            padding-top: 60px;
-            background-color: var(--dark-bg);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            word-wrap: break-word;
-        }
-
-        /* Preloader */
-        #preloader {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .preloader-content {
-            text-align: center;
-        }
-        .heart {
-            width: 40px;
-            height: 40px;
-            background: #ff0000;
-            position: relative;
-            transform: rotate(-45deg);
-            animation: pulse 1s infinite;
-            display: inline-block;
-            margin: 0 10px;
-        }
-        .heart:before,
-        .heart:after {
-            content: '';
-            width: 40px;
-            height: 40px;
-            background: #ff0000;
-            border-radius: 50%;
-            position: absolute;
-        }
-        .heart:before {
-            left: 20px;
-            top: 0;
-        }
-        .heart:after {
-            left: 0;
-            top: -20px;
-        }
-        .medical-sign {
-            font-size: 40px;
-            color: var(--primary-color);
-            animation: pulse 1s infinite;
-            display: inline-block;
-            margin: 0 10px;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        #preloader p {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            margin-top: 15px;
-        }
-
-        /* Popup */
-        #socialPopup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
-            z-index: 10000;
-            color: var(--text-primary);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        #socialPopup a {
-            color: var(--primary-color);
-            text-decoration: none;
-            margin: 5px 0;
-            display: block;
-        }
-        #socialPopup a:hover {
-            color: var(--secondary-color);
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.95) !important;
-            backdrop-filter: blur(10px);
-        }
-        .navbar-brand, .nav-link {
-            color: var(--text-primary) !important;
-        }
-        .nav-link:hover {
-            color: var(--primary-color) !important;
-        }
-        .navbar-brand small {
-            font-size: 0.6rem;
-            opacity: 0.9;
-            display: block;
-            margin-top: -5px;
-        }
-
-        /* Notice Bar */
-        .notice-bar {
-            background-color: rgba(0, 180, 216, 0.1);
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
-        }
-        .bengali-text {
-            font-family: 'Noto Sans Bengali', sans-serif;
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-        }
-
-        /* Hero Section */
-        #hero {
-            background: linear-gradient(135deg, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.9) 100%);
-            padding: 6rem 0;
-            color: var(--text-primary);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-        #clock {
-            font-size: 2rem;
-            font-weight: 600;
-        }
-        #date {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* Cards */
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(0, 180, 216, 0.2);
-            transition: transform 0.3s ease;
-            color: var(--text-primary);
-        }
-        .card:hover {
-            transform: scale(1.03);
-        }
-
-        /* Video Section */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .video-grid iframe {
-            width: 100%;
-            height: 150px;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background-color: var(--primary-color);
-            border: none;
-            color: var(--text-primary);
-        }
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            color: var(--text-primary);
-        }
-
-        /* Section Backgrounds */
-        .bg-light {
-            background-color: var(--card-bg) !important;
-            color: var(--text-primary);
-        }
-
-        /* Calculator Section */
-        #calculator {
-            padding: 2rem 0;
-        }
-        #calculator .card {
-            background-color: var(--card-bg);
-            color: var(--text-primary);
-        }
-        #calculator .form-label {
-            color: var(--text-primary) !important;
-            font-size: 0.9rem;
-        }
-        #calculator .form-control {
-            background-color: #2a2a2a;
-            border: 1px solid rgba(0, 180, 216, 0.2);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-        #calculator .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(0, 180, 216, 0.25);
-        }
-        #bmiResult {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-        #calculator .alert {
-            color: var(--text-primary);
-            background-color: rgba(0, 180, 216, 0.2);
-            border-color: rgba(0, 180, 216, 0.4);
-        }
-        #bmi-importance {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        #bmi-importance .bengali-text {
-            font-family: 'Noto Sans Bengali', sans-serif;
-            color: var(--text-secondary);
-        }
-
-        /* Contact Section */
-        #contact .social-links a {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        #contact .social-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--darker-bg);
-            border-top: 1px solid rgba(0, 180, 216, 0.2);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding-top: 50px;
-            }
-            #hero {
-                padding: 3rem 0;
-            }
-            .display-4 {
-                font-size: 1.8rem;
-            }
-            #clock {
-                font-size: 1.5rem;
-            }
-            #date {
-                font-size: 0.9rem;
-            }
-            .navbar-brand {
-                font-size: 1rem;
-            }
-            .navbar-brand small {
-                font-size: 0.5rem;
-            }
-            .nav-link {
-                font-size: 0.9rem;
-            }
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-            .video-grid iframe {
-                height: 200px;
-            }
-            .card {
-                margin-bottom: 1rem;
-            }
-            #calculator .row {
-                flex-direction: column;
-            }
-            #calculator .col {
-                margin-bottom: 0.5rem;
-            }
-            #socialPopup {
-                padding: 10px;
-                max-width: 250px;
-            }
-            #socialPopup h4 {
-                font-size: 1rem;
-            }
-            #socialPopup a {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            h2 {
-                font-size: 1.5rem;
-            }
-            .lead {
-                font-size: 1rem;
-            }
-            .btn-lg {
-                font-size: 0.9rem;
-                padding: 0.5rem 1rem;
-            }
-            .card-body {
-                padding: 0.75rem;
-            }
-            .card-title {
-                font-size: 1rem;
-            }
-            .card-text {
-                font-size: 0.8rem;
-            }
-            #calculator .form-label {
-                font-size: 0.8rem;
-            }
-            #calculator .form-control {
-                font-size: 0.8rem;
-            }
-            #bmiResult {
-                font-size: 0.8rem;
-            }
-            #bmi-importance {
-                font-size: 0.8rem;
-            }
-        }
+      body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+      .dark body { background: #0f172a; }
     </style>
 </head>
-<body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <i class="fas fa-stethoscope medical-sign"></i>
-            <div class="heart"></div>
-            <p>Welcome to Dr. Afif Bashar</p>
-        </div>
+
+<body class="min-h-screen text-white relative">
+
+  <!-- Dark/Light Mode Toggle -->
+  <button onclick="document.documentElement.classList.toggle('dark')" 
+          class="fixed top-4 right-4 z-50 bg-white/20 backdrop-blur-lg p-4 rounded-full hover:scale-110 transition-all shadow-xl">
+    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path class="sun hidden dark:inline" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+      <path class="moon inline dark:hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+    </svg>
+  </button>
+
+  <!-- Scrolling Notice -->
+  <div class="bg-black/30 backdrop-blur-md py-3 text-center font-semibold overflow-hidden">
+    <marquee behavior="scroll" direction="left">
+      ডাঃ আফিফ বাশার | ২৪ ঘণ্টা অনলাইন সেবা চালু | Dr Live ও Shukhee অ্যাপে ভিডিও কল
+    </marquee>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-md mx-auto px-5 py-10 text-center">
+
+    <img src="Profile.jpg" alt="ডাঃ আফিফ বাশার" 
+         class="w-40 h-40 rounded-full mx-auto border-4 border-white/50 shadow-2xl animate-float hover:scale-110 transition">
+
+    <h1 class="text-4xl font-bold mt-8">ডাঃ আফিফ বাশার</h1>
+    <p class="text-lg opacity-90 mt-3 leading-relaxed">
+      এমবিবিএস, এমআরসিএস পার্ট এ (ইংল্যান্ড)<br>
+      মেডিসিন, শিশুরোগ ও চর্মরোগ বিশেষজ্ঞ
+    </p>
+
+    <!-- Consultation Links -->
+    <div class="mt-12 space-y-5">
+      <a href="https://play.google.com/store/apps/details?id=com.mobu.drlivepatient" target="_blank"
+         class="block bg-white/20 hover:bg-white/30 backdrop-blur-lg border border-white/30 py-6 rounded-2xl text-xl font-bold transition-all hover:-translate-y-2 shadow-2xl">
+        ভিডিও কল - Dr Live অ্যাপ
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.shukhee.patientapp" target="_blank"
+         class="block bg-white/20 hover:bg-white/30 backdrop-blur-lg border border-white/30 py-6 rounded-2xl text-xl font-bold transition-all hover:-translate-y-2 shadow-2xl">
+        অ্যাপয়েন্টমেন্ট - Shukhee অ্যাপ
+      </a>
+
+      <a href="https://m.me/drafifbashar" target="_blank"
+         class="block bg-white/20 hover:bg-white/30 backdrop-blur-lg border border-white/30 py-6 rounded-2xl text-xl font-bold transition-all hover:-translate-y-2 shadow-2xl">
+        মেসেঞ্জারে মেসেজ করুন
+      </a>
     </div>
 
-    <!-- Social Popup -->
-    <div id="socialPopup">
-        <h4>Follow Dr. Afif Bashar</h4>
-        <a href="https://facebook.com/drafifbashar" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="https://x.com/afifbashar" target="_blank"><i class="fab fa-x-twitter"></i> X</a>
-        <a href="https://linkedin.com/in/afifbashar" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="https://instagram.com/drafifbashar" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://youtube.com/@drafifbashar" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-        <a href="https://tiktok.com/@drafifbashar" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-        <a href="http://afifbashar.free.nf" target="_blank">Visit My Other Website</a>
-        <button class="btn btn-primary mt-3" onclick="document.getElementById('socialPopup').style.display='none'">Close</button>
+    <!-- Social Icons -->
+    <div class="flex justify-center gap-10 mt-16 text-4xl">
+      <a href="https://facebook.com/drafifbashar" target="_blank" class="hover:scale-125 transition">F</a>
+      <a href="https://instagram.com/drafifbashar" target="_blank" class="hover:scale-125 transition">I</a>
+      <a href="https://youtube.com/@drafifbashar" target="_blank" class="hover:scale-125 transition">Y</a>
+      <a href="https://tiktok.com/@drafifbashar" target="_blank" class="hover:scale-125 transition">T</a>
+      <a href="https://x.com/afifbashar" target="_blank" class="hover:scale-125 transition">X</a>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Dr. Afif Bashar<br><small>MBBS, MRCS Part A (England)</small></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#videos">Videos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#calculator">Calculator</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Notice Bar -->
-    <div class="notice-bar">
-        <div class="container">
-            <marquee class="bengali-text">
-                গ্যাস্ট্রিকের সমস্যা কমাতে চাইলে এই নিয়মগুলো মেনে চলুন: খাদ্যাভ্যাস ঠিক করুন - বেশি মশলাদার খাবার, চা, কফি, কোমল পানীয় কম খান। ফলমূল, শাকসবজি আর হালকা খাবার বেশি খান।
-            </marquee>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="hero" class="text-center">
-        <div class="container">
-            <h1 class="display-4 mb-4" data-aos="fade-up">Dr. Afif Bashar</h1>
-            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">MBBS, MRCS Part A (England)</p>
-            <a href="#contact" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="200">Schedule Consultation</a>
-            <div class="mt-4" data-aos="fade-up" data-aos-delay="250">
-                <div id="clock" class="display-6 mb-2"></div>
-                <div id="date" class="lead"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6" data-aos="fade-right">
-                    <img src="Profile.jpg" alt="Dr. Afif Bashar" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
-                </div>
-                <div class="col-md-6" data-aos="fade-left">
-                    <h2 class="mb-4">About Me</h2>
-                    <p class="lead">MBBS, MRCS Part A (England)</p>
-                    <p>Dedicated medical professional with expertise in Medicine, Surgery, pediatric care, and dermatology.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Education</h2>
-            <div class="row">
-                <div class="col-md-6" data-aos="fade-right">
-                    <h4>MRCS Part A</h4>
-                    <p>Royal College of Surgeons England</p>
-                    <p>Pass 2024</p>
-                </div>
-                <div class="col-md-6" data-aos="fade-left">
-                    <h4>Bachelor of Medicine and Bachelor of Surgery</h4>
-                    <p>University of Dhaka, Bangladesh</p>
-                    <p>Pass May, 2022</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Courses & Certifications</h2>
-            <ul class="list-unstyled" data-aos="fade-up">
-                <li>Advanced Cardiac Life Support & Basic Life Support, Via Medtigo, 2022</li>
-                <li>International Summer Course on Public Health, Universitas Muhammadiyah Kalimantan Timur, 2023</li>
-                <li>Certificate Course on Diabetes, Genesis Online University, 2021</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- Videos Section -->
-    <section id="videos" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Latest Videos</h2>
-            <div class="video-grid" id="videoGrid" data-aos="fade-up">
-                <iframe src="https://www.youtube.com/embed/fr6fFCAdJbU" frameborder="0" allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/sHv4L_GT6XY" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Services</h2>
-            <div class="row g-4">
-                <div class="col-md-3" data-aos="fade-up">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-user-md fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Medical Consultation</h5>
-                            <p class="card-text">Comprehensive medical consultations.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-baby fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Pediatric Care</h5>
-                            <p class="card-text">Healthcare services for children.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-allergies fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Dermatology</h5>
-                            <p class="card-text">Treatment of skin conditions.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-procedures fa-3x mb-3 text-primary"></i>
-                            <h5 class="card-title">Surgical Consultations</h5>
-                            <p class="card-text">Pre and post-operative care.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BMI Calculator Section -->
-    <section id="calculator" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">BMI Calculator</h2>
-            <div id="bmi-importance" data-aos="fade-up">
-                <p><strong>Importance of BMI:</strong> Body Mass Index (BMI) is a simple tool to assess whether your weight is healthy for your height. It helps identify risks of health issues like heart disease, diabetes, and more.</p>
-                <p class="bengali-text"><strong>বিএমআই-এর গুরুত্ব:</strong> বডি মাস ইনডেক্স (বিএমআই) হলো একটি সহজ উপায় যা আপনার উচ্চতার সাথে আপনার ওজন স্বাস্থ্যকর কিনা তা নির্ধারণ করে। এটি হৃদরোগ, ডায়াবেটিস এবং অন্যান্য স্বাস্থ্য সমস্যার ঝুঁকি চিহ্নিত করতে সাহায্য করে।</p>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-11" data-aos="fade-up">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label">Height / উচ্চতা</label>
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="number" class="form-control" id="heightFeet" placeholder="Feet / ফুট" min="0">
-                                    </div>
-                                    <div class="col">
-                                        <input type="number" class="form-control" id="heightInch" placeholder="Inch / ইঞ্চি" min="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Weight (kg) / ওজন (কেজি)</label>
-                                <input type="number" class="form-control" id="weightKg" step="0.1" min="0" placeholder="Enter your weight / আপনার ওজন লিখুন">
-                            </div>
-                            <button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI / বিএমআই গণনা করুন</button>
-                            <div id="bmiResult" class="mt-4"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Contact Me</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4" data-aos="fade-right">
-                    <form action="https://formspree.io/f/mgveelyo" method="POST">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" name="message" rows="4" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-                <div class="col-md-6" data-aos="fade-left">
-                    <div class="d-flex flex-column h-100">
-                        <div class="consultation-links mb-4">
-                            <h4>Quick Consultation</h4>
-                            <a href="https://wa.me/+8801794519139" class="btn btn-primary mb-2 w-100"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
-                            <a href="https://m.me/drafifbashar" class="btn btn-primary w-100"><i class="fab fa-facebook-messenger me-2"></i>Messenger</a>
-                        </div>
-                        <div class="social-links mt-3">
-                            <h4>Follow Me</h4>
-                            <div class="d-flex justify-content-center flex-wrap">
-                                <a href="https://facebook.com/drafifbashar" target="_blank"><i class="fab fa-facebook"></i></a>
-                                <a href="https://x.com/afifbashar" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                                <a href="https://linkedin.com/in/afifbashar" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://instagram.com/drafifbashar" target="_blank"><i class="fab fa-instagram"></i></a>
-                                <a href="https://youtube.com/@drafifbashar" target="_blank"><i class="fab fa-youtube"></i></a>
-                                <a href="https://tiktok.com/@drafifbashar" target="_blank"><i class="fab fa-tiktok"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-4">
-        <div class="container text-center">
-            <p class="mb-0">© 2025 Dr. Afif Bashar. All rights reserved.</p>
-        </div>
+    <footer class="mt-20 text-sm opacity-80">
+      © ২০২৫ ডাঃ আফিফ বাশার • সকল অধিকার সংরক্ষিত<br>
+      <small class="block mt-2">জরুরি অবস্থায় নিকটস্থ হাসপাতালে যোগাযোগ করুন</small>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({ duration: 800, once: true });
-
-        // Preloader
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('preloader').style.display = 'none';
-                setTimeout(() => {
-                    document.getElementById('socialPopup').style.display = 'block';
-                }, 5000); // Popup after 5 seconds
-            }, 2000); // Preloader for 2 seconds
-        });
-
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Clock and Date
-        function updateDateTime() {
-            const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString();
-            document.getElementById('date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
-
-        // Improved BMI Calculator
-        function calculateBMI() {
-            const feet = parseFloat(document.getElementById('heightFeet').value) || 0;
-            const inches = parseFloat(document.getElementById('heightInch').value) || 0;
-            const weight = parseFloat(document.getElementById('weightKg').value) || 0;
-            const resultDiv = document.getElementById('bmiResult');
-
-            if (feet <= 0 && inches <= 0) {
-                resultDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid height. / অনুগ্রহ করে সঠিক উচ্চতা লিখুন।</div>';
-                return;
-            }
-            if (weight <= 0) {
-                resultDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid weight. / অনুগ্রহ করে সঠিক ওজন লিখুন।</div>';
-                return;
-            }
-
-            const totalInches = (feet * 12) + inches;
-            const heightMeters = totalInches * 0.0254; // Convert inches to meters
-            const bmi = (weight / (heightMeters * heightMeters)).toFixed(1);
-
-            let category = '';
-            let categoryBangla = '';
-            let suggestion = '';
-            let suggestionBangla = '';
-
-            if (bmi < 18.5) {
-                category = 'Underweight';
-                categoryBangla = 'কম ওজন';
-                suggestion = 'Consider consulting a doctor or nutritionist to gain weight healthily.';
-                suggestionBangla = 'স্বাস্থ্যকরভাবে ওজন বাড়ানোর জন্য ডাক্তার বা পুষ্টিবিদের সাথে পরামর্শ করুন।';
-            } else if (bmi >= 18.5 && bmi < 25) {
-                category = 'Normal weight';
-                categoryBangla = 'স্বাভাবিক ওজন';
-                suggestion = 'Maintain your current lifestyle with a balanced diet and regular exercise.';
-                suggestionBangla = 'সুষম খাদ্য এবং নিয়মিত ব্যায়ামের মাধ্যমে আপনার বর্তমান জীবনধারা বজায় রাখুন।';
-            } else if (bmi >= 25 && bmi < 30) {
-                category = 'Overweight';
-                categoryBangla = 'অতিরিক্ত ওজন';
-                suggestion = 'Incorporate more physical activity and a balanced diet to manage your weight.';
-                suggestionBangla = 'ওজন নিয়ন্ত্রণের জন্য আরও শারীরিক কার্যকলাপ এবং সুষম খাদ্য গ্রহণ করুন।';
-            } else {
-                category = 'Obese';
-                categoryBangla = 'স্থূলতা';
-                suggestion = 'Seek medical advice to create a plan for weight loss and reduce health risks.';
-                suggestionBangla = 'ওজন কমানোর পরিকল্পনা এবং স্বাস্থ্য ঝুঁকি কমাতে চিকিৎসকের পরামর্শ নিন।';
-            }
-
-            resultDiv.innerHTML = `
-                <div class="alert alert-info">
-                    <h5>Your BMI / আপনার বিএমআই: ${bmi}</h5>
-                    <p>Category / শ্রেণী: ${category} (${categoryBangla})</p>
-                    <p><strong>Suggestion / পরামর্শ:</strong> ${suggestion}</p>
-                    <p class="bengali-text"><strong>পরামর্শ:</strong> ${suggestionBangla}</p>
-                </div>
-            `;
-        }
-    </script>
+  </div>
 </body>
 </html>
