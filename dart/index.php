@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 requireLogin();
-
 $doctor_id = $_SESSION['user_id'];
 $success = $error = '';
 $is_template = isset($_GET['template']) && $_GET['template'] == '1';
@@ -11,62 +10,43 @@ date_default_timezone_set('Asia/Dhaka');
 
 // Initialize form data
 $form_data = [
-    'bp' => '',
-    'pulse' => '',
-    'temperature' => '',
-    'spo2' => '',
-    'chief_complaints' => '',
-    'medical_history' => '',
-    'examination_findings' => '',
-    'diagnosis' => '',
-    'investigation' => '',
-    'advice' => '',
-    'next_visit' => '',
+    'bp' => '', 'pulse' => '', 'temperature' => '', 'spo2' => '',
+    'chief_complaints' => '', 'medical_history' => '', 'examination_findings' => '',
+    'diagnosis' => '', 'investigation' => '', 'advice' => '', 'next_visit' => '',
     'drugs' => []
 ];
 
-// Load from template
+// Load template data if creating from a template
+$template_data = null;
 if ($from_template) {
     $sql = "SELECT * FROM prescriptions WHERE id = ? AND is_template = 1 AND doctor_id = ?";
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "ii", $from_template, $doctor_id);
+        mysqli_stmt_bind_param($stmt, "ii", $from_template, $_SESSION['user_id']);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         $template_data = mysqli_fetch_assoc($result);
-
+        
         if ($template_data) {
-            $form_data = [
-                'bp' => $template_data['bp'] ?? '',
-                'pulse' => $template_data['pulse'] ?? '',
-                'temperature' => $template_data['temperature'] ?? '',
-                'spo2' => $template_data['spo2'] ?? '',
-                'chief_complaints' => $template_data['chief_complaints'] ?? '',
-                'medical_history' => $template_data['medical_history'] ?? '',
-                'examination_findings' => $template_data['examination_findings'] ?? '',
-                'diagnosis' => $template_data['diagnosis'] ?? '',
-                'investigation' => $template_data['investigation'] ?? '',
-                'advice' => $template_data['advice'] ?? '',
-                'next_visit' => $template_data['next_visit'] ?? '',
-                'drugs' => []
-            ];
-
-            $drug_sql = "SELECT pd.*, d.brand_name, d.generic_name, d.strength, d.manufacturer, d.drug_class, d.price 
-                         FROM prescription_drugs pd 
-                         LEFT JOIN drugs d ON pd.drug_id = d.id 
-                         WHERE pd.prescription_id = ?";
-            if ($drug_stmt = mysqli_prepare($conn, $drug_sql)) {
-                mysqli_stmt_bind_param($drug_stmt, "i", $from_template);
-                mysqli_stmt_execute($drug_stmt);
-                $drug_result = mysqli_stmt_get_result($drug_stmt);
-                while ($d = mysqli_fetch_assoc($drug_result)) {
-                    $form_data['drugs'][] = $d;
+            $form_data = array_merge($form_data, $template_data);
+            $sql = "SELECT pd.*, d.brand_name, d.generic_name, d.strength, d.manufacturer, d.drug_class, d.price 
+                   FROM prescription_drugs pd 
+                   LEFT JOIN drugs d ON pd.drug_id = d.id 
+                   WHERE pd.prescription_id = ?";
+            if ($stmt = mysqli_prepare($conn, $sql)) {
+                mysqli_stmt_bind_param($stmt, "i", $from_template);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $template_drugs = [];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $template_drugs[] = $row;
                 }
+                $form_data['drugs'] = $template_drugs;
             }
         }
     }
 }
 
-// Load templates for dropdowns
+// Load all templates
 $template_types = [
     'frequency' => 'frequency_templates',
     'duration' => 'duration_templates',
@@ -84,60 +64,11 @@ foreach ($template_types as $type => $table) {
     $templates[$type] = [];
     $sql = "SELECT * FROM $table WHERE doctor_id = ? OR is_default = 1 ORDER BY is_default DESC, name";
     if ($stmt = mysqli_prepare($conn, $sql)) {
-        mysqli_stmt_bind_param($stmt, "i", $doctor_id);
+        mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         while ($row = mysqli_fetch_assoc($result)) {
             $templates[$type][] = $row;
-        }
-    }
-}
-
-// Handle submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient_id = $is_template ? null : (int)$_POST['patient_id'];
-    $title = $is_template ? trim($_POST['title']) : null;
-    $drugs = $_POST['drugs'] ?? [];
-
-    $bp = trim($_POST['bp'] ?? '');
-    $pulse = trim($_POST['pulse'] ?? '');
-    $temperature = trim($_POST['temperature'] ?? '');
-    $spo2 = trim($_POST['spo2'] ?? '');
-    $chief_complaints = trim($_POST['chief_complaints'] ?? '');
-    $medical_history = trim($_POST['medical_history'] ?? '');
-    $examination_findings = trim($_POST['examination_findings'] ?? '');
-    $diagnosis = trim($_POST['diagnosis'] ?? '');
-    $investigation = trim($_POST['investigation'] ?? '');
-    $advice = trim($_POST['advice'] ?? '');
-    $next_visit = trim($_POST['next_visit'] ?? '');
-
-    $sql = "INSERT INTO prescriptions (patient_id, doctor_id, bp, pulse, temperature, spo2, chief_complaints, medical_history, examination_findings, diagnosis, investigation, advice, next_visit, created_at, is_template, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-        $is_template_int = $is_template ? 1 : 0;
-        mysqli_stmt_bind_param($stmt, "iisssssssssssis", $patient_id, $doctor_id, $bp, $pulse, $temperature, $spo2, $chief_complaints, $medical_history, $examination_findings, $diagnosis, $investigation, $advice, $next_visit, $is_template_int, $title);
-        if (mysqli_stmt_execute($stmt)) {
-            $prescription_id = mysqli_insert_id($conn);
-
-            foreach ($drugs as $drug) {
-                $drug_id = $drug['drug_id'] ?? null;
-                $drug_name = $drug['drug_name'] ?? '';
-                $dosage = $drug['dosage'] ?? '';
-                $frequency = $drug['frequency'] ?? '';
-                $duration = $drug['duration'] ?? '';
-                $instructions = $drug['instructions'] ?? '';
-
-                $drug_sql = "INSERT INTO prescription_drugs (prescription_id, drug_id, drug_name, dosage, frequency, duration, instructions) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                if ($drug_stmt = mysqli_prepare($conn, $drug_sql)) {
-                    mysqli_stmt_bind_param($drug_stmt, "iisssss", $prescription_id, $drug_id, $drug_name, $dosage, $frequency, $duration, $instructions);
-                    mysqli_stmt_execute($drug_stmt);
-                }
-            }
-
-            $success = $is_template ? "Template created successfully!" : "Prescription created successfully!";
-            header("Location: prescriptions.php");
-            exit;
-        } else {
-            $error = "Error creating prescription.";
         }
     }
 }
@@ -154,15 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <script src="assets/tinymce/tinymce.min.js"></script>
     <style>
         body { background: #f8f9fa; font-family: 'Poppins', sans-serif; }
-        .main-card { border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
-        .section-header { background: #4361ee; color: white; padding: 15px 20px; font-weight: 600; cursor: pointer; border-radius: 12px; margin-bottom: 10px; }
-        .section-body { background: white; border-radius: 0 0 12px 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .card { border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
         .form-label { font-weight: 600; color: #4361ee; }
         .btn-primary { background: #4361ee; border: none; }
-        .btn-success { background: #28a745; border: none; }
-        .drug-row { background: #f1f3f5; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
         .suggestion-box {
             position: absolute;
             top: 100%;
@@ -183,134 +111,146 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cursor: pointer;
         }
         .suggestion-item:hover { background: #f0f0f0; }
-        @media (max-width: 768px) {
-            .row > div { margin-bottom: 1rem; }
-            .btn { font-size: 0.9rem; }
-        }
+        .drug-row { background: #f1f3f5; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
 
     <div class="container py-5">
-        <div class="main-card bg-white">
-            <form method="POST" id="prescriptionForm">
-                <!-- Patient Section -->
-                <div class="section-card mb-4">
-                    <div class="section-header">Patient Information</div>
-                    <div class="section-body">
-                        <div class="row g-3">
-                            <div class="col-lg-8">
-                                <select name="patient_id" class="form-select select2" <?php echo $is_template ? 'disabled' : 'required'; ?>>
-                                    <option value="">Select patient...</option>
-                                    <?php
-                                    $sql = "SELECT id, name, patient_uid, age, sex FROM patients WHERE doctor_id = ? ORDER BY name";
-                                    if ($stmt = mysqli_prepare($conn, $sql)) {
-                                        mysqli_stmt_bind_param($stmt, "i", $doctor_id);
-                                        mysqli_stmt_execute($stmt);
-                                        $result = mysqli_stmt_get_result($stmt);
-                                        while ($p = mysqli_fetch_assoc($result)) {
-                                            echo "<option value='{$p['id']}'>{$p['name']} ({$p['patient_uid']}) - {$p['age']}y/{$p['sex']}</option>";
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0"><?php echo $is_template ? 'Create Template' : 'Create Prescription'; ?></h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="prescriptionForm">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-lg-6">
+                            <!-- Patient Selection -->
+                            <div class="mb-4">
+                                <label class="form-label">Select Patient</label>
+                                <div class="input-group">
+                                    <select name="patient_id" class="form-select select2" <?php echo $is_template ? 'disabled' : 'required'; ?>>
+                                        <option value="">Search patient...</option>
+                                        <?php
+                                        $sql = "SELECT id, name, patient_uid, age, sex FROM patients WHERE doctor_id = ? ORDER BY name";
+                                        if ($stmt = mysqli_prepare($conn, $sql)) {
+                                            mysqli_stmt_bind_param($stmt, "i", $doctor_id);
+                                            mysqli_stmt_execute($stmt);
+                                            $result = mysqli_stmt_get_result($stmt);
+                                            while ($p = mysqli_fetch_assoc($result)) {
+                                                echo "<option value='{$p['id']}'>{$p['name']} ({$p['patient_uid']}) - {$p['age']}y/{$p['sex']}</option>";
+                                            }
                                         }
-                                    }
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addPatientModal">
+                                        Quick Add
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#scanPatientModal">
+                                        Scan QR
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-lg-4 d-flex gap-2">
-                                <button type="button" class="btn btn-outline-primary flex-fill" data-bs-toggle="modal" data-bs-target="#addPatientModal">
-                                    Quick Add
-                                </button>
-                                <button type="button" class="btn btn-outline-secondary flex-fill" data-bs-toggle="modal" data-bs-target="#scanPatientModal">
-                                    Scan QR
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Vitals Section -->
-                <div class="section-card mb-4">
-                    <div class="section-header">Vitals</div>
-                    <div class="section-body">
-                        <div class="row g-3">
-                            <div class="col-md-3">
-                                <input type="text" name="bp" class="form-control" placeholder="BP" value="<?php echo htmlspecialchars($form_data['bp']); ?>">
+                            <!-- Vitals -->
+                            <div class="mb-4">
+                                <label class="form-label">Vitals</label>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <input type="text" name="bp" class="form-control" placeholder="BP" value="<?php echo htmlspecialchars($form_data['bp']); ?>">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="pulse" class="form-control" placeholder="Pulse" value="<?php echo htmlspecialchars($form_data['pulse']); ?>">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="temperature" class="form-control" placeholder="Temperature" value="<?php echo htmlspecialchars($form_data['temperature']); ?>">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="spo2" class="form-control" placeholder="SpO2" value="<?php echo htmlspecialchars($form_data['spo2']); ?>">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" name="pulse" class="form-control" placeholder="Pulse" value="<?php echo htmlspecialchars($form_data['pulse']); ?>">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" name="temperature" class="form-control" placeholder="Temperature" value="<?php echo htmlspecialchars($form_data['temperature']); ?>">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" name="spo2" class="form-control" placeholder="SpO2" value="<?php echo htmlspecialchars($form_data['spo2']); ?>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Clinical Section -->
-                <div class="section-card mb-4">
-                    <div class="section-header">Clinical Information</div>
-                    <div class="section-body">
-                        <div class="row g-3">
-                            <div class="col-lg-6 position-relative">
-                                <textarea name="chief_complaints" id="chief_complaints" class="form-control" rows="3" placeholder="Chief Complaints"><?php echo htmlspecialchars($form_data['chief_complaints']); ?></textarea>
+                            <!-- Clinical Fields -->
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Chief Complaints</label>
+                                <textarea name="chief_complaints" id="chief_complaints" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['chief_complaints']); ?></textarea>
                                 <div id="suggestions-chief_complaints" class="suggestion-box"></div>
                             </div>
-                            <div class="col-lg-6 position-relative">
-                                <textarea name="medical_history" id="medical_history" class="form-control" rows="3" placeholder="Medical History"><?php echo htmlspecialchars($form_data['medical_history']); ?></textarea>
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Medical History</label>
+                                <textarea name="medical_history" id="medical_history" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['medical_history']); ?></textarea>
                                 <div id="suggestions-medical_history" class="suggestion-box"></div>
                             </div>
-                            <!-- Add other fields similarly -->
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Examination Findings</label>
+                                <textarea name="examination_findings" id="examination_findings" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['examination_findings']); ?></textarea>
+                                <div id="suggestions-examination_findings" class="suggestion-box"></div>
+                            </div>
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Diagnosis</label>
+                                <textarea name="diagnosis" id="diagnosis" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['diagnosis']); ?></textarea>
+                                <div id="suggestions-diagnosis" class="suggestion-box"></div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-lg-6">
+                            <!-- Drugs -->
+                            <div class="mb-4">
+                                <label class="form-label">Medicines</label>
+                                <div id="drugsList">
+                                    <?php foreach ($form_data['drugs'] as $index => $drug): ?>
+                                        <!-- তোমার আগের drug row code -->
+                                    <?php endforeach; ?>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary mt-2" id="addDrugRow">
+                                    Add Medicine
+                                </button>
+                            </div>
+
+                            <!-- Investigation & Advice -->
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Investigation</label>
+                                <textarea name="investigation" id="investigation" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['investigation']); ?></textarea>
+                                <div id="suggestions-investigation" class="suggestion-box"></div>
+                            </div>
+                            <div class="mb-4 position-relative">
+                                <label class="form-label">Advice</label>
+                                <textarea name="advice" id="advice" class="form-control" rows="3"><?php echo htmlspecialchars($form_data['advice']); ?></textarea>
+                                <div id="suggestions-advice" class="suggestion-box"></div>
+                            </div>
+
+                            <!-- Next Visit -->
+                            <div class="mb-4">
+                                <label class="form-label">Next Visit</label>
+                                <input type="date" name="next_visit" class="form-control" value="<?php echo $form_data['next_visit']; ?>">
+                            </div>
+
+                            <?php if (!$is_template): ?>
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" name="save_as_template">
+                                    <label class="form-check-label">
+                                        Save as Template
+                                    </label>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
-                </div>
 
-                <!-- Drugs Section -->
-                <div class="section-card mb-4">
-                    <div class="section-header">Medicines</div>
-                    <div class="section-body">
-                        <div id="drugsList">
-                            <!-- Drug rows -->
-                        </div>
-                        <button type="button" class="btn btn-outline-primary mt-3" id="addDrugRow">
-                            Add Medicine
-                        </button>
+                    <!-- Submit -->
+  <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="prescriptions.php" class="btn btn-light"><i class='bx bx-x me-1'></i>Cancel</a>
+                        <button type="submit" class="btn btn-primary"><i class='bx bx-save me-1'></i>Save <?php echo $is_template ? "Template" : "Prescription"; ?></button>
                     </div>
-                </div>
-
-                <!-- Next Visit -->
-                <div class="section-card mb-4">
-                    <div class="section-header">Next Visit</div>
-                    <div class="section-body">
-                        <input type="date" name="next_visit" class="form-control" value="<?php echo $form_data['next_visit']; ?>">
-                    </div>
-                </div>
-
-                <!-- Save as Template -->
-                <?php if (!$is_template): ?>
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" name="save_as_template" id="saveAsTemplate">
-                        <label class="form-check-label" for="saveAsTemplate">
-                            Save as Template
-                        </label>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Submit Buttons -->
-                <div class="text-end">
-                    <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel</button>
-                    <button type="submit" class="btn btn-primary btn-lg px-5">
-                        <i class='bx bx-save me-2'></i> Save
-                    </button>
-                    <button type="button" class="btn btn-success btn-lg px-5 ms-2" onclick="printPreview()">
-                        <i class='bx bx-printer me-2'></i> Print Preview
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
+    <!-- তোমার আগের মডালগুলো + JS (Select2, QR Scan, Drug Add, Auto-Suggestion, Print Preview) রাখো --
 
     <!-- Modals and Scripts -->
 
