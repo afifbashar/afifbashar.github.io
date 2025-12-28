@@ -3,52 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mulerouter AI Image Generator</title>
+    <title>Mulerouter AI Text Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background: #f4f4f4;
         }
-        input, button {
+        input, textarea, button {
             padding: 10px;
             margin: 5px 0;
             width: 100%;
+            box-sizing: border-box;
         }
-        img {
+        #output {
             margin-top: 20px;
-            max-width: 100%;
+            padding: 15px;
+            background: #fff;
             border: 1px solid #ccc;
+            min-height: 100px;
+            white-space: pre-wrap;
         }
     </style>
 </head>
 <body>
-    <h2>Mulerouter AI Image Generator</h2>
+    <h2>Mulerouter AI Text Generator</h2>
     
     <label for="prompt">Prompt:</label>
-    <input type="text" id="prompt" placeholder="A beautiful sunset over the mountains" value="A beautiful sunset over the mountains">
+    <textarea id="prompt" rows="4" placeholder="Type your prompt here...">Once upon a time</textarea>
 
-    <label for="aspect">Aspect Ratio:</label>
-    <input type="text" id="aspect" placeholder="5:4" value="5:4">
+    <button id="generateBtn">Generate Text</button>
 
-    <label for="resolution">Resolution:</label>
-    <input type="text" id="resolution" placeholder="2K" value="2K">
-
-    <button id="generateBtn">Generate Image</button>
-
-    <div id="result">
-        <img id="generatedImage" src="" alt="" />
-    </div>
+    <div id="output"></div>
 
     <script>
         const generateBtn = document.getElementById('generateBtn');
-        const generatedImage = document.getElementById('generatedImage');
+        const output = document.getElementById('output');
 
         generateBtn.addEventListener('click', async () => {
             const prompt = document.getElementById('prompt').value;
-            const aspect_ratio = document.getElementById('aspect').value;
-            const resolution = document.getElementById('resolution').value;
-
             const token = "sk-mr-4069f4bb3d7aedf6f65123ecce078979886d1d143511748a9fcf73257d119df7"; // এখানে তোমার API key বসাও
 
             try {
@@ -60,23 +53,23 @@
                     },
                     body: JSON.stringify({
                         prompt: prompt,
-                        aspect_ratio: aspect_ratio,
-                        resolution: resolution
+                        type: "text",  // Text generation জন্য
+                        max_tokens: 200 // যত টেক্সট generate করতে চাও
                     })
                 });
 
                 const data = await response.json();
 
-                // ধরছি API রেসপন্সে image URL আছে data.url এ
-                if(data.url){
-                    generatedImage.src = data.url;
+                // ধরছি API রেসপন্সে generated text আছে data.text এ
+                if(data.text){
+                    output.textContent = data.text;
                 } else {
-                    generatedImage.alt = "Image generation failed!";
+                    output.textContent = "Text generation failed!";
                     console.error(data);
                 }
             } catch (error) {
                 console.error('Error:', error);
-                generatedImage.alt = "Error generating image";
+                output.textContent = "Error generating text";
             }
         });
     </script>
