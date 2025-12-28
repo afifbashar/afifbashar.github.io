@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Afif Bashar AI Prescription Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; }
         .english { font-family: 'Roboto', sans-serif; }
@@ -16,41 +16,41 @@
         <h1 class="text-3xl font-bold text-center text-blue-800 mb-8">
             Dr. Afif Bashar AI Prescription Assistant
         </h1>
-        <p class="text-center text-gray-600 mb-8">পেশেন্টের তথ্য দিন — AI সাজেস্টেড প্রেসক্রিপশন তৈরি করবে (শিক্ষামূলক উদ্দেশ্যে)</p>
+        <p class="text-center text-gray-600 mb-8">পেশেন্টের তথ্য দিন (শুধু Diagnosis দিয়েও চলবে) — শিক্ষামূলক উদ্দেশ্যে</p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-                <label class="block text-gray-700 font-semibold mb-2">বয়স (Age) <span class="text-gray-500 text-sm">(ঐচ্ছিক)</span></label>
-                <input type="text" id="age" placeholder="যেমন: ৩৫" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-gray-700 font-semibold mb-2">বয়স (Age) <span class="text-gray-500 text-sm font-normal">(ঐচ্ছিক)</span></label>
+                <input type="text" id="age" placeholder="e.g. 35" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             <div>
-                <label class="block text-gray-700 font-semibold mb-2">লিঙ্গ (Sex) <span class="text-gray-500 text-sm">(ঐচ্ছিক)</span></label>
+                <label class="block text-gray-700 font-semibold mb-2">লিঙ্গ (Sex) <span class="text-gray-500 text-sm font-normal">(ঐচ্ছিক)</span></label>
                 <select id="sex" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">নির্বাচন করুন</option>
-                    <option value="পুরুষ">পুরুষ</option>
-                    <option value="মহিলা">মহিলা</option>
-                    <option value="অন্যান্য">অন্যান্য</option>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
         </div>
 
         <div class="mb-6">
-            <label class="block text-gray-700 font-semibold mb-2">প্রধান অভিযোগসমূহ (Chief Complaints) <span class="text-gray-500 text-sm">(ঐচ্ছিক)</span></label>
-            <textarea id="complaints" rows="3" placeholder="যেমন: জ্বর, গলা ব্যথা, কাশি ৩ দিন ধরে" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <label class="block text-gray-700 font-semibold mb-2">প্রধান অভিযোগসমূহ (Chief Complaints) <span class="text-gray-500 text-sm font-normal">(ঐচ্ছিক)</span></label>
+            <textarea id="complaints" rows="3" placeholder="e.g. Fever, sore throat, cough for 3 days" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         </div>
 
         <div class="mb-6">
-            <label class="block text-gray-700 font-semibold mb-2">ইতিহাস (History) <span class="text-gray-500 text-sm">(ঐচ্ছিক)</span></label>
-            <textarea id="history" rows="4" placeholder="যেমন: ডায়াবেটিস আছে, পেনিসিলিন অ্যালার্জি ইত্যাদি..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <label class="block text-gray-700 font-semibold mb-2">ইতিহাস (History) <span class="text-gray-500 text-sm font-normal">(ঐচ্ছিক)</span></label>
+            <textarea id="history" rows="4" placeholder="e.g. Known diabetic, allergic to penicillin etc." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         </div>
 
         <div class="mb-6">
             <label class="block text-gray-700 font-semibold mb-2 text-red-600">সাময়িক রোগ নির্ণয় (Provisional Diagnosis) <span class="text-red-500">*</span></label>
-            <input type="text" id="diagnosis" placeholder="যেমন: Acute Viral Fever বা Hypertension" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" id="diagnosis" placeholder="e.g. Acute Tonsillitis, Hypertension, Viral Fever" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
         <button id="generateBtn" class="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold py-4 rounded-lg hover:from-blue-700 hover:to-green-700 transition shadow-lg flex items-center justify-center gap-3">
-            <span>প্রেসক্রিপশন তৈরি করুন (AI দিয়ে)</span>
+            <span>Generate Prescription</span>
             <svg id="loadingSpinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.17l-.54-.54A8 8 0 016 5.17l2 2z"></path>
@@ -60,7 +60,7 @@
         <div id="output" class="mt-10 bg-gray-50 p-8 rounded-xl border border-gray-200 hidden">
             <div class="text-5xl font-bold text-center text-blue-700 mb-8">Rx</div>
             <div id="prescriptionContent" class="text-gray-800 leading-relaxed english text-lg"></div>
-            <div id="adviceSection" class="mt-8 pt-6 border-t-2 border-dashed border-gray-300 text-lg"></div>
+            <div id="adviceSection" class="mt-8 pt-6 border-t-2 border-dashed border-gray-300"></div>
         </div>
     </div>
 
@@ -71,96 +71,97 @@
         const prescriptionContent = document.getElementById('prescriptionContent');
         const adviceSection = document.getElementById('adviceSection');
 
-        // ফ্রি মডেল (২০২৫-এর ডিসেম্বরে সবচেয়ে ভালো structured output-এর জন্য)
-        const AI_MODEL = 'google/gemma-3-27b-it:free';  // Gemma 3 structured outputs সাপোর্ট করে
-        const OPENROUTER_API_KEY = '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'; // খালি রাখো (ফ্রি মডেল কাজ করবে), অথবা তোমার key বসাও
-
         generateBtn.addEventListener('click', async () => {
-            const age = document.getElementById('age').value.trim() || 'উল্লেখ নেই';
-            const sex = document.getElementById('sex').value || 'উল্লেখ নেই';
-            const complaints = document.getElementById('complaints').value.trim() || 'উল্লেখ নেই';
-            const history = document.getElementById('history').value.trim() || 'কোনো ইতিহাস নেই';
+            const age = document.getElementById('age').value.trim();
+            const sex = document.getElementById('sex').value;
+            const complaints = document.getElementById('complaints').value.trim();
+            const history = document.getElementById('history').value.trim();
             const diagnosis = document.getElementById('diagnosis').value.trim();
 
             if (!diagnosis) {
-                alert('Provisional Diagnosis অবশ্যই দিন!');
+                alert('Provisional Diagnosis is required!');
                 return;
             }
 
             generateBtn.disabled = true;
             loadingSpinner.classList.remove('hidden');
             output.classList.add('hidden');
-            prescriptionContent.innerHTML = 'প্রেসক্রিপশন তৈরি হচ্ছে...';
+            prescriptionContent.textContent = 'Generating prescription...';
 
-            const prompt = `তুমি Dr. Afif Bashar, একজন অভিজ্ঞ চিকিৎসক।
+            const apiKey = "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"; // Your OpenRouter API Key
 
-পেশেন্টের তথ্য:
-- বয়স: ${age}
-- লিঙ্গ: ${sex}
-- প্রধান অভিযোগ: ${complaints}
-- ইতিহাস: ${history}
-- সাময়িক রোগ নির্ণয়: ${diagnosis}
+            const prompt = `You are an experienced general physician, Dr. Afif Bashar.
 
-একটা নিরাপদ প্রেসক্রিপশন তৈরি করো। শুধু এই রোগের জন্য প্রয়োজনীয় ওষুধ দাও।
+Patient details:
+- Age: ${age || 'Not mentioned'}
+- Sex: ${sex || 'Not mentioned'}
+- Chief complaints: ${complaints || 'Not mentioned'}
+- History: ${history || 'No additional history provided'}
+- Provisional diagnosis: ${diagnosis}
 
-ফরম্যাট (ইংরেজিতে):
+Based on this, generate a safe and rational prescription in the following format:
+
+Write the entire prescription (medicine list) in clear, professional English only.
+
+Example format:
 1. Tab. Paracetamol 500 mg
-   - 1 tablet three times daily after meals
-   - For 5 days
+   - 1 tablet three times daily after meals for 5 days
 
-শেষে আলাদা সেকশন:
+2. Tab. Amoxicillin 500 mg
+   - 1 capsule twice daily after meals for 5 days
+
+(Continue similarly for all required medicines)
+
+After all medicines, add a separate section clearly marked as:
+
 **সাধারণ পরামর্শ (General Advice):**
-- প্রচুর পানি পান করুন এবং বিশ্রাম নিন।
-- হালকা খাবার খান।
-(এই পরামর্শ শুধু বাংলায় লিখো এবং রোগ অনুযায়ী কাস্টমাইজ করো)
+- বিশ্রাম নিন এবং প্রচুর পানি পান করুন।
+- খাবার হালকা ও সহজপাচ্য রাখুন।
+- জ্বর ১০২°F এর উপরে হলে বা উপসর্গ বাড়লে ডাক্তারের সাথে যোগাযোগ করুন।
+(Write all advice in Bengali only)
 
-কোনো অতিরিক্ত কথা লিখো না।`;
+Keep the prescription concise, relevant to the diagnosis only, and adjust dose according to age/sex if provided.`;
 
             try {
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'HTTP-Referer': window.location.origin,
-                    'X-Title': 'AI Prescription Assistant'
-                };
-                if (OPENROUTER_API_KEY) {
-                    headers['Authorization'] = `Bearer ${OPENROUTER_API_KEY}`;
-                }
-
                 const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
-                    headers: headers,
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': window.location.origin,
+                        'X-Title': 'Dr. Afif AI Prescription'
+                    },
                     body: JSON.stringify({
-                        model: AI_MODEL,
+                        model: "openai/gpt-4o-mini",
                         messages: [{ role: "user", content: prompt }],
                         max_tokens: 800,
-                        temperature: 0.5
+                        temperature: 0.7
                     })
                 });
 
                 const data = await response.json();
-
                 if (data.choices && data.choices[0]?.message?.content) {
                     const fullText = data.choices[0].message.content.trim();
 
-                    // Advice আলাদা করো
-                    const adviceMarker = '**সাধারণ পরামর্শ';
+                    // Split prescription and advice
+                    const adviceMarker = "**সাধারণ পরামর্শ (General Advice):**";
                     if (fullText.includes(adviceMarker)) {
                         const parts = fullText.split(adviceMarker);
                         prescriptionContent.innerHTML = parts[0].trim().replace(/\n/g, '<br>');
-                        adviceSection.innerHTML = `<strong class="text-xl text-blue-800">সাধারণ পরামর্শ:</strong><br><br>` + parts[1].trim().replace(/\n/g, '<br>');
+                        adviceSection.innerHTML = `<strong class="text-xl text-blue-800">সাধারণ পরামর্শ (General Advice):</strong><br><br>` + parts[1].trim().replace(/\n/g, '<br>');
                     } else {
+                        // If not separated properly, show all in prescription section
                         prescriptionContent.innerHTML = fullText.replace(/\n/g, '<br>');
                         adviceSection.innerHTML = '';
                     }
-
                     output.classList.remove('hidden');
                 } else {
-                    prescriptionContent.innerHTML = 'প্রেসক্রিপশন তৈরি করতে সমস্যা হয়েছে।';
+                    prescriptionContent.textContent = "Failed to generate prescription.";
                     output.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error(error);
-                prescriptionContent.innerHTML = 'ইন্টারনেট বা AI-তে সমস্যা। আবার চেষ্টা করুন।';
+                prescriptionContent.textContent = "Error: Check internet or API key.";
                 output.classList.remove('hidden');
             } finally {
                 generateBtn.disabled = false;
