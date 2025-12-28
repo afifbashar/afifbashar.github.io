@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenRouter Text Generator</title>
-    <style>
-        body { font-family: Arial; padding: 20px; background: #f4f4f4; }
-        textarea, button { width: 100%; padding: 10px; margin: 5px 0; }
-        #output { margin-top: 20px; padding: 15px; background: #fff; border: 1px solid #ccc; min-height: 100px; white-space: pre-wrap; }
-    </style>
+    <title>Dr. Afif Bashar AI Prescription Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h2>OpenRouter Text Generator</h2>
-    
-    <label for="prompt">Prompt:</label>
-    <textarea id="prompt" rows="4" placeholder="Type your prompt here...">Once upon a time</textarea>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-xl">
+        <h1 class="text-2xl font-bold text-center mb-4">Dr. Afif Bashar AI Prescription Assistant</h1>
 
-    <button id="generateBtn">Generate Text</button>
+        <label class="block text-gray-700 font-semibold mb-2">Enter Diagnosis:</label>
+        <input type="text" id="diagnosis" placeholder="e.g., Hypertension" 
+               class="w-full p-2 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
 
-    <div id="output"></div>
+        <button id="generateBtn" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">Generate Prescription</button>
+
+        <div id="output" class="mt-6 bg-gray-50 p-4 rounded min-h-[150px] whitespace-pre-wrap text-gray-800"></div>
+    </div>
 
     <script>
         const generateBtn = document.getElementById('generateBtn');
         const output = document.getElementById('output');
 
         generateBtn.addEventListener('click', async () => {
-            const prompt = document.getElementById('prompt').value;
-            const apiKey = "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"; // এখানে তোমার OpenRouter API key বসাও
+            const diagnosis = document.getElementById('diagnosis').value.trim();
+            if(!diagnosis){
+                output.textContent = "Please enter a diagnosis!";
+                return;
+            }
 
-            output.textContent = "Generating...";
+            const apiKey = "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"; // তোমার OpenRouter API Key
+
+            output.textContent = "Generating prescription...";
 
             try {
+                const prompt = `
+You are Dr. Afif Bashar, a general physician. 
+Patient diagnosis: ${diagnosis}
+Generate a concise prescription:
+- Medicines only relevant to the diagnosis
+- Include name, dose, frequency, duration, instructions
+- At the end, give general advice
+Format it clearly for patient use.
+`;
+
                 const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
                     headers: {
@@ -38,9 +52,9 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: "gpt-4.1-mini", // Free API compatible model
+                        model: "gpt-4.1-mini",
                         messages: [{ role: "user", content: prompt }],
-                        max_tokens: 200
+                        max_tokens: 300
                     })
                 });
 
@@ -48,12 +62,12 @@
                 if(data.choices && data.choices.length > 0){
                     output.textContent = data.choices[0].message.content;
                 } else {
-                    output.textContent = "Failed to generate text";
+                    output.textContent = "Failed to generate prescription";
                     console.log(data);
                 }
             } catch (error) {
                 console.error(error);
-                output.textContent = "Error generating text";
+                output.textContent = "Error generating prescription";
             }
         });
     </script>
