@@ -191,16 +191,52 @@ while ($row = mysqli_fetch_assoc($result)) $categories[] = $row['category'];
         .card-actions { display: flex; gap: 0.75rem; margin-top: auto; }
         .modal-content { border-radius: 20px; box-shadow: 0 25px 80px rgba(0,0,0,0.3); }
         .modal-header { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border-radius: 20px 20px 0 0; }
-        .ck-editor__editable { min-height: 550px; }
+        .info-badge {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1e40af;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
 
-        /* Compact Toolbar Styles */
-        .ck.ck-toolbar { background: #f8fafc !important; border-bottom: 1px solid #e2e8f0 !important; padding: 4px 8px !important; gap: 4px !important; flex-wrap: wrap !important; font-size: 12px !important; }
-        .ck.ck-button, .ck.ck-dropdown { font-size: 12px !important; padding: 4px 8px !important; min-width: 30px !important; height: 30px !important; border-radius: 4px !important; }
-        .ck.ck-icon { font-size: 12px !important; }
-        .ck.ck-toolbar .ck-toolbar__items { flex-wrap: wrap !important; gap: 3px !important; }
-        .ck.ck-dropdown__panel { font-size: 12px !important; }
-        .ck.ck-list__item .ck-button { padding: 4px 8px !important; }
-    </style>
+        .editor-container {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .editor-container:focus-within {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .ck-editor__editable {
+            min-height: 400px;
+            max-height: 600px;
+        }
+
+        .ck.ck-editor__main > .ck-editor__editable {
+            background: white;
+        }
+
+        .ck.ck-toolbar {
+            border: none !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9) !important;
+            padding: 10px !important;
+        }
+
+        .ck.ck-editor__editable:not(.ck-focused) {
+            border: none !important;
+        }
+
+        .ck-content {
+            font-family: 'Inter', sans-serif;
+        }  </style>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
@@ -347,8 +383,8 @@ while ($row = mysqli_fetch_assoc($result)) $categories[] = $row['category'];
 
         let editor = null;
 
+        
         const editorConfig = {
-            
             plugins: [
                 Essentials, Paragraph, Heading, Bold, Italic, Underline, Strikethrough,
                 Subscript, Superscript, Code, RemoveFormat,
@@ -364,8 +400,10 @@ while ($row = mysqli_fetch_assoc($result)) $categories[] = $row['category'];
                 SpecialCharacters, SpecialCharactersEssentials,
                 WordCount, Autosave
             ],
-                
-                toolbar: {
+                        licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Nzk0OTQzOTksImp0aSI6ImFmYjQ4YTY2LTlmYjctNDg4Mi04YTc3LTk5NWJmNzI3NzQ3NCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6ImYyZGM4YWRhIn0.1NRmv4AyOFfNLVcHmcLSItw4ReASVOxFoiL03Cqnoz4XjcRWXZ-5WzSpKHbkUcaON4tfenP7leb-eLRRfgI-CA',
+
+           
+            toolbar: {
                 items: [
                     'heading', '|',
                     'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
@@ -382,21 +420,63 @@ while ($row = mysqli_fetch_assoc($result)) $categories[] = $row['category'];
                 shouldNotGroupWhenFull: true
             },
             fontFamily: {
-                options: ['default', 'Hind Siliguri, sans-serif', 'Noto Sans Bengali, sans-serif', 'Kalpurush, sans-serif', 'Noto Serif Bengali, serif', 'Baloo Da 2, cursive', 'Tiro Bangla, serif', 'Mukta, sans-serif', 'Inter, sans-serif', 'Roboto, sans-serif', 'Open Sans, sans-serif', 'Lato, sans-serif', 'Montserrat, sans-serif', 'Poppins, sans-serif', 'Playfair Display, serif', 'Merriweather, serif', 'Oswald, sans-serif', 'Raleway, sans-serif', 'Ubuntu, sans-serif', 'Nunito, sans-serif', 'PT Sans, sans-serif', 'Source Sans 3, sans-serif', 'Work Sans, sans-serif'],
+                options: [
+                    'default',
+                    'Hind Siliguri, sans-serif',
+                    'Noto Sans Bengali, sans-serif',
+                    'Kalpurush, sans-serif',
+                    'Noto Serif Bengali, serif',
+                    'Baloo Da 2, cursive',
+                    'Tiro Bangla, serif',
+                    'Mukta, sans-serif',
+                    'Inter, sans-serif',
+                    'Roboto, sans-serif',
+                    'Open Sans, sans-serif',
+                    'Lato, sans-serif',
+                    'Montserrat, sans-serif',
+                    'Poppins, sans-serif',
+                    'Arial, Helvetica, sans-serif',
+                    'Courier New, Courier, monospace',
+                    'Georgia, serif',
+                    'Times New Roman, Times, serif',
+                    'Trebuchet MS, Helvetica, sans-serif',
+                    'Verdana, Geneva, sans-serif'
+                ],
                 supportAllValues: true
             },
-            fontSize: { options: [8,9,10,11,12,14,'default',16,18,20,24,28,32,36,48,72], supportAllValues: true },
-            image: {
-                resizeOptions: [
-                    { name: 'resizeImage:original', value: null, label: 'Original' },
-                    { name: 'resizeImage:50', value: '50', label: '50%' },
-                    { name: 'resizeImage:75', value: '75', label: '75%' },
-                    { name: 'resizeImage:100', value: '100', label: '100%' }
-                ],
-                toolbar: ['imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|', 'toggleImageCaption', 'imageTextAlternative', '|', 'linkImage', '|', 'resizeImage']
+            fontSize: {
+                options: [8, 9, 10, 11, 12, 14, 'default', 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44, 48],
+                supportAllValues: true
             },
-            
-               heading: {
+            fontColor: {
+                columns: 6,
+                colors: [
+                    { color: '#000000', label: 'Black' },
+                    { color: '#ffffff', label: 'White', hasBorder: true },
+                    { color: '#ff0000', label: 'Red' },
+                    { color: '#00ff00', label: 'Green' },
+                    { color: '#0000ff', label: 'Blue' },
+                    { color: '#ffff00', label: 'Yellow' },
+                    { color: '#ff00ff', label: 'Magenta' },
+                    { color: '#00ffff', label: 'Cyan' },
+                    { color: '#1e293b', label: 'Slate' },
+                    { color: '#6366f1', label: 'Indigo' }
+                ]
+            },
+            fontBackgroundColor: {
+                columns: 6,
+                colors: [
+                    { color: '#000000', label: 'Black' },
+                    { color: '#ffffff', label: 'White', hasBorder: true },
+                    { color: '#ff0000', label: 'Red' },
+                    { color: '#00ff00', label: 'Green' },
+                    { color: '#0000ff', label: 'Blue' },
+                    { color: '#ffff00', label: 'Yellow' },
+                    { color: '#ff00ff', label: 'Magenta' },
+                    { color: '#00ffff', label: 'Cyan' }
+                ]
+            },
+            heading: {
                 options: [
                     { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
                     { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
@@ -420,11 +500,14 @@ while ($row = mysqli_fetch_assoc($result)) $categories[] = $row['category'];
                     reversed: true
                 }
             },
-
-            
-            
-            
-            htmlSupport: { allow: [{ name: /.*/, attributes: true, classes: true, styles: true }] }
+            htmlSupport: {
+                allow: [{
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }]
+            }
         };
 
         class UploadAdapter {
