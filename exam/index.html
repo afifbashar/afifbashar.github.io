@@ -2,83 +2,179 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Exam Answer Sheet</title>
+
 <style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .question { margin-bottom: 10px; }
-  .stem { margin-left: 20px; }
-  textarea { width: 100%; height: 280px; margin-top: 15px; }
-  button { padding: 10px 20px; font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+    background: #f4f6f8;
+    margin: 0;
+    padding-bottom: 100px;
+  }
+
+  header {
+    background: #0f172a;
+    color: #fff;
+    padding: 16px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .container {
+    padding: 12px;
+    max-width: 720px;
+    margin: auto;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    color: #0f172a;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .question-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .stem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6px 0;
+  }
+
+  .options label {
+    margin-right: 14px;
+    font-weight: 500;
+  }
+
+  input[type="radio"] {
+    transform: scale(1.2);
+    margin-right: 4px;
+  }
+
+  .sba-options label {
+    margin-right: 10px;
+    font-weight: 600;
+  }
+
+  .submit-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 12px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 280px;
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
 </style>
 </head>
 
 <body>
 
-<h2>Exam Answer Sheet</h2>
+<header>Exam Answer Sheet</header>
 
-<h3>MCQ (Q1–Q40): True / False</h3>
-<div id="mcq"></div>
+<div class="container">
 
-<h3>SBA (Q41–Q50): Single Best Answer</h3>
-<div id="sba"></div>
+  <div class="section-title">MCQ (Q1–Q40) — True / False</div>
+  <div id="mcq"></div>
 
-<button onclick="generateAnswers()">Submit</button>
+  <div class="section-title">SBA (Q41–Q50)</div>
+  <div id="sba"></div>
 
-<h3>Output</h3>
-<textarea id="output" readonly></textarea>
+  <textarea id="output" placeholder="Your formatted answers will appear here..." readonly></textarea>
+
+</div>
+
+<div class="submit-bar">
+  <button onclick="generateAnswers()">Submit Answers</button>
+</div>
 
 <script>
-// -------- MCQ Q1–Q40 --------
 const mcqDiv = document.getElementById("mcq");
-
-for (let q = 1; q <= 40; q++) {
-  let qHtml = `<div class="question"><strong>Q${q}</strong>`;
-  for (let s = 1; s <= 5; s++) {
-    qHtml += `
-      <div class="stem">
-        Stem ${s}:
-        <label><input type="radio" name="q${q}_${s}" value="T"> T</label>
-        <label><input type="radio" name="q${q}_${s}" value="F"> F</label>
-      </div>`;
-  }
-  qHtml += `</div>`;
-  mcqDiv.innerHTML += qHtml;
-}
-
-// -------- SBA Q41–Q50 --------
 const sbaDiv = document.getElementById("sba");
 
-for (let q = 41; q <= 50; q++) {
-  let sbaHtml = `<div class="question"><strong>Q${q}</strong>: `;
-  ["A","B","C","D","E"].forEach(opt => {
-    sbaHtml += `
-      <label>
-        <input type="radio" name="q${q}" value="${opt}"> ${opt}
-      </label>
-    `;
-  });
-  sbaHtml += `</div>`;
-  sbaDiv.innerHTML += sbaHtml;
+// MCQs
+for (let q = 1; q <= 40; q++) {
+  let card = `<div class="card">
+    <div class="question-title">Q${q}</div>`;
+  for (let s = 1; s <= 5; s++) {
+    card += `
+      <div class="stem">
+        <span>Stem ${s}</span>
+        <div class="options">
+          <label><input type="radio" name="q${q}_${s}" value="T">T</label>
+          <label><input type="radio" name="q${q}_${s}" value="F">F</label>
+        </div>
+      </div>`;
+  }
+  card += `</div>`;
+  mcqDiv.innerHTML += card;
 }
 
-// -------- Generate Output --------
+// SBAs
+for (let q = 41; q <= 50; q++) {
+  let card = `<div class="card">
+    <div class="question-title">Q${q}</div>
+    <div class="sba-options">`;
+  ["A","B","C","D","E"].forEach(opt => {
+    card += `
+      <label>
+        <input type="radio" name="q${q}" value="${opt}"> ${opt}
+      </label>`;
+  });
+  card += `</div></div>`;
+  sbaDiv.innerHTML += card;
+}
+
 function generateAnswers() {
   let result = "";
 
-  // MCQ output
   for (let q = 1; q <= 40; q++) {
     let ans = "";
     for (let s = 1; s <= 5; s++) {
-      const checked = document.querySelector(`input[name="q${q}_${s}"]:checked`);
-      ans += checked ? checked.value : "_";
+      const v = document.querySelector(`input[name="q${q}_${s}"]:checked`);
+      ans += v ? v.value : "_";
     }
     result += `Q${q} : ${ans}\n`;
   }
 
-  // SBA output
   for (let q = 41; q <= 50; q++) {
-    const checked = document.querySelector(`input[name="q${q}"]:checked`);
-    result += `Q${q} : ${checked ? checked.value : "_"}\n`;
+    const v = document.querySelector(`input[name="q${q}"]:checked`);
+    result += `Q${q} : ${v ? v.value : "_"}\n`;
   }
 
   document.getElementById("output").value = result;
