@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exam Answer Sheet</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  .question { margin-bottom: 10px; }
+  .stem { margin-left: 20px; }
+  textarea { width: 100%; height: 280px; margin-top: 15px; }
+  button { padding: 10px 20px; font-size: 16px; }
+</style>
+</head>
+
+<body>
+
+<h2>Exam Answer Sheet</h2>
+
+<h3>MCQ (Q1–Q40): True / False</h3>
+<div id="mcq"></div>
+
+<h3>SBA (Q41–Q50): Single Best Answer</h3>
+<div id="sba"></div>
+
+<button onclick="generateAnswers()">Submit</button>
+
+<h3>Output</h3>
+<textarea id="output" readonly></textarea>
+
+<script>
+// -------- MCQ Q1–Q40 --------
+const mcqDiv = document.getElementById("mcq");
+
+for (let q = 1; q <= 40; q++) {
+  let qHtml = `<div class="question"><strong>Q${q}</strong>`;
+  for (let s = 1; s <= 5; s++) {
+    qHtml += `
+      <div class="stem">
+        Stem ${s}:
+        <label><input type="radio" name="q${q}_${s}" value="T"> T</label>
+        <label><input type="radio" name="q${q}_${s}" value="F"> F</label>
+      </div>`;
+  }
+  qHtml += `</div>`;
+  mcqDiv.innerHTML += qHtml;
+}
+
+// -------- SBA Q41–Q50 --------
+const sbaDiv = document.getElementById("sba");
+
+for (let q = 41; q <= 50; q++) {
+  let sbaHtml = `<div class="question"><strong>Q${q}</strong>: `;
+  ["A","B","C","D","E"].forEach(opt => {
+    sbaHtml += `
+      <label>
+        <input type="radio" name="q${q}" value="${opt}"> ${opt}
+      </label>
+    `;
+  });
+  sbaHtml += `</div>`;
+  sbaDiv.innerHTML += sbaHtml;
+}
+
+// -------- Generate Output --------
+function generateAnswers() {
+  let result = "";
+
+  // MCQ output
+  for (let q = 1; q <= 40; q++) {
+    let ans = "";
+    for (let s = 1; s <= 5; s++) {
+      const checked = document.querySelector(`input[name="q${q}_${s}"]:checked`);
+      ans += checked ? checked.value : "_";
+    }
+    result += `Q${q} : ${ans}\n`;
+  }
+
+  // SBA output
+  for (let q = 41; q <= 50; q++) {
+    const checked = document.querySelector(`input[name="q${q}"]:checked`);
+    result += `Q${q} : ${checked ? checked.value : "_"}\n`;
+  }
+
+  document.getElementById("output").value = result;
+}
+</script>
+
+</body>
+</html>
