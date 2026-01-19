@@ -3,181 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exam Answer Sheet</title>
+<title>Exam Answer Software</title>
 
 <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-    background: #f4f6f8;
-    margin: 0;
-    padding-bottom: 100px;
-  }
-
-  header {
-    background: #0f172a;
-    color: #fff;
-    padding: 16px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  .container {
-    padding: 12px;
-    max-width: 720px;
-    margin: auto;
-  }
-
-  .section-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 20px 0 10px;
-    color: #0f172a;
-  }
-
-  .card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-
-  .question-title {
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .stem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 6px 0;
-  }
-
-  .options label {
-    margin-right: 14px;
-    font-weight: 500;
-  }
-
-  input[type="radio"] {
-    transform: scale(1.2);
-    margin-right: 4px;
-  }
-
-  .sba-options label {
-    margin-right: 10px;
-    font-weight: 600;
-  }
-
-  .submit-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    padding: 12px;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-  }
-
-  button {
-    width: 100%;
-    padding: 14px;
-    font-size: 18px;
-    font-weight: 600;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 10px;
-  }
-
-  textarea {
-    width: 100%;
-    height: 280px;
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-  }
+:root{
+  --primary:#2563eb;
+  --bg:#f1f5f9;
+  --card:#ffffffcc;
+  --text:#0f172a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:linear-gradient(180deg,#e0e7ff,#f8fafc);
+  color:var(--text);
+  padding-bottom:110px;
+}
+header{
+  backdrop-filter: blur(10px);
+  background:#0f172acc;
+  color:#fff;
+  padding:18px;
+  font-size:18px;
+  font-weight:600;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.container{
+  max-width:720px;
+  margin:auto;
+  padding:14px;
+}
+.section{
+  margin-top:20px;
+  font-weight:700;
+  font-size:16px;
+}
+.card{
+  background:var(--card);
+  backdrop-filter: blur(10px);
+  border-radius:16px;
+  padding:14px;
+  margin-top:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.q-title{
+  font-weight:700;
+  margin-bottom:8px;
+}
+.stem{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:6px 0;
+}
+.options label{
+  margin-left:12px;
+  font-weight:600;
+}
+input[type=radio]{
+  transform:scale(1.3);
+  margin-right:4px;
+}
+.sba label{
+  margin-right:14px;
+  font-weight:700;
+}
+textarea{
+  width:100%;
+  height:240px;
+  margin-top:16px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #cbd5f5;
+  font-size:14px;
+}
+.bottom-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#ffffffee;
+  padding:12px;
+  display:flex;
+  gap:10px;
+  box-shadow:0 -6px 20px rgba(0,0,0,.15);
+}
+button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+}
+.primary{
+  background:var(--primary);
+  color:white;
+}
+.copy{
+  background:#10b981;
+  color:white;
+}
+.copied{
+  background:#059669!important;
+}
 </style>
 </head>
 
 <body>
 
-<header>Exam Answer Sheet</header>
+<header>Exam Answer Software</header>
 
 <div class="container">
 
-  <div class="section-title">MCQ (Q1–Q40) — True / False</div>
-  <div id="mcq"></div>
+<div class="section">MCQ (Q1–Q40) — True / False</div>
+<div id="mcq"></div>
 
-  <div class="section-title">SBA (Q41–Q50)</div>
-  <div id="sba"></div>
+<div class="section">SBA (Q41–Q50)</div>
+<div id="sba"></div>
 
-  <textarea id="output" placeholder="Your formatted answers will appear here..." readonly></textarea>
+<textarea id="output" placeholder="Formatted answers will appear here…" readonly></textarea>
 
 </div>
 
-<div class="submit-bar">
-  <button onclick="generateAnswers()">Submit Answers</button>
+<div class="bottom-bar">
+  <button class="primary" onclick="generate()">Generate</button>
+  <button class="copy" id="copyBtn" onclick="copyText()">Copy</button>
 </div>
 
 <script>
-const mcqDiv = document.getElementById("mcq");
-const sbaDiv = document.getElementById("sba");
+const mcq=document.getElementById("mcq");
+const sba=document.getElementById("sba");
 
-// MCQs
-for (let q = 1; q <= 40; q++) {
-  let card = `<div class="card">
-    <div class="question-title">Q${q}</div>`;
-  for (let s = 1; s <= 5; s++) {
-    card += `
-      <div class="stem">
-        <span>Stem ${s}</span>
-        <div class="options">
-          <label><input type="radio" name="q${q}_${s}" value="T">T</label>
-          <label><input type="radio" name="q${q}_${s}" value="F">F</label>
-        </div>
-      </div>`;
+// MCQ
+for(let q=1;q<=40;q++){
+  let c=`<div class="card"><div class="q-title">Q${q}</div>`;
+  for(let s=1;s<=5;s++){
+    c+=`<div class="stem">
+      <span>Stem ${s}</span>
+      <div class="options">
+        <label><input type="radio" name="q${q}_${s}" value="T">T</label>
+        <label><input type="radio" name="q${q}_${s}" value="F">F</label>
+      </div></div>`;
   }
-  card += `</div>`;
-  mcqDiv.innerHTML += card;
+  c+=`</div>`;
+  mcq.innerHTML+=c;
 }
 
-// SBAs
-for (let q = 41; q <= 50; q++) {
-  let card = `<div class="card">
-    <div class="question-title">Q${q}</div>
-    <div class="sba-options">`;
-  ["A","B","C","D","E"].forEach(opt => {
-    card += `
-      <label>
-        <input type="radio" name="q${q}" value="${opt}"> ${opt}
-      </label>`;
+// SBA
+for(let q=41;q<=50;q++){
+  let c=`<div class="card"><div class="q-title">Q${q}</div><div class="sba">`;
+  ["A","B","C","D","E"].forEach(o=>{
+    c+=`<label><input type="radio" name="q${q}" value="${o}">${o}</label>`;
   });
-  card += `</div></div>`;
-  sbaDiv.innerHTML += card;
+  c+=`</div></div>`;
+  sba.innerHTML+=c;
 }
 
-function generateAnswers() {
-  let result = "";
-
-  for (let q = 1; q <= 40; q++) {
-    let ans = "";
-    for (let s = 1; s <= 5; s++) {
-      const v = document.querySelector(`input[name="q${q}_${s}"]:checked`);
-      ans += v ? v.value : "_";
+function generate(){
+  let r="";
+  for(let q=1;q<=40;q++){
+    let a="";
+    for(let s=1;s<=5;s++){
+      let v=document.querySelector(`input[name="q${q}_${s}"]:checked`);
+      a+=v?v.value:"_";
     }
-    result += `Q${q} : ${ans}\n`;
+    r+=`Q${q} : ${a}\n`;
   }
-
-  for (let q = 41; q <= 50; q++) {
-    const v = document.querySelector(`input[name="q${q}"]:checked`);
-    result += `Q${q} : ${v ? v.value : "_"}\n`;
+  for(let q=41;q<=50;q++){
+    let v=document.querySelector(`input[name="q${q}"]:checked`);
+    r+=`Q${q} : ${v?v.value:"_"}\n`;
   }
+  document.getElementById("output").value=r;
+}
 
-  document.getElementById("output").value = result;
+function copyText(){
+  const t=document.getElementById("output");
+  t.select();
+  document.execCommand("copy");
+  const b=document.getElementById("copyBtn");
+  b.textContent="Copied ✓";
+  b.classList.add("copied");
+  setTimeout(()=>{b.textContent="Copy";b.classList.remove("copied")},1500);
 }
 </script>
 
