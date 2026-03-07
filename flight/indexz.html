@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkyWatch — Live Flight Tracker</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+
+<style>
+:root {
+  --cyan:   #00cfff;
+  --green:  #00e87a;
+  --yellow: #ffc107;
+  --orange: #ff7043;
+  --red:    #f44336;
+  --white:  #ffffff;
+}
+
+body.dark {
+  --bg:         #0a0e14;
+  --panel:      rgba(10,14,20,0.94);
+  --card:       #111820;
+  --border:     #1e3448;
+  --border2:    #2a4a64;
+  --t1:         #e2eff8;
+  --t2:         #7bb5cf;
+  --t3:         #2e5068;
+  --logo:       #00cfff;
+  --path-color: #ff9800;
+}
+
+body.light {
+  --bg:         #f0f4f8;
+  --panel:      rgba(240,244,248,0.96);
+  --card:       #dde8f0;
+  --border:     #9ab8cc;
+  --border2:    #6a96b0;
+  --t1:         #0a1e2e;
+  --t2:         #2a5a78;
+  --t3:         #7aaabf;
+  --logo:       #0066a0;
+  --path-color: #e65100;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%; width: 100%;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+}
+
+#map { position: absolute; inset: 0; z-index: 1; }
+
+body.dark .leaflet-tile-pane {
+  filter: brightness(0.75) invert(1) contrast(1.1) hue-rotate(195deg) saturate(0.5) brightness(0.7);
+}
+
+#topbar {
+  position: absolute; top:0; left:0; right:0; height:48px;
+  z-index: 500;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border2);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; padding: 0 12px; gap: 10px;
+}
+
+.logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.logo svg { width:26px; height:26px; }
+.logo-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 15px; font-weight: 900;
+  color: var(--logo); letter-spacing: 4px;
+  text-shadow: 0 0 14px var(--logo);
+}
+.logo-sub { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--t3); letter-spacing: 2px; }
+
+.stat {
+  display: flex; align-items: center; gap:5px;
+  padding: 3px 9px;
+  background: rgba(0,207,255,0.07);
+  border: 1px solid rgba(0,207,255,0.2);
+  border-radius: 4px;
+}
+.stat .val { font-family:'Orbitron',monospace; font-size:12px; font-weight:700; color:var(--cyan); }
+
+#topbar-right { margin-left:auto; display:flex; align-items:center; gap:8px; }
+
+.live-pill { display: flex; align-items: center; gap:6px; font-size:10px; color:var(--t2); }
+.pulse {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--green); box-shadow:0 0 7px var(--green);
+  animation: blink 1.8s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.icon-btn {
+  width:32px; height:32px;
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:5px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .2s;
+}
+.icon-btn.active { border-color:var(--green); background:rgba(0,232,122,0.15); color:var(--green); }
+
+#region-bar {
+  position:absolute; top:56px; left:50%; transform:translateX(-50%);
+  z-index:500; display:flex; gap:3px;
+  background:var(--panel); border:1px solid var(--border2);
+  border-radius:6px; padding:4px 7px;
+  backdrop-filter:blur(10px);
+}
+.rbtn {
+  font-family:'Share Tech Mono',monospace; font-size:10px;
+  background:transparent; border:1px solid transparent;
+  border-radius:3px; padding:3px 9px; cursor:pointer;
+}
+.rbtn.on {
+  color:var(--cyan); border-color:rgba(0,207,255,.4);
+  background:rgba(0,207,255,.09);
+}
+
+#sidebar {
+  position:absolute; top:48px; left:0; bottom:0; width:280px;
+  z-index:400;
+  background:var(--panel); border-right:1px solid var(--border2);
+  backdrop-filter:blur(14px);
+  display:flex; flex-direction:column;
+  transition:transform .3s ease;
+}
+#sidebar.off { transform:translateX(-280px); }
+
+#flist { flex:1; overflow-y:auto; }
+
+.frow {
+  padding:8px 11px; border-bottom:1px solid rgba(30,52,72,.6);
+  cursor:pointer; display:flex; align-items:center; gap:8px;
+}
+.frow.sel { background:rgba(0,207,255,.11); border-left:2px solid var(--cyan); padding-left:9px; }
+
+.frow-alt { font-family:'Orbitron',monospace; font-size:11px; color:var(--cyan); text-align:right; }
+
+#detail {
+  position:absolute; bottom:0; left:50%;
+  transform:translateX(-50%) translateY(100%);
+  z-index:500; width:480px; max-width:96vw;
+  background:var(--panel); border:1px solid var(--border2); border-bottom:none;
+  border-radius:10px 10px 0 0;
+  backdrop-filter:blur(18px);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+}
+#detail.show { transform:translateX(-50%) translateY(0); }
+
+.dt-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.dt-cell { background:var(--card); padding:10px 14px; }
+.dt-val { font-family:'Orbitron',monospace; font-size:15px; font-weight:700; }
+
+#toast {
+  position:absolute; top:56px; left:50%; transform:translateX(-50%) translateY(-60px);
+  z-index:600; background:var(--panel); border:1px solid var(--border2);
+  border-radius:5px; padding:7px 16px; font-size:11px;
+  transition:transform .28s ease; pointer-events:none;
+}
+#toast.show { transform:translateX(-50%) translateY(0); }
+
+#loader {
+  position:absolute; inset:0; z-index:900;
+  background:var(--bg);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+}
+.ld-name { font-family:'Orbitron',monospace; font-size:24px; color:var(--cyan); letter-spacing:6px; }
+</style>
+</head>
+<body class="dark">
+
+<div id="loader">
+  <div class="ld-name">SKYWATCH</div>
+  <div>INITIALIZING...</div>
+</div>
+
+<div id="map"></div>
+
+<div id="topbar">
+  <div class="logo">
+    <div>
+      <div class="logo-name">SKYWATCH</div>
+      <div class="logo-sub">LIVE AIR TRAFFIC</div>
+    </div>
+  </div>
+
+  <div class="stat gr"><span>LIVE</span><span id="s-n">—</span></div>
+  <div class="stat"><span>HIGHEST</span><span id="s-h">—</span></div>
+  <div class="stat"><span>FASTEST</span><span id="s-f">—</span></div>
+
+  <div id="topbar-right">
+    <div class="live-pill">
+      <div class="pulse" id="pdot"></div>
+      <span id="plbl">CONNECTING</span>
+    </div>
+    <div id="upd-time">—</div>
+    <div class="icon-btn" id="theme-btn" title="Toggle theme">🌙</div>
+  </div>
+</div>
+
+<div id="region-bar">
+  <button class="rbtn on" data-r="dhaka">DHAKA</button>
+  <button class="rbtn" data-r="india">INDIA</button>
+  <button class="rbtn" data-r="gulf">GULF</button>
+  <button class="rbtn" data-r="sea">SE ASIA</button>
+  <button class="rbtn" data-r="global">GLOBAL</button>
+</div>
+
+<div id="sidebar">
+  <div style="padding:10px; border-bottom:1px solid var(--border);">
+    <strong>FLIGHTS</strong> <span id="sb-count">0</span>
+  </div>
+  <div style="padding:8px 10px; border-bottom:1px solid var(--border);">
+    <input id="sb-inp" type="text" placeholder="Search callsign / ICAO" style="width:100%;padding:6px;background:rgba(255,255,255,0.08);border:1px solid var(--border2);color:var(--t1);"/>
+  </div>
+  <div id="flist"></div>
+</div>
+
+<div id="detail">
+  <div style="padding:12px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start;">
+    <div>
+      <div id="dt-cs" style="font-size:22px; font-weight:900; color:var(--cyan);">—</div>
+      <div id="dt-co" style="font-size:10px; color:var(--t3); margin-top:4px;">—</div>
+    </div>
+    <div onclick="closeDetail()" style="cursor:pointer; color:var(--red); font-size:18px;">✕</div>
+  </div>
+  <div class="dt-grid">
+    <div class="dt-cell"><div>ALT</div><div id="dt-alt" class="dt-val">—</div><div>ft</div></div>
+    <div class="dt-cell"><div>SPD</div><div id="dt-spd" class="dt-val">—</div><div>km/h</div></div>
+    <div class="dt-cell"><div>HDG</div><div id="dt-hdg" class="dt-val">—</div><div>°</div></div>
+    <div class="dt-cell"><div>ICAO</div><div id="dt-icao" class="dt-val">—</div></div>
+    <div class="dt-cell"><div>V/S</div><div id="dt-vr" class="dt-val">—</div><div>ft/min</div></div>
+    <div class="dt-cell"><div>STATUS</div><div id="dt-st" class="dt-val">—</div></div>
+    <div class="dt-cell"><div>AIRLINE</div><div id="dt-airline" class="dt-val">—</div></div>
+    <div class="dt-cell"><div>ROUTE</div><div id="dt-route" class="dt-val">— → —</div></div>
+    <div class="dt-cell"><div>TYPE</div><div id="dt-type" class="dt-val">—</div></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ──────────────────────────────────────────────
+//  CONFIG
+// ──────────────────────────────────────────────
+
+const OPENSKY_USER     = "your_username_here";      // ← CHANGE THIS
+const OPENSKY_PASS     = "your_password_here";      // ← CHANGE THIS
+
+const POLL_INTERVAL    = 60000;     // 60 seconds
+const MIN_FETCH_GAP    = 45000;     // enforce min 45s between calls
+const TRAIL_MAX_POINTS = 25;
+
+// ──────────────────────────────────────────────
+//  REGIONS
+// ──────────────────────────────────────────────
+
+const REGIONS = {
+  dhaka:  { name:"Dhaka Region",   c:[23.81, 90.41], z:8,  b:[21.0, 87.0, 26.5, 94.0] },
+  india:  { name:"India",          c:[20.6, 78.9],   z:5,  b:[6,   65,   37,   99]   },
+  gulf:   { name:"Gulf",           c:[25.0, 54.0],   z:6,  b:[12,  42,   32,   66]   },
+  sea:    { name:"SE Asia",        c:[10.0, 105.0],  z:5,  b:[-2,  90,   25,  125]   },
+  global: { name:"Worldwide",      c:[15.0,   0.0],  z:3,  b:[-60,-180,  80,  180]   }
+};
+
+let curRegion = localStorage.getItem('skywatch-region') || 'dhaka';
+
+// ──────────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────────
+
+const map = L.map('map', { zoomControl:false, attributionControl:true }).setView(REGIONS[curRegion].c, REGIONS[curRegion].z);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+let markers      = {};          // icao → {marker, data, pathCoords, pathLayer, startPos, airline}
+let selIcao      = null;
+let followMode   = false;
+let lastFetch    = 0;
+let allData      = [];
+let searchQ      = '';
+
+// ──────────────────────────────────────────────
+//  HELPERS
+// ──────────────────────────────────────────────
+
+const AIRLINES = {
+  'BG': 'Biman Bangladesh',   'QR': 'Qatar Airways',    'EK': 'Emirates',
+  'SQ': 'Singapore Airlines', 'TG': 'Thai Airways',     'MH': 'Malaysia Airlines',
+  'UL': 'SriLankan',          'AI': 'Air India',        'PK': 'Pakistan Intl',
+  'KU': 'Kuwait Airways',     'GF': 'Gulf Air',         'WY': 'Oman Air',
+  'SV': 'Saudia',             'FZ': 'flydubai',         'J9': 'Jazeera Airways',
+  'BA': 'British Airways',    'TK': 'Turkish Airlines', 'LH': 'Lufthansa',
+  'AF': 'Air France',         'KL': 'KLM',              'EK': 'Emirates'
+};
+
+function getAirline(callsign) {
+  if (!callsign) return '—';
+  const pre = callsign.trim().slice(0,2).toUpperCase();
+  return AIRLINES[pre] || 'Unknown / Private';
+}
+
+function planeColor(s) {
+  if (selIcao === s[0])          return '#00cfff';
+  if (s[8])                      return '#888888';
+  if ((s[11]||0) >  2)           return '#00e87a';   // climbing
+  if ((s[11]||0) < -2)           return '#ff7043';   // descending
+  return '#ffc107';
+}
+
+function makeIcon(hdg, color, selected) {
+  const sz = selected ? 38 : 28;
+  return L.divIcon({
+    html: `
+      <svg width="${sz}" height="${sz}" viewBox="0 0 36 36"
+        style="transform:rotate(${hdg}deg); filter: drop-shadow(0 0 6px ${color}88);">
+        <g transform="translate(18,18)" fill="${color}">
+          <ellipse rx="2.4" ry="10"/>
+          <path d="M-2.4,0 L-13,8 L-11,10.5 L0,5.5 Z" opacity="0.9"/>
+          <path d="M2.4,0 L13,8 L11,10.5 L0,5.5 Z" opacity="0.9"/>
+        </g>
+      </svg>`,
+    className: '',
+    iconSize: [sz, sz],
+    iconAnchor: [sz/2, sz/2]
+  });
+}
+
+function toast(msg, dur=2800) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+
+// ──────────────────────────────────────────────
+//  FETCH
+// ──────────────────────────────────────────────
+
+async function fetchFlights(silent = false) {
+  const now = Date.now();
+  if (now - lastFetch < MIN_FETCH_GAP) {
+    if (!silent) toast("Rate limit guard — waiting...", 1800);
+    return;
+  }
+  lastFetch = now;
+
+  const r = REGIONS[curRegion];
+  const [la,lo,LA,LO] = r.b;
+
+  let states = [];
+
+  try {
+    const auth = btoa(OPENSKY_USER + ":" + OPENSKY_PASS);
+    const res = await fetch(
+      `https://opensky-network.org/api/states/all?lamin=${la}&lomin=${lo}&lamax=${LA}&lomax=${LO}`,
+      { headers: { 'Authorization': 'Basic ' + auth } }
+    );
+
+    if (res.status === 429) {
+      toast("OpenSky rate limit — retrying later...", 4000);
+      setTimeout(() => fetchFlights(true), 90000);
+      return;
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const json = await res.json();
+    states = (json.states || []).filter(s => s[5]!=null && s[6]!=null);
+
+    document.getElementById('upd-time').textContent = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('plbl').textContent = 'LIVE';
+    document.getElementById('pdot').className = 'pulse';
+
+    if (!silent) toast(`${states.length} aircraft tracked`);
+  } catch (err) {
+    console.warn(err);
+    document.getElementById('plbl').textContent = 'DEMO';
+    document.getElementById('pdot').className = 'pulse demo';
+    toast("Using demo data — API issue", 4500);
+    // states = makeDemoData();  // ← you can keep your demo function
+  }
+
+  allData = states;
+  updateMarkers(states);
+  updateSidebar(states);
+  updateStats(states);
+
+  if (followMode && selIcao && markers[selIcao]) {
+    const pos = markers[selIcao].marker.getLatLng();
+    map.panTo(pos, { animate: true, duration: 1.2 });
+  }
+}
+
+// ──────────────────────────────────────────────
+//  MARKERS & TRAIL
+// ──────────────────────────────────────────────
+
+function updateMarkers(states) {
+  const seen = new Set();
+
+  states.forEach(s => {
+    const icao = s[0];
+    seen.add(icao);
+    const lat = s[6], lon = s[5], hdg = s[10]||0;
+    const color = planeColor(s);
+    const icon = makeIcon(hdg, color, selIcao===icao);
+
+    if (markers[icao]) {
+      const m = markers[icao];
+      m.marker.setLatLng([lat, lon]);
+      m.marker.setIcon(icon);
+      m.data = s;
+      m.airline = getAirline(s[1]);
+
+      // trail
+      const coords = m.pathCoords;
+      if (coords.length === 0 || Math.hypot(lat-coords[coords.length-1][0], lon-coords[coords.length-1][1]) > 0.0003) {
+        coords.push([lat, lon]);
+        if (coords.length > TRAIL_MAX_POINTS) coords.shift();
+        updateTrail(icao);
+      }
+
+      if (!m.startPos && !s[8]) m.startPos = [lat, lon];
+    } else {
+      const mk = L.marker([lat, lon], {icon, zIndexOffset:200}).addTo(map);
+      mk.on('click', () => selectFlight(icao));
+
+      markers[icao] = {
+        marker: mk,
+        data: s,
+        pathCoords: [[lat, lon]],
+        pathLayer: null,
+        startPos: s[8] ? null : [lat, lon],
+        airline: getAirline(s[1])
+      };
+    }
+  });
+
+  // remove old
+  Object.keys(markers).forEach(icao => {
+    if (!seen.has(icao)) {
+      map.removeLayer(markers[icao].marker);
+      if (markers[icao].pathLayer) map.removeLayer(markers[icao].pathLayer);
+      delete markers[icao];
+    }
+  });
+}
+
+function updateTrail(icao) {
+  const m = markers[icao];
+  if (!m) return;
+
+  if (m.pathLayer) map.removeLayer(m.pathLayer);
+  const coords = m.pathCoords;
+  if (coords.length < 2) return;
+
+  const group = L.layerGroup();
+
+  for (let i = 1; i < coords.length; i++) {
+    const opacity = 0.25 + 0.65 * ((i-1) / (coords.length-2));
+    L.polyline([coords[i-1], coords[i]], {
+      color: isDark ? '#ff9800' : '#e65100',
+      weight: 2.8,
+      opacity,
+      lineCap: 'round'
+    }).addTo(group);
+  }
+
+  m.pathLayer = group.addTo(map);
+}
+
+// ──────────────────────────────────────────────
+//  SELECTION & FOLLOW
+// ──────────────────────────────────────────────
+
+function selectFlight(icao) {
+  if (selIcao === icao) return;
+
+  // deselect old
+  if (selIcao && markers[selIcao]) {
+    const old = markers[selIcao];
+    old.marker.setIcon(makeIcon(old.data[10]||0, planeColor(old.data), false));
+    old.marker.setZIndexOffset(200);
+  }
+
+  selIcao = icao;
+  const m = markers[icao];
+  if (!m) return;
+
+  m.marker.setIcon(makeIcon(m.data[10]||0, '#00cfff', true));
+  m.marker.setZIndexOffset(1200);
+
+  showDetail(m.data);
+  updateSidebar(allData);
+
+  map.panTo(m.marker.getLatLng(), { animate:true, duration:0.8 });
+
+  if (followMode) {
+    document.getElementById('follow-btn')?.classList.add('active');
+  }
+}
+
+function closeDetail() {
+  if (selIcao && markers[selIcao]) {
+    const m = markers[selIcao];
+    m.marker.setIcon(makeIcon(m.data[10]||0, planeColor(m.data), false));
+    m.marker.setZIndexOffset(200);
+  }
+  selIcao = null;
+  document.getElementById('detail').classList.remove('show');
+  updateSidebar(allData);
+}
+
+function toggleFollow() {
+  followMode = !followMode;
+  const btn = document.getElementById('follow-btn');
+  if (btn) {
+    btn.classList.toggle('active', followMode);
+  }
+  toast(followMode ? "Following mode ON" : "Following mode OFF");
+  if (followMode && selIcao && markers[selIcao]) {
+    map.panTo(markers[selIcao].marker.getLatLng());
+  }
+}
+
+// ──────────────────────────────────────────────
+//  DETAIL PANEL
+// ──────────────────────────────────────────────
+
+function showDetail(s) {
+  const icao = s[0];
+  const m = markers[icao] || {};
+
+  const altFt  = Math.round((s[7]||0) * 3.28084);
+  const spdKmh = Math.round((s[9]||0) * 3.6);
+  const vrFpm  = Math.round((s[11]||0) * 196.85);
+  const cs     = (s[1] || '—').trim();
+
+  document.getElementById('dt-cs').textContent     = cs || icao.toUpperCase();
+  document.getElementById('dt-co').textContent     = m.airline || '—';
+  document.getElementById('dt-alt').textContent    = altFt.toLocaleString();
+  document.getElementById('dt-spd').textContent    = spdKmh.toLocaleString();
+  document.getElementById('dt-hdg').textContent    = Math.round(s[10]||0);
+  document.getElementById('dt-icao').textContent   = icao.toUpperCase();
+  document.getElementById('dt-vr').textContent     = (vrFpm>0?'+':'') + vrFpm.toLocaleString();
+  document.getElementById('dt-st').textContent     = s[8] ? 'GROUND' : 'AIRBORNE';
+  document.getElementById('dt-airline').textContent = m.airline || '—';
+  document.getElementById('dt-type').textContent   = '—'; // not available in states/all
+
+  // route estimate
+  let route = '— → —';
+  if (m.startPos) {
+    route = `${m.startPos[0].toFixed(2)},${m.startPos[1].toFixed(2)} → `;
+  }
+  if (s[10]) {
+    const hdg = s[10] * Math.PI / 180;
+    const dist = 0.8; // ~90 km projection
+    const predLat = s[6] + Math.cos(hdg) * dist;
+    const predLon = s[5] + Math.sin(hdg) * dist;
+    route += `${predLat.toFixed(2)},${predLon.toFixed(2)}`;
+  }
+  document.getElementById('dt-route').textContent = route;
+
+  document.getElementById('detail').classList.add('show');
+}
+
+// ──────────────────────────────────────────────
+//  SIDEBAR & STATS
+// ──────────────────────────────────────────────
+
+function updateSidebar(states) {
+  const q = searchQ.toLowerCase();
+  const list = document.getElementById('flist');
+  list.innerHTML = '';
+
+  const shown = states
+    .filter(s => !q || s[1]?.toLowerCase().includes(q) || s[0].toLowerCase().includes(q))
+    .sort((a,b) => (b[7]||0) - (a[7]||0));
+
+  document.getElementById('sb-count').textContent = shown.length;
+
+  shown.forEach(s => {
+    const icao = s[0];
+    const m = markers[icao] || {};
+    const cs = (s[1]||icao).trim();
+    const alt = Math.round((s[7]||0)*3.28084);
+    const vs = Math.round((s[11]||0)*196.85);
+    const vsSign = vs > 0 ? '↑' : vs < 0 ? '↓' : '→';
+
+    const div = document.createElement('div');
+    div.className = 'frow' + (selIcao===icao ? ' sel' : '');
+    div.innerHTML = `
+      <div style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:14px;color:${planeColor(s)};">✈</span>
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:600;">${cs}</div>
+        <div style="font-size:10px;color:var(--t3);">
+          ${m.airline?.slice(0,18)||'—'} • ${vsSign}${Math.abs(vs)}
+        </div>
+      </div>
+      <div class="frow-alt">
+        ${alt > 100 ? alt.toLocaleString()+'<small>ft</small>' : 'GND'}
+      </div>`;
+    div.onclick = () => selectFlight(icao);
+    list.appendChild(div);
+  });
+}
+
+function updateStats(states) {
+  document.getElementById('s-n').textContent = states.length || '—';
+
+  if (!states.length) return;
+
+  const highest = states.reduce((max, s) => (s[7]||0) > (max[7]||0) ? s : max, states[0]);
+  const fastest = states.reduce((max, s) => (s[9]||0) > (max[9]||0) ? s : max, states[0]);
+
+  document.getElementById('s-h').textContent = Math.round((highest[7]||0)*3.28084).toLocaleString() + ' ft';
+  document.getElementById('s-f').textContent = Math.round((fastest[9]||0)*3.6) + ' km/h';
+}
+
+// ──────────────────────────────────────────────
+//  EVENT LISTENERS
+// ──────────────────────────────────────────────
+
+document.getElementById('sb-inp').oninput = e => {
+  searchQ = e.target.value;
+  updateSidebar(allData);
+};
+
+document.querySelectorAll('.rbtn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.rbtn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    curRegion = btn.dataset.r;
+    localStorage.setItem('skywatch-region', curRegion);
+
+    // clear
+    Object.values(markers).forEach(m => {
+      map.removeLayer(m.marker);
+      if (m.pathLayer) map.removeLayer(m.pathLayer);
+    });
+    markers = {}; selIcao = null;
+    document.getElementById('detail').classList.remove('show');
+
+    map.flyTo(REGIONS[curRegion].c, REGIONS[curRegion].z, {duration:1.1});
+    fetchFlights();
+  };
+});
+
+document.getElementById('theme-btn').onclick = () => {
+  document.body.classList.toggle('dark');
+  document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+};
+
+// Auto theme
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.body.classList.remove('dark');
+  document.body.classList.add('light');
+  document.getElementById('theme-btn').textContent = '☀️';
+}
+
+// ──────────────────────────────────────────────
+//  START
+// ──────────────────────────────────────────────
+
+document.getElementById('loader').style.display = 'none';
+
+map.on('click', closeDetail);
+
+fetchFlights();
+setInterval(() => fetchFlights(true), POLL_INTERVAL);
+
+// Optional: initial center
+setTimeout(() => {
+  map.flyTo(REGIONS[curRegion].c, REGIONS[curRegion].z, {duration: 1.2});
+}, 800);
+
+</script>
+</body>
+  </html>
