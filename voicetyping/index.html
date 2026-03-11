@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <title>অফলাইন বাংলা ভয়েস টাইপিং (Whisper - Updated 2026)</title>
+  <style>
+    body { font-family: 'Noto Sans Bengali', Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    textarea { width: 100%; height: 180px; font-size: 18px; padding: 10px; }
+    button { padding: 12px 28px; font-size: 18px; margin: 10px 5px 0 0; cursor: pointer; }
+    #status { font-weight: bold; color: #444; margin-top: 10px; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h2>অফলাইন বাংলা ভয়েস → টেক্সট (প্রথমবার মডেল লোড হবে)</h2>
+  <p>প্রথম লোডে ~৫০-২০০ MB ডাউনলোড হবে (ইন্টারনেট লাগবে শুধু প্রথমবার)। পরে সম্পূর্ণ অফলাইন কাজ করবে।</p>
+
+  <button id="startBtn">ভয়েস শুরু করুন 🎤</button>
+  <button id="stopBtn" disabled>থামান ⏹️</button>
+  <button id="clearBtn">ক্লিয়ার করুন</button>
+
+  <textarea id="result" placeholder="এখানে বাংলা টেক্সট আসবে..."></textarea>
+  <div id="status">স্ট্যাটাস: প্রস্তুত (মডেল লোড হচ্ছে...)</div>
+
+  <script type="module">
+    import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.0-next.6';
+
+    // Important configs to fix loading / script errors
+    env.allowRemoteModels = true;
+    env.allowLocalModels = false; // Change to true later if hosting files yourself
+    env.useBrowserCache = true;
+    // Helps with WASM loading issues
+    env.backends.onnx.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.0.0-next.6/dist/';
+
+    let transcriber = null;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    const statusEl = document.getElementById('status');
+    const resultEl = document.getElementById('result');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Model choices:
+    // - Fast + small: 'Xenova/whisper-tiny' (~50 MB)
+    // - Better Bangla: 'asif00/whisper-bangla' (small-based, ~500 MB, better accuracy)
+    // - Balanced: 'Xenova/whisper-base' or 'Xenova/whisper-small'
+    const MODEL = 'Xenova/whisper-tiny'; // Start here for quick test
+
+    async function initModel() {
+      statusEl.textContent = 'মডেল লোড হচ্ছে... (প্রথমবার ১-৫ মিনিট লাগতে পারে)';
+      statusEl.className = '';
+
+      try {
+        transcriber = await pipeline('automatic-speech-recognition', MODEL);
+        statusEl.textContent = 'মডেল লোড সম্পূর্ণ! এখন কথা বলতে পারেন।';
+      } catch (err) {
+        statusEl.textContent = 'লোড ত্রুটি: ' + err.message;
+        statusEl.className = 'error';
+        console.error(err);
+      }
+    }
+
+    // Load model immediately
+    initModel();
+
+    startBtn.onclick = async () => {
+      if (!transcriber) {
+        alert('মডেল এখনো লোড হয়নি। অপেক্ষা করুন...');
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+
+        mediaRecorder.onstop = async () => {
+          statusEl.textContent = 'অডিও প্রসেস হচ্ছে...';
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const arrayBuffer = await audioBlob.arrayBuffer();
+
+          try {
+            const output = await transcriber(arrayBuffer, {
+              language: 'bengali',
+              task: 'transcribe',
+              chunk_length_s: 30,
+              stride_length_s: 5,
+              return_timestamps: false
+            });
+            resultEl.value += (resultEl.value ? '\n' : '') + output.text.trim();
+            statusEl.textContent = 'সফল! আবার রেকর্ড করতে পারেন।';
+          } catch (e) {
+            statusEl.textContent = 'ট্রান্সক্রাইব ত্রুটি: ' + e.message;
+            statusEl.className = 'error';
+          }
+        };
+
+        mediaRecorder.start();
+        isRecording = true;
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        statusEl.textContent = 'রেকর্ডিং চলছে... কথা বলুন';
+        statusEl.className = '';
+      } catch (err) {
+        statusEl.textContent = 'মাইক অনুমতি দরকার: ' + err.message;
+        statusEl.className = 'error';
+      }
+    };
+
+    stopBtn.onclick = () => {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+        statusEl.textContent = 'রেকর্ডিং থেমেছে। প্রসেস করা হচ্ছে...';
+      }
+    };
+
+    clearBtn.onclick = () => {
+      resultEl.value = '';
+    };
+  </script>
+</body>
+</html>
