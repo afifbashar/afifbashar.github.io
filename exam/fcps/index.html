@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Answer Sheet</title>
+
+<style>
+:root{
+--primary:#2563eb;
+--danger:#ef4444;
+--bg:#eef2ff;
+--card:#ffffff;
+}
+
+body{
+margin:0;
+font-family:system-ui;
+background:var(--bg);
+padding-bottom:120px;
+}
+
+header{
+background:#111827;
+color:white;
+padding:14px;
+text-align:center;
+font-weight:600;
+font-size:18px;
+}
+
+.timer{
+background:#fef3c7;
+text-align:center;
+padding:10px;
+font-weight:700;
+font-size:18px;
+}
+
+.container{
+max-width:720px;
+margin:auto;
+padding:14px;
+}
+
+.section{
+margin-top:20px;
+font-weight:700;
+}
+
+.card{
+background:var(--card);
+border-radius:14px;
+padding:14px;
+margin-top:12px;
+box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+
+.qtitle{
+font-weight:700;
+margin-bottom:8px;
+}
+
+.stem{
+display:flex;
+justify-content:space-between;
+margin:6px 0;
+}
+
+.options label{
+margin-left:10px;
+font-weight:600;
+}
+
+input[type=radio]{
+transform:scale(1.3);
+margin-right:4px;
+}
+
+.sba label{
+margin-right:12px;
+font-weight:700;
+}
+
+textarea{
+width:100%;
+height:240px;
+margin-top:16px;
+border-radius:12px;
+padding:12px;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+padding:12px;
+display:flex;
+gap:10px;
+box-shadow:0 -5px 16px rgba(0,0,0,.15);
+}
+
+button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight:700;
+}
+
+.generate{background:var(--primary);color:white;}
+.copy{background:#10b981;color:white;}
+</style>
+</head>
+
+<body>
+
+<header>Exam Answer Sheet</header>
+
+<div class="timer">
+Time Left: <span id="time">50:00</span>
+</div>
+
+<div class="container">
+
+<div class="section">MCQ (Q1–Q25)</div>
+<div id="mcq"></div>
+
+<div class="section">SBA (Q26–Q50)</div>
+<div id="sba"></div>
+
+<textarea id="output" placeholder="Generated answers appear here..." readonly></textarea>
+
+</div>
+
+<div class="bottom">
+<button class="generate" onclick="generate()">Generate</button>
+<button class="copy" onclick="copyText()">Copy</button>
+</div>
+
+<script>
+
+const mcq=document.getElementById("mcq");
+const sba=document.getElementById("sba");
+
+
+// MCQ Q1–25
+for(let q=1;q<=25;q++){
+
+let card=`<div class="card">
+<div class="qtitle">Q${q}</div>`;
+
+for(let s=1;s<=5;s++){
+
+card+=`
+<div class="stem">
+<span>Stem ${s}</span>
+<div class="options">
+<label><input type="radio" name="q${q}_${s}" value="T">T</label>
+<label><input type="radio" name="q${q}_${s}" value="F">F</label>
+</div>
+</div>
+`;
+
+}
+
+card+=`</div>`;
+mcq.innerHTML+=card;
+
+}
+
+
+// SBA Q26–50
+for(let q=26;q<=50;q++){
+
+let card=`<div class="card">
+<div class="qtitle">Q${q}</div>
+<div class="sba">`;
+
+["A","B","C","D","E"].forEach(o=>{
+card+=`<label><input type="radio" name="q${q}" value="${o}">${o}</label>`;
+});
+
+card+=`</div></div>`;
+sba.innerHTML+=card;
+
+}
+
+
+// Generate answers
+function generate(){
+
+let r="";
+
+for(let q=1;q<=25;q++){
+
+let ans="";
+
+for(let s=1;s<=5;s++){
+
+let v=document.querySelector(`input[name="q${q}_${s}"]:checked`);
+ans+=v?v.value:"_";
+
+}
+
+r+=`Q${q} : ${ans}\n`;
+
+}
+
+for(let q=26;q<=50;q++){
+
+let v=document.querySelector(`input[name="q${q}"]:checked`);
+r+=`Q${q} : ${v?v.value:"_"}\n`;
+
+}
+
+document.getElementById("output").value=r;
+
+}
+
+
+// Copy answers
+function copyText(){
+
+let text=document.getElementById("output");
+text.select();
+document.execCommand("copy");
+
+}
+
+
+// Timer (50 minutes)
+let totalSeconds=50*60;
+
+function updateTimer(){
+
+let minutes=Math.floor(totalSeconds/60);
+let seconds=totalSeconds%60;
+
+document.getElementById("time").textContent=
+minutes+":"+(seconds<10?"0":"")+seconds;
+
+if(totalSeconds==300){
+alert("⚠️ 5 minutes remaining!");
+}
+
+if(totalSeconds<=0){
+alert("⏰ Time Over! Answers generated.");
+generate();
+return;
+}
+
+totalSeconds--;
+
+}
+
+setInterval(updateTimer,1000);
+
+</script>
+
+</body>
+</html>
