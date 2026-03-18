@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Practice</title>
+
+<style>
+
+body{
+font-family:system-ui;
+margin:0;
+background:#eef2ff;
+padding-bottom:120px;
+}
+
+header{
+background:#111827;
+color:white;
+text-align:center;
+padding:14px;
+font-weight:600;
+}
+
+.timerbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#fef3c7;
+padding:10px 14px;
+font-weight:700;
+}
+
+button{
+padding:10px 14px;
+border:none;
+border-radius:8px;
+font-weight:600;
+}
+
+.pause{background:#ef4444;color:white}
+.resume{background:#10b981;color:white}
+
+.container{
+max-width:720px;
+margin:auto;
+padding:14px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:12px;
+margin-top:12px;
+box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+
+.stem{
+display:flex;
+justify-content:space-between;
+margin:6px 0;
+}
+
+.options label{
+margin-left:10px;
+}
+
+textarea{
+width:100%;
+height:220px;
+margin-top:16px;
+padding:10px;
+border-radius:10px;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+padding:12px;
+display:flex;
+gap:10px;
+}
+
+.generate{background:#2563eb;color:white}
+.copy{background:#10b981;color:white}
+
+.startscreen{
+text-align:center;
+padding:40px;
+}
+
+.startscreen button{
+margin:10px;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>Exam Practice</header>
+
+<div id="startscreen" class="startscreen">
+<h2>Exam Options</h2>
+<button onclick="startNew()">Start New Exam</button>
+<button onclick="resumeExam()">Continue Saved Exam</button>
+</div>
+
+<div id="exam" style="display:none">
+
+<div class="timerbar">
+<span>Time: <span id="time">50:00</span></span>
+<button id="pauseBtn" class="pause" onclick="togglePause()">Pause</button>
+</div>
+
+<div class="container">
+
+<h3>MCQ (Q1–Q25)</h3>
+<div id="mcq"></div>
+
+<h3>SBA (Q26–Q50)</h3>
+<div id="sba"></div>
+
+<textarea id="output" readonly placeholder="Generated answers appear here"></textarea>
+
+</div>
+
+<div class="bottom">
+<button class="generate" onclick="generate()">Generate</button>
+<button class="copy" onclick="copyText()">Copy</button>
+</div>
+
+</div>
+
+<script>
+
+let totalSeconds=3000
+let timer
+let paused=false
+
+const mcq=document.getElementById("mcq")
+const sba=document.getElementById("sba")
+
+// build questions
+for(let q=1;q<=25;q++){
+
+let card=`<div class="card"><b>Q${q}</b>`
+
+for(let s=1;s<=5;s++){
+
+card+=`
+<div class="stem">
+<span>Stem ${s}</span>
+<div class="options">
+<label><input type="radio" name="q${q}_${s}" value="T">T</label>
+<label><input type="radio" name="q${q}_${s}" value="F">F</label>
+</div>
+</div>`
+
+}
+
+card+=`</div>`
+mcq.innerHTML+=card
+}
+
+for(let q=26;q<=50;q++){
+
+let card=`<div class="card"><b>Q${q}</b><br>`
+
+;["A","B","C","D","E"].forEach(o=>{
+card+=`<label><input type="radio" name="q${q}" value="${o}">${o}</label>`
+})
+
+card+=`</div>`
+sba.innerHTML+=card
+}
+
+
+// start new
+function startNew(){
+
+localStorage.clear()
+
+document.getElementById("startscreen").style.display="none"
+document.getElementById("exam").style.display="block"
+
+startTimer()
+
+}
+
+// resume exam
+function resumeExam(){
+
+document.getElementById("startscreen").style.display="none"
+document.getElementById("exam").style.display="block"
+
+loadAnswers()
+
+let savedTime=localStorage.getItem("time")
+if(savedTime) totalSeconds=parseInt(savedTime)
+
+startTimer()
+
+}
+
+// timer
+function startTimer(){
+
+timer=setInterval(()=>{
+
+if(!paused){
+
+totalSeconds--
+
+let m=Math.floor(totalSeconds/60)
+let s=totalSeconds%60
+
+document.getElementById("time").textContent=
+m+":"+(s<10?"0":"")+s
+
+localStorage.setItem("time",totalSeconds)
+
+if(totalSeconds<=0){
+
+clearInterval(timer)
+alert("Time Over")
+generate()
+
+}
+
+}
+
+},1000)
+
+}
+
+// pause
+function togglePause(){
+
+paused=!paused
+
+let btn=document.getElementById("pauseBtn")
+
+if(paused){
+btn.textContent="Resume"
+btn.className="resume"
+}else{
+btn.textContent="Pause"
+btn.className="pause"
+}
+
+}
+
+
+// autosave answers
+document.addEventListener("change",e=>{
+
+if(e.target.type==="radio"){
+
+localStorage.setItem(e.target.name,e.target.value)
+
+}
+
+})
+
+// load saved
+function loadAnswers(){
+
+document.querySelectorAll("input[type=radio]").forEach(r=>{
+
+let v=localStorage.getItem(r.name)
+
+if(v && r.value===v){
+r.checked=true
+}
+
+})
+
+}
+
+
+// generate answers
+function generate(){
+
+let r=""
+
+for(let q=1;q<=25;q++){
+
+let ans=""
+
+for(let s=1;s<=5;s++){
+
+let v=document.querySelector(`input[name="q${q}_${s}"]:checked`)
+ans+=v?v.value:"_"
+
+}
+
+r+=`Q${q} : ${ans}\n`
+
+}
+
+for(let q=26;q<=50;q++){
+
+let v=document.querySelector(`input[name="q${q}"]:checked`)
+r+=`Q${q} : ${v?v.value:"_"}\n`
+
+}
+
+document.getElementById("output").value=r
+
+}
+
+// copy
+function copyText(){
+
+let text=document.getElementById("output")
+
+text.select()
+document.execCommand("copy")
+
+}
+
+</script>
+
+</body>
+</html>
