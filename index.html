@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr. Afif Bashar | General Health, Dermatology & Urinary Health</title>
-  <meta name="description" content="Dr. Afif Bashar MBBS, MRCS Part A (UK), FCPS Part-I (Surgery & Urology). 24/7 online consultation in General Health, Dermatology & Urinary Health via Dr Live, Shukhee & Messenger.">
+  <meta name="description" content="Dr. Afif Bashar MBBS, MRCS Part A (UK), FCPS Part-I. 24/7 online consultation – General Health, Dermatology & Urinary Health via Dr Live, Shukhee & Messenger.">
   <meta name="keywords" content="Dr Afif Bashar, online doctor Bangladesh, telemedicine, dermatologist, urologist, Dr Live, Shukhee, MBBS MRCS FCPS">
   <meta name="author" content="Dr. Afif Bashar">
   <meta name="robots" content="index, follow">
@@ -16,617 +16,899 @@
   <meta property="og:type" content="profile">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Physician","name":"Dr. Afif Bashar","url":"https://afifbashar.github.io","image":"https://afifbashar.github.io/img_2_1740251712259.jpg","medicalSpecialty":["General Practice","Dermatology","Urology"],"qualification":"MBBS, MRCS Part A (UK), FCPS Part-I (Surgery & Urology)"}</script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
   <style>
-    /* ── Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
 
-    /* ── Dark (default) ── */
-    body {
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(145deg, #080f1f 0%, #0d1b3e 50%, #0a1628 100%);
-      color: #f1f5f9;
-      transition: background 0.4s, color 0.4s;
+    /* ── Body & Background ── */
+    body{
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+      min-height:100vh;
+      background:#0a1628;
+      background-image:radial-gradient(ellipse at top left,#0d2560 0%,#0a1628 60%);
+      color:#e8f0fe;
+      line-height:1.65;
+      overflow-x:hidden;
+      -webkit-text-size-adjust:100%;
     }
-
-    /* ── Light mode ── */
-    html.light body {
-      background: linear-gradient(145deg, #dbeafe 0%, #eff6ff 60%, #f0f9ff 100%);
-      color: #0f172a;
+    html.light body{
+      background:#eef4ff;
+      background-image:radial-gradient(ellipse at top left,#c7d9ff 0%,#eef4ff 60%);
+      color:#0f172a;
     }
 
     /* ── Glass ── */
-    .glass {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.13);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    .glass{
+      background:rgba(255,255,255,0.07);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,0.13);
+      box-shadow:0 6px 28px rgba(0,0,0,0.25);
     }
-    html.light .glass {
-      background: rgba(255,255,255,0.72);
-      border-color: rgba(148,196,255,0.35);
-      box-shadow: 0 8px 24px rgba(59,130,246,0.1);
-    }
-
-    /* ── Marquee – pure CSS infinite loop (FIXED) ── */
-    .marquee-track {
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .marquee-content {
-      display: inline-block;
-      /* duplicate text handles the seamless loop */
-      animation: marqueeScroll 28s linear infinite;
-    }
-    @keyframes marqueeScroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    html.light .glass{
+      background:rgba(255,255,255,0.82);
+      border-color:rgba(99,179,255,0.28);
+      box-shadow:0 6px 22px rgba(59,130,246,0.1);
     }
 
-    /* ── Floating hero card ── */
-    @keyframes floatY {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
-    }
-    .float-card { animation: floatY 6s ease-in-out infinite; }
-
-    /* ── Glow ring on photo ── */
-    @keyframes glowPulse {
-      0%   { box-shadow: 0 0 18px rgba(6,182,212,0.4); }
-      100% { box-shadow: 0 0 48px rgba(6,182,212,0.85); }
-    }
-    .glow-ring { animation: glowPulse 3s ease-in-out infinite alternate; }
-
-    /* ── Online dot ── */
-    @keyframes dotPulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.5; transform:scale(1.4); }
-    }
-    .online-dot {
-      position: absolute; bottom: 10px; right: 10px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #22c55e; border: 3px solid #0d1b3e;
-      animation: dotPulse 2s ease-in-out infinite;
-    }
-    html.light .online-dot { border-color: #eff6ff; }
-
-    /* ── Gradient text ── */
-    .grad-text {
-      background: linear-gradient(90deg, #67e8f9, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    html.light .grad-text {
-      background: linear-gradient(90deg, #0369a1, #4f46e5);
-      -webkit-background-clip: text;
-      background-clip: text;
+    /* ── Wrapper ── */
+    .wrap{
+      width:100%;
+      max-width:700px;
+      margin:0 auto;
+      padding:0.9rem 0.9rem 2.5rem;
     }
 
-    /* ── Section title ── */
-    .sec-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
+    /* ── Card ── */
+    .card{
+      border-radius:18px;
+      padding:1.2rem;
+      margin-bottom:1rem;
+      width:100%;
     }
-
-    /* ── Tag pills ── */
-    .tag {
-      display: inline-block;
-      padding: 3px 12px; border-radius: 999px; font-size: 0.73rem;
-      background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.35);
-      color: #67e8f9;
+    @media(min-width:480px){
+      .card{padding:1.6rem;border-radius:22px}
+      .wrap{padding:1rem 1rem 2.5rem}
     }
-    html.light .tag { background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
-
-    /* ── Service cards ── */
-    .svc-card {
-      transition: transform 0.25s, box-shadow 0.25s;
-      cursor: default;
+    @media(min-width:640px){
+      .card{padding:1.9rem;border-radius:26px}
+      .wrap{padding:1.2rem 1.2rem 3rem}
     }
-    .svc-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(6,182,212,0.2); }
-
-    /* ── Symptom chips ── */
-    .chip {
-      display: inline-block; padding: 5px 13px; border-radius: 999px;
-      font-size: 0.78rem; margin: 3px; cursor: pointer;
-      background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.28);
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-      user-select: none;
-    }
-    .chip:hover { transform: scale(1.05); }
-    .chip.selected { background: rgba(6,182,212,0.3); border-color: rgba(6,182,212,0.7); }
-
-    /* ── Consultation buttons ── */
-    .btn-book {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1.1rem 1.25rem; border-radius: 1rem;
-      background: rgba(255,255,255,0.08);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      text-decoration: none; color: inherit;
-      transition: all 0.3s ease;
-    }
-    .btn-book:hover {
-      background: rgba(6,182,212,0.2);
-      border-color: rgba(6,182,212,0.55);
-      transform: translateY(-4px);
-      box-shadow: 0 14px 36px rgba(6,182,212,0.22);
-    }
-    html.light .btn-book { background: rgba(255,255,255,0.85); border-color: #cbd5e1; color: #0f172a; }
-    html.light .btn-book:hover { background: #dbeafe; border-color: #3b82f6; }
-
-    /* ── Inputs ── */
-    .inp {
-      width: 100%; padding: 0.65rem 1rem; border-radius: 0.6rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #f1f5f9; outline: none;
-      transition: border-color 0.2s;
-      font-family: 'Inter', sans-serif; font-size: 0.9rem;
-    }
-    .inp:focus { border-color: #06b6d4; }
-    .inp::placeholder { color: rgba(255,255,255,0.35); }
-    html.light .inp { background: rgba(255,255,255,0.9); border-color: #cbd5e1; color: #0f172a; }
-    html.light .inp::placeholder { color: #94a3b8; }
-    html.light .inp option { background: #fff; color: #0f172a; }
-    .inp option { background: #0d1b3e; color: #f1f5f9; }
-
-    /* ── CTA button ── */
-    .btn-cta {
-      display: inline-block; padding: 0.75rem 2rem; border-radius: 0.85rem;
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      color: white; font-weight: 700; font-size: 0.95rem;
-      text-decoration: none; border: none; cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 6px 20px rgba(6,182,212,0.4);
-    }
-    .btn-cta:hover { opacity: 0.9; transform: translateY(-2px); }
-
-    /* ── Accordion ── */
-    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
-    .acc-body.open { max-height: 300px; }
-    .acc-icon { transition: transform 0.3s; font-size: 0.75rem; }
-    .acc-icon.open { transform: rotate(180deg); }
-
-    /* ── Toast ── */
-    #toast {
-      position: fixed; bottom: 1.8rem; left: 50%;
-      transform: translateX(-50%) translateY(5rem);
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      color: white; padding: 0.7rem 1.6rem; border-radius: 1rem;
-      font-weight: 600; font-size: 0.88rem; z-index: 999;
-      transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
-      box-shadow: 0 8px 30px rgba(6,182,212,0.45);
-      pointer-events: none;
-    }
-    #toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ── Scroll-to-top button ── */
-    #scrollTop {
-      position: fixed; bottom: 5rem; right: 1.2rem; z-index: 90;
-      width: 42px; height: 42px; border-radius: 50%;
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      color: white; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      opacity: 0; transform: scale(0.6);
-      transition: opacity 0.3s, transform 0.3s;
-      box-shadow: 0 4px 16px rgba(6,182,212,0.4);
-    }
-    #scrollTop.visible { opacity: 1; transform: scale(1); }
 
     /* ── Progress bar ── */
-    #readProgress {
-      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-      background: linear-gradient(90deg, #06b6d4, #818cf8);
-      z-index: 200; transition: width 0.1s;
+    #readProgress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg,#06b6d4,#818cf8);
+      z-index:300;transition:width .1s linear;
     }
 
-    /* ── Mobile bottom nav ── */
-    #bottomNav {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
-      display: flex; justify-content: space-around; align-items: center;
-      padding: 0.6rem 0.5rem;
+    /* ── Navbar ── */
+    #navbar{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0.5rem 0.9rem;
+      min-height:48px;
     }
-    .bnav-btn {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 2px; font-size: 0.62rem; color: rgba(255,255,255,0.6);
-      cursor: pointer; transition: color 0.2s;
-      background: none; border: none; padding: 4px 8px;
+    .nav-brand{
+      font-weight:700;font-size:0.85rem;color:#67e8f9;
+      white-space:nowrap;letter-spacing:.02em;flex-shrink:0;
     }
-    .bnav-btn i { font-size: 1.15rem; }
-    .bnav-btn:hover, .bnav-btn.active { color: #67e8f9; }
-    html.light .bnav-btn { color: #64748b; }
-    html.light .bnav-btn:hover, html.light .bnav-btn.active { color: #0369a1; }
+    html.light .nav-brand{color:#0369a1}
 
-    /* ── Stats counter ── */
-    @keyframes countUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-    .stat-num { animation: countUp 0.6s ease forwards; }
-
-    /* ── Health tip card ── */
-    .tip-card {
-      border-left: 3px solid #06b6d4; padding: 0.85rem 1rem;
-      border-radius: 0 0.75rem 0.75rem 0;
-      background: rgba(6,182,212,0.08);
-      margin-bottom: 0.6rem;
-      transition: background 0.2s;
+    /* Desktop links – hidden below 640px */
+    #desktopLinks{display:none}
+    @media(min-width:640px){
+      #desktopLinks{display:flex;gap:1.2rem;align-items:center}
+      #hamburger{display:none}
+      #mobileMenu{display:none!important}
     }
-    .tip-card:hover { background: rgba(6,182,212,0.14); }
+    #desktopLinks a{
+      font-size:0.78rem;font-weight:500;color:inherit;
+      text-decoration:none;opacity:.78;transition:opacity .2s,color .2s;
+      white-space:nowrap;
+    }
+    #desktopLinks a:hover{opacity:1;color:#67e8f9}
+    html.light #desktopLinks a:hover{color:#0369a1}
 
-    /* ── Spacing helpers ── */
-    .section-gap { margin-top: 1.5rem; }
+    /* Nav controls */
+    .nav-controls{display:flex;gap:0.35rem;align-items:center;flex-shrink:0}
+    .nav-btn{
+      font-size:0.7rem;padding:4px 8px;border-radius:8px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(255,255,255,0.07);
+      color:inherit;cursor:pointer;font-family:inherit;
+      white-space:nowrap;transition:background .2s;
+    }
+    html.light .nav-btn{border-color:rgba(0,0,0,0.14);background:rgba(255,255,255,0.55)}
+    .nav-btn:hover{background:rgba(255,255,255,0.15)}
 
-    /* reduce motion */
-    @media (prefers-reduced-motion: reduce) {
-      .float-card, .glow-ring, .online-dot { animation: none; }
-      .marquee-content { animation-duration: 60s; }
+    /* Hamburger */
+    #hamburger{
+      display:flex;flex-direction:column;gap:5px;
+      background:none;border:none;cursor:pointer;padding:5px;
+    }
+    #hamburger span{
+      display:block;width:22px;height:2px;
+      background:#e8f0fe;border-radius:2px;transition:all .3s;
+    }
+    html.light #hamburger span{background:#0f172a}
+    #hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    #hamburger.open span:nth-child(2){opacity:0}
+    #hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    /* Mobile fullscreen menu */
+    #mobileMenu{
+      position:fixed;inset:0;z-index:190;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:2rem;
+      background:rgba(6,14,28,0.97);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      opacity:0;pointer-events:none;transition:opacity .3s;
+    }
+    html.light #mobileMenu{background:rgba(238,244,255,0.97)}
+    #mobileMenu.open{opacity:1;pointer-events:all}
+    #mobileMenu a{
+      font-size:1.4rem;font-weight:600;color:#e8f0fe;
+      text-decoration:none;letter-spacing:.04em;transition:color .2s;
+    }
+    html.light #mobileMenu a{color:#0f172a}
+    #mobileMenu a:hover{color:#67e8f9}
+
+    /* ── Marquee ── */
+    .marquee-wrap{
+      overflow:hidden;white-space:nowrap;
+      margin-top:48px;padding:7px 0;
+      font-size:0.78rem;font-weight:500;color:#67e8f9;
+    }
+    html.light .marquee-wrap{color:#0369a1}
+    .marquee-inner{
+      display:inline-block;
+      animation:mScroll 32s linear infinite;
+    }
+    @keyframes mScroll{
+      0%{transform:translateX(0)}
+      100%{transform:translateX(-50%)}
+    }
+
+    /* ── Hero ── */
+    .hero-card{text-align:center}
+    .photo-wrap{position:relative;display:inline-block}
+    .hero-photo{
+      width:120px;height:120px;border-radius:50%;
+      border:3px solid rgba(255,255,255,0.22);
+      object-fit:cover;display:block;margin:0 auto;
+      animation:glowPulse 3s ease-in-out infinite alternate;
+    }
+    @media(min-width:400px){.hero-photo{width:140px;height:140px}}
+    @keyframes glowPulse{
+      0%{box-shadow:0 0 14px rgba(6,182,212,.35)}
+      100%{box-shadow:0 0 42px rgba(6,182,212,.8)}
+    }
+    .float-card{animation:floatY 6s ease-in-out infinite}
+    @keyframes floatY{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    .online-dot{
+      position:absolute;bottom:7px;right:7px;
+      width:16px;height:16px;border-radius:50%;
+      background:#22c55e;border:2.5px solid #0a1628;
+      animation:dotPulse 2s ease-in-out infinite;
+    }
+    html.light .online-dot{border-color:#eef4ff}
+    @keyframes dotPulse{
+      0%,100%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.45);opacity:.55}
+    }
+    .hero-name{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.5rem,6vw,2.2rem);
+      font-weight:700;margin-top:.9rem;line-height:1.2;
+      background:linear-gradient(90deg,#67e8f9,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    html.light .hero-name{
+      background:linear-gradient(90deg,#0369a1,#4f46e5);
+      -webkit-background-clip:text;background-clip:text;
+    }
+    .hero-creds{font-size:clamp(0.72rem,2.5vw,0.85rem);opacity:.72;margin-top:.3rem}
+    .hero-spec{
+      font-size:clamp(0.8rem,2.8vw,0.92rem);
+      color:#67e8f9;font-weight:600;margin-top:.45rem;
+    }
+    html.light .hero-spec{color:#0369a1}
+
+    /* ── Tags ── */
+    .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:.8rem}
+    .tag{
+      display:inline-block;padding:3px 10px;
+      border-radius:999px;font-size:0.68rem;
+      background:rgba(6,182,212,.13);border:1px solid rgba(6,182,212,.3);
+      color:#67e8f9;white-space:nowrap;
+    }
+    html.light .tag{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
+    .tag-green{background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.33);color:#86efac}
+    html.light .tag-green{background:#dcfce7;border-color:#86efac;color:#166534}
+
+    /* ── CTA buttons ── */
+    .cta-row{
+      display:flex;gap:.55rem;justify-content:center;
+      flex-wrap:wrap;margin-top:1rem;
+    }
+    .btn-cta{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:.6rem 1.2rem;border-radius:11px;
+      background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      color:#fff;font-weight:700;font-size:clamp(.78rem,3vw,.88rem);
+      text-decoration:none;border:none;cursor:pointer;
+      font-family:inherit;white-space:nowrap;
+      box-shadow:0 4px 16px rgba(6,182,212,.35);
+      transition:opacity .2s,transform .2s;
+    }
+    .btn-cta:hover{opacity:.88;transform:translateY(-2px)}
+    .btn-cta-alt{background:linear-gradient(135deg,#1d4ed8,#3b82f6)}
+
+    /* ── Section title ── */
+    .sec-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.05rem,4vw,1.35rem);
+      font-weight:700;margin-bottom:.85rem;
+      background:linear-gradient(90deg,#67e8f9,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    html.light .sec-title{
+      background:linear-gradient(90deg,#0369a1,#4f46e5);
+      -webkit-background-clip:text;background-clip:text;
+    }
+
+    /* ── Stats ── */
+    .stats-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      text-align:center;
+    }
+    .stat-item{padding:.85rem .4rem}
+    .stat-item:nth-child(2){
+      border-left:1px solid rgba(255,255,255,.1);
+      border-right:1px solid rgba(255,255,255,.1);
+    }
+    html.light .stat-item:nth-child(2){border-color:rgba(59,130,246,.18)}
+    .stat-num{
+      font-size:clamp(1.3rem,5vw,1.8rem);font-weight:800;
+      background:linear-gradient(90deg,#67e8f9,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    html.light .stat-num{
+      background:linear-gradient(90deg,#0369a1,#4f46e5);
+      -webkit-background-clip:text;background-clip:text;
+    }
+    .stat-label{font-size:.68rem;opacity:.52;margin-top:2px}
+
+    /* ── Service grid – mobile: 2 cols, tablet+: 4 cols ── */
+    .svc-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:.6rem;
+      margin-bottom:1rem;
+    }
+    @media(min-width:500px){
+      .svc-grid{grid-template-columns:repeat(4,1fr)}
+    }
+    .svc-card{
+      border-radius:14px;padding:1rem .5rem;
+      text-align:center;cursor:default;
+      transition:transform .25s,box-shadow .25s;
+    }
+    .svc-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(6,182,212,.18)}
+    .svc-icon{font-size:1.6rem;margin-bottom:.35rem}
+    .svc-name{font-size:.72rem;font-weight:600;line-height:1.3}
+
+    /* ── Symptom chips ── */
+    .chips{display:flex;flex-wrap:wrap;gap:6px}
+    .chip{
+      display:inline-block;padding:5px 11px;border-radius:999px;
+      font-size:.75rem;cursor:pointer;user-select:none;
+      background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.26);
+      color:inherit;font-family:inherit;
+      transition:background .2s,border-color .2s,transform .15s;
+    }
+    .chip:hover{transform:scale(1.04)}
+    .chip.on{background:rgba(6,182,212,.28);border-color:rgba(6,182,212,.65);color:#67e8f9}
+    html.light .chip{background:#eff6ff;border-color:#bfdbfe}
+    html.light .chip.on{background:#dbeafe;border-color:#3b82f6;color:#1d4ed8}
+
+    /* ── Form ── */
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.55rem;
+      margin-bottom:.55rem;
+    }
+    /* On very small screens, stack to 1 column */
+    @media(max-width:360px){
+      .form-grid{grid-template-columns:1fr}
+    }
+    .form-full{margin-bottom:.55rem}
+    .lbl{font-size:.7rem;opacity:.5;display:block;margin-bottom:3px}
+    .inp{
+      width:100%;padding:.6rem .85rem;
+      border-radius:10px;font-size:.85rem;
+      background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.14);
+      color:#e8f0fe;outline:none;font-family:inherit;
+      transition:border-color .2s;
+      -webkit-appearance:none;appearance:none;
+    }
+    .inp:focus{border-color:#06b6d4}
+    .inp::placeholder{color:rgba(255,255,255,.3)}
+    .inp option{background:#0d1b3a;color:#e8f0fe}
+    html.light .inp{background:rgba(255,255,255,.9);border-color:#cbd5e1;color:#0f172a}
+    html.light .inp::placeholder{color:#94a3b8}
+    html.light .inp option{background:#fff;color:#0f172a}
+
+    /* Wide action button */
+    .btn-wide{
+      width:100%;padding:.68rem 1rem;border-radius:11px;
+      background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      color:#fff;font-weight:700;font-size:.86rem;
+      border:none;cursor:pointer;font-family:inherit;
+      margin-top:.65rem;
+      box-shadow:0 4px 14px rgba(6,182,212,.33);
+      transition:opacity .2s,transform .2s;
+    }
+    .btn-wide:hover{opacity:.88;transform:translateY(-2px)}
+
+    /* ── BMI bar ── */
+    .bmi-legend{display:flex;justify-content:space-between;font-size:.63rem;margin-bottom:4px}
+    .bmi-track{
+      width:100%;height:10px;border-radius:999px;
+      position:relative;overflow:visible;
+      background:linear-gradient(to right,#3b82f6 0%,#22c55e 35%,#f59e0b 65%,#ef4444 100%);
+    }
+    .bmi-needle{
+      position:absolute;top:-4px;
+      width:18px;height:18px;border-radius:50%;
+      background:#fff;box-shadow:0 0 6px rgba(0,0,0,.5);
+      left:0%;margin-left:-9px;
+      transition:left .85s cubic-bezier(.34,1.56,.64,1);
+    }
+    .bmi-result{display:none;margin-top:1rem}
+    .bmi-value{
+      text-align:center;font-size:1.55rem;font-weight:800;margin-top:.65rem;
+      background:linear-gradient(90deg,#67e8f9,#a78bfa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .bmi-label {text-align:center;font-size:.82rem;opacity:.62;margin-top:2px}
+    .bmi-advice{text-align:center;font-size:.73rem;opacity:.46;font-style:italic;margin-top:3px}
+    .bmi-ideal {text-align:center;font-size:.73rem;color:#67e8f9;margin-top:4px}
+    html.light .bmi-ideal{color:#0369a1}
+
+    /* ── Calorie boxes ── */
+    .cal-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin-top:.75rem}
+    .cal-box{padding:.7rem .3rem;border-radius:11px;text-align:center}
+    .cal-box-num{font-size:1.05rem;font-weight:800}
+    .cal-box-lbl{font-size:.62rem;opacity:.52;margin-top:2px}
+    .cal-note{text-align:center;font-size:.65rem;opacity:.36;margin-top:.4rem}
+
+    /* ── Water / symptom result ── */
+    .result-box{
+      display:none;margin-top:.8rem;padding:.9rem;
+      border-radius:11px;
+      background:rgba(6,182,212,.08);
+      border:1px solid rgba(6,182,212,.18);
+      font-size:.82rem;line-height:1.7;
+    }
+    html.light .result-box{background:#eff6ff;border-color:#bfdbfe}
+    .water-result{
+      display:none;margin-top:.7rem;
+      text-align:center;font-weight:600;
+      color:#67e8f9;font-size:.9rem;
+    }
+    html.light .water-result{color:#0369a1}
+
+    /* ── FAQ accordion ── */
+    .faq-item{border-radius:12px;overflow:hidden;margin-bottom:.5rem}
+    .faq-btn{
+      width:100%;display:flex;align-items:flex-start;
+      justify-content:space-between;gap:.5rem;
+      padding:.85rem .95rem;
+      background:none;border:none;color:inherit;
+      cursor:pointer;font-family:inherit;
+      font-size:clamp(.78rem,3vw,.86rem);
+      font-weight:600;text-align:left;line-height:1.45;
+    }
+    .faq-btn:active{opacity:.8}
+    .faq-icon{
+      color:#67e8f9;flex-shrink:0;
+      font-size:.7rem;margin-top:4px;
+      transition:transform .3s;
+    }
+    html.light .faq-icon{color:#0369a1}
+    .faq-icon.open{transform:rotate(180deg)}
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .38s ease}
+    .faq-body.open{max-height:300px}
+    .faq-body p{
+      padding:0 .95rem 1rem;
+      font-size:clamp(.75rem,2.8vw,.82rem);
+      opacity:.68;line-height:1.7;
+    }
+
+    /* ── Health tips ── */
+    .tip{
+      border-left:3px solid #06b6d4;
+      padding:.75rem .85rem;
+      border-radius:0 11px 11px 0;
+      background:rgba(6,182,212,.07);
+      margin-bottom:.55rem;
+    }
+    html.light .tip{background:rgba(6,182,212,.06)}
+    .tip strong{font-size:clamp(.82rem,3vw,.88rem)}
+    .tip span{
+      font-size:clamp(.74rem,2.6vw,.8rem);
+      opacity:.66;display:block;margin-top:2px;line-height:1.55;
+    }
+
+    /* ── Book buttons ── */
+    .book-btn{
+      display:flex;align-items:center;gap:.8rem;
+      padding:.95rem 1rem;border-radius:13px;
+      background:rgba(255,255,255,.07);
+      border:1.5px solid rgba(255,255,255,.13);
+      text-decoration:none;color:inherit;
+      margin-bottom:.6rem;
+      transition:background .3s,border-color .3s,transform .3s;
+    }
+    .book-btn:last-child{margin-bottom:0}
+    .book-btn:hover{
+      background:rgba(6,182,212,.18);
+      border-color:rgba(6,182,212,.5);
+      transform:translateY(-3px);
+    }
+    html.light .book-btn{background:rgba(255,255,255,.82);border-color:#cbd5e1}
+    html.light .book-btn:hover{background:#dbeafe;border-color:#3b82f6}
+    .book-icon{font-size:1.3rem;flex-shrink:0;width:24px;text-align:center}
+    .book-title{font-weight:700;font-size:clamp(.82rem,3vw,.9rem)}
+    .book-sub  {font-size:clamp(.68rem,2.4vw,.73rem);opacity:.46;margin-top:1px}
+    .book-arrow{margin-left:auto;opacity:.26;font-size:.78rem;flex-shrink:0}
+
+    /* ── Social icons ── */
+    .social-row{
+      display:flex;justify-content:center;
+      gap:clamp(.9rem,5vw,1.7rem);
+      font-size:clamp(1.4rem,6vw,1.75rem);
+      margin:1rem 0;
+    }
+    .social-row a{
+      color:inherit;text-decoration:none;
+      transition:transform .2s;display:inline-block;
+    }
+    .social-row a:hover{transform:scale(1.22)}
+
+    /* ── Footer ── */
+    .footer{
+      margin-top:.9rem;padding-top:.9rem;
+      border-top:1px solid rgba(255,255,255,.09);
+      font-size:.7rem;opacity:.38;
+      text-align:center;line-height:1.7;
+    }
+    html.light .footer{border-color:rgba(0,0,0,.09)}
+    .emergency{color:#fca5a5!important;opacity:1!important;margin-top:5px;font-weight:500}
+
+    /* ── Toast ── */
+    #toast{
+      position:fixed;bottom:1.3rem;left:50%;
+      transform:translateX(-50%) translateY(5rem);
+      background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      color:#fff;padding:.6rem 1.3rem;border-radius:11px;
+      font-weight:600;font-size:.82rem;z-index:999;
+      transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+      box-shadow:0 6px 22px rgba(6,182,212,.42);
+      pointer-events:none;white-space:nowrap;
+    }
+    #toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* ── Scroll-to-top ── */
+    #scrollTop{
+      position:fixed;bottom:1.1rem;right:.9rem;z-index:90;
+      width:40px;height:40px;border-radius:50%;
+      background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      color:#fff;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.88rem;
+      opacity:0;transform:scale(0.6);
+      transition:opacity .3s,transform .3s;
+      box-shadow:0 4px 14px rgba(6,182,212,.38);
+    }
+    #scrollTop.visible{opacity:1;transform:scale(1)}
+
+    /* ── Reduced motion ── */
+    @media(prefers-reduced-motion:reduce){
+      .float-card,.hero-photo,.online-dot{animation:none}
+      .marquee-inner{animation-duration:80s}
     }
   </style>
 </head>
 <body>
 
-<!-- Page read progress bar -->
 <div id="readProgress"></div>
-
-<!-- Toast -->
 <div id="toast"></div>
-
-<!-- Scroll to top -->
-<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- ══ STICKY NAV ══ -->
-<nav id="mainNav" class="glass" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:0.6rem 1.2rem;display:flex;align-items:center;justify-content:space-between;">
-  <span style="font-weight:700;font-size:0.9rem;color:#67e8f9;letter-spacing:0.03em;">Dr. Afif Bashar</span>
-  <!-- desktop links -->
-  <div style="display:flex;gap:1.4rem;font-size:0.82rem;font-weight:500;" class="hidden md:flex" id="desktopLinks">
-    <a href="#about"    onclick="scrollTo('about')"    style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="About"    data-bn="পরিচয়">About</a>
-    <a href="#services" onclick="scrollTo('services')" style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="Services" data-bn="সেবা">Services</a>
-    <a href="#urinary"  onclick="scrollTo('urinary')"  style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="Urinary"  data-bn="মূত্রতন্ত্র">Urinary</a>
-    <a href="#tools"    onclick="scrollTo('tools')"    style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="Tools"    data-bn="টুলস">Tools</a>
-    <a href="#tips"     onclick="scrollTo('tips')"     style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="Tips"     data-bn="স্বাস্থ্য টিপস">Tips</a>
-    <a href="#book"     onclick="scrollTo('book')"     style="cursor:pointer;text-decoration:none;color:inherit;transition:color 0.2s;" onmouseover="this.style.color='#67e8f9'" onmouseout="this.style.color=''" data-en="Book"     data-bn="বুকিং">Book</a>
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar" class="glass">
+  <span class="nav-brand">Dr. Afif Bashar</span>
+
+  <!-- Desktop links -->
+  <div id="desktopLinks">
+    <a href="#about"    onclick="navTo('about')"    data-en="About"    data-bn="পরিচয়">About</a>
+    <a href="#services" onclick="navTo('services')" data-en="Services" data-bn="সেবা">Services</a>
+    <a href="#urinary"  onclick="navTo('urinary')"  data-en="Urinary"  data-bn="মূত্রতন্ত্র">Urinary</a>
+    <a href="#tools"    onclick="navTo('tools')"    data-en="Tools"    data-bn="টুলস">Tools</a>
+    <a href="#tips"     onclick="navTo('tips')"     data-en="Tips"     data-bn="টিপস">Tips</a>
+    <a href="#book"     onclick="navTo('book')"     data-en="Book"     data-bn="বুকিং">Book</a>
   </div>
-  <div style="display:flex;gap:0.5rem;align-items:center;">
-    <button onclick="toggleLang()" id="langBtn" style="font-size:0.75rem;padding:4px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:inherit;cursor:pointer;font-family:inherit;">বাংলা</button>
-    <button onclick="toggleTheme()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:inherit;cursor:pointer;font-size:0.9rem;" id="themeBtn">☀️</button>
+
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="toggleLang()" id="langBtn">বাংলা</button>
+    <button class="nav-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+    <button id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<!-- ══ MARQUEE (FIXED – duplicated text for seamless loop) ══ -->
-<div class="glass marquee-track" style="margin-top:56px;padding:8px 0;font-size:0.82rem;font-weight:500;color:#67e8f9;">
-  <div class="marquee-content">
-    Dr. Afif Bashar &nbsp;•&nbsp; 24/7 Online Consultation &nbsp;•&nbsp; Video Call: Dr Live &amp; Shukhee &nbsp;•&nbsp; General Health &nbsp;•&nbsp; Dermatology &nbsp;•&nbsp; Urinary Health &nbsp;•&nbsp; MBBS · MRCS Part A (UK) · FCPS Part-I &nbsp;•&nbsp; ডাঃ আফিফ বাশার &nbsp;•&nbsp; অনলাইন পরামর্শ সর্বদা &nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    Dr. Afif Bashar &nbsp;•&nbsp; 24/7 Online Consultation &nbsp;•&nbsp; Video Call: Dr Live &amp; Shukhee &nbsp;•&nbsp; General Health &nbsp;•&nbsp; Dermatology &nbsp;•&nbsp; Urinary Health &nbsp;•&nbsp; MBBS · MRCS Part A (UK) · FCPS Part-I &nbsp;•&nbsp; ডাঃ আফিফ বাশার &nbsp;•&nbsp; অনলাইন পরামর্শ সর্বদা &nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!-- Mobile fullscreen menu -->
+<div id="mobileMenu">
+  <a href="#about"    onclick="navTo('about');closeMenu()"    data-en="About"    data-bn="পরিচয়">About</a>
+  <a href="#services" onclick="navTo('services');closeMenu()" data-en="Services" data-bn="সেবা">Services</a>
+  <a href="#urinary"  onclick="navTo('urinary');closeMenu()"  data-en="Urinary"  data-bn="মূত্রতন্ত্র">Urinary</a>
+  <a href="#tools"    onclick="navTo('tools');closeMenu()"    data-en="Tools"    data-bn="টুলস">Tools</a>
+  <a href="#tips"     onclick="navTo('tips');closeMenu()"     data-en="Tips"     data-bn="টিপস">Tips</a>
+  <a href="#book"     onclick="navTo('book');closeMenu()"     data-en="Book"     data-bn="বুকিং">Book</a>
+</div>
+
+<!-- ══ MARQUEE ══ -->
+<div class="glass marquee-wrap">
+  <div class="marquee-inner">
+    Dr. Afif Bashar &nbsp;•&nbsp; 24/7 Online Consultation &nbsp;•&nbsp; Dr Live &amp; Shukhee Video Call &nbsp;•&nbsp; General Health &nbsp;•&nbsp; Dermatology &nbsp;•&nbsp; Urinary Health &nbsp;•&nbsp; MBBS · MRCS Part A (UK) · FCPS Part-I &nbsp;•&nbsp; ডাঃ আফিফ বাশার &nbsp;•&nbsp; অনলাইন পরামর্শ সর্বদা পাওয়া যায় &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Dr. Afif Bashar &nbsp;•&nbsp; 24/7 Online Consultation &nbsp;•&nbsp; Dr Live &amp; Shukhee Video Call &nbsp;•&nbsp; General Health &nbsp;•&nbsp; Dermatology &nbsp;•&nbsp; Urinary Health &nbsp;•&nbsp; MBBS · MRCS Part A (UK) · FCPS Part-I &nbsp;•&nbsp; ডাঃ আফিফ বাশার &nbsp;•&nbsp; অনলাইন পরামর্শ সর্বদা পাওয়া যায় &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
 </div>
 
-<!-- ══ MAIN CONTENT ══ -->
-<div style="max-width:720px;margin:0 auto;padding:1.2rem 1rem 6rem;">
+<!-- ══ MAIN ══ -->
+<div class="wrap">
 
-  <!-- ── HERO ── -->
-  <div class="glass float-card" id="hero" style="border-radius:1.75rem;padding:2.2rem 1.5rem;text-align:center;margin-bottom:1.5rem;">
-    <div style="position:relative;display:inline-block;">
-      <img src="img_2_1740251712259.jpg" alt="Dr. Afif Bashar"
-           class="glow-ring"
-           style="width:148px;height:148px;border-radius:50%;border:4px solid rgba(255,255,255,0.25);object-fit:cover;display:block;margin:0 auto;"
-           onerror="this.src='https://ui-avatars.com/api/?name=Dr+Afif+Bashar&size=148&background=0d1b3e&color=67e8f9&bold=true'">
+  <!-- HERO -->
+  <div class="glass card hero-card float-card" id="hero">
+    <div class="photo-wrap">
+      <img src="img_2_1740251712259.jpg" alt="Dr. Afif Bashar" class="hero-photo"
+           onerror="this.src='https://ui-avatars.com/api/?name=Dr+Afif&size=140&background=0d1b3e&color=67e8f9&bold=true'">
       <div class="online-dot"></div>
     </div>
-    <h1 class="grad-text" style="font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;margin-top:1.1rem;line-height:1.2;">Dr. Afif Bashar</h1>
-    <p style="margin-top:0.5rem;opacity:0.8;font-size:0.9rem;">MBBS &nbsp;|&nbsp; MRCS Part A (UK) &nbsp;|&nbsp; FCPS Part-I (Surgery & Urology)</p>
-    <p style="margin-top:0.6rem;color:#67e8f9;font-weight:600;font-size:0.95rem;letter-spacing:0.02em;"
+    <h1 class="hero-name">Dr. Afif Bashar</h1>
+    <p class="hero-creds">MBBS &nbsp;|&nbsp; MRCS Part A (UK) &nbsp;|&nbsp; FCPS Part-I (Surgery &amp; Urology)</p>
+    <p class="hero-spec"
        data-en="General Health • Dermatology • Urinary Health"
-       data-bn="সাধারণ স্বাস্থ্য • চর্মরোগ • মূত্রতন্ত্র সংক্রান্ত পরামর্শ">
+       data-bn="সাধারণ স্বাস্থ্য • চর্মরোগ • মূত্রতন্ত্র পরামর্শ">
       General Health • Dermatology • Urinary Health
     </p>
-    <div style="margin-top:0.9rem;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+    <div class="tags">
       <span class="tag">🩺 MBBS</span>
       <span class="tag">🇬🇧 MRCS Part A</span>
       <span class="tag">🏥 FCPS Part-I</span>
-      <span class="tag" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);color:#86efac;" data-en="🟢 Available Now" data-bn="🟢 এখন উপলব্ধ">🟢 Available Now</span>
+      <span class="tag tag-green" data-en="🟢 Available Now" data-bn="🟢 এখন উপলব্ধ">🟢 Available Now</span>
     </div>
-    <div style="margin-top:1.3rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-      <a href="#book" onclick="scrollTo('book')" class="btn-cta" data-en="Book Consultation" data-bn="পরামর্শ নিন">Book Consultation</a>
-      <a href="https://m.me/drafifbashar" target="_blank" class="btn-cta" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">
-        <i class="fab fa-facebook-messenger" style="margin-right:6px;"></i><span data-en="Message Now" data-bn="বার্তা পাঠান">Message Now</span>
+    <div class="cta-row">
+      <a href="#book" onclick="navTo('book')" class="btn-cta" data-en="Book Consultation" data-bn="পরামর্শ নিন">Book Consultation</a>
+      <a href="https://m.me/drafifbashar" target="_blank" class="btn-cta btn-cta-alt">
+        <i class="fab fa-facebook-messenger"></i>
+        <span data-en="Message Now" data-bn="বার্তা পাঠান">Message Now</span>
       </a>
     </div>
   </div>
 
-  <!-- ── STATS ── -->
-  <div class="glass section-gap" style="border-radius:1.5rem;padding:1.4rem 1.5rem;margin-bottom:1.5rem;">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;text-align:center;">
-      <div>
-        <div class="grad-text stat-num" style="font-size:1.9rem;font-weight:800;" id="stat1">500+</div>
-        <div style="font-size:0.75rem;opacity:0.6;margin-top:2px;" data-en="Patients Helped" data-bn="রোগী সহায়তা">Patients Helped</div>
+  <!-- STATS -->
+  <div class="glass card" style="padding:.5rem 0;">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label" data-en="Patients Helped" data-bn="রোগী সহায়তা">Patients Helped</div>
       </div>
-      <div style="border-left:1px solid rgba(255,255,255,0.1);border-right:1px solid rgba(255,255,255,0.1);">
-        <div class="grad-text stat-num" style="font-size:1.9rem;font-weight:800;">24/7</div>
-        <div style="font-size:0.75rem;opacity:0.6;margin-top:2px;" data-en="Available" data-bn="উপলব্ধ">Available</div>
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label" data-en="Available" data-bn="উপলব্ধ">Available</div>
       </div>
-      <div>
-        <div class="grad-text stat-num" style="font-size:1.9rem;font-weight:800;">3+</div>
-        <div style="font-size:0.75rem;opacity:0.6;margin-top:2px;" data-en="Platforms" data-bn="প্ল্যাটফর্ম">Platforms</div>
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-label" data-en="Platforms" data-bn="প্ল্যাটফর্ম">Platforms</div>
       </div>
     </div>
   </div>
 
-  <!-- ── ABOUT ── -->
-  <div class="glass section-gap" id="about" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" data-en="About Me" data-bn="আমার সম্পর্কে">About Me</h2>
-    <p style="opacity:0.8;line-height:1.75;font-size:0.92rem;"
+  <!-- ABOUT -->
+  <div class="glass card" id="about">
+    <h2 class="sec-title" data-en="About Me" data-bn="আমার সম্পর্কে">About Me</h2>
+    <p style="font-size:0.88rem;line-height:1.78;opacity:0.78;"
        data-en="I am Dr. Afif Bashar — a qualified physician with MBBS, MRCS Part A (UK), and FCPS Part-I in Surgery & Urology. I provide patient-centered online consultations covering general health, dermatology, chronic disease management, and urinary health assessment. My aim is to make quality healthcare accessible from the comfort of your home."
        data-bn="আমি ডাঃ আফিফ বাশার — MBBS, MRCS Part A (UK) এবং FCPS Part-I (Surgery & Urology) ডিগ্রিধারী চিকিৎসক। সাধারণ স্বাস্থ্য, চর্মরোগ, দীর্ঘমেয়াদী রোগ ব্যবস্থাপনা এবং মূত্রতন্ত্র সংক্রান্ত অনলাইন পরামর্শ প্রদান করি। আপনার ঘরে বসেই মানসম্পন্ন স্বাস্থ্যসেবা নিশ্চিত করাই আমার লক্ষ্য।">
       I am Dr. Afif Bashar — a qualified physician with MBBS, MRCS Part A (UK), and FCPS Part-I in Surgery &amp; Urology. I provide patient-centered online consultations covering general health, dermatology, chronic disease management, and urinary health assessment. My aim is to make quality healthcare accessible from the comfort of your home.
     </p>
   </div>
 
-  <!-- ── SERVICES ── -->
-  <div id="services" style="margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" style="padding:0 4px;" data-en="Services" data-bn="সেবাসমূহ">Services</h2>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;" class="md:grid-cols-4">
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">🩺</div><div style="font-size:0.82rem;font-weight:600;" data-en="General Consultation" data-bn="সাধারণ পরামর্শ">General Consultation</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">🌿</div><div style="font-size:0.82rem;font-weight:600;" data-en="Dermatology" data-bn="চর্মরোগ">Dermatology</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">🚻</div><div style="font-size:0.82rem;font-weight:600;" data-en="Urinary Health" data-bn="মূত্রতন্ত্র">Urinary Health</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">📋</div><div style="font-size:0.82rem;font-weight:600;" data-en="Second Opinion" data-bn="সেকেন্ড ওপিনিয়ন">Second Opinion</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">💊</div><div style="font-size:0.82rem;font-weight:600;" data-en="Chronic Disease" data-bn="দীর্ঘমেয়াদী রোগ">Chronic Disease</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">🧪</div><div style="font-size:0.82rem;font-weight:600;" data-en="Report Review" data-bn="রিপোর্ট রিভিউ">Report Review</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">👶</div><div style="font-size:0.82rem;font-weight:600;" data-en="Pediatric Care" data-bn="শিশু স্বাস্থ্য">Pediatric Care</div></div>
-      <div class="glass svc-card" style="border-radius:1.25rem;padding:1.2rem;text-align:center;"><div style="font-size:2rem;margin-bottom:0.4rem;">💬</div><div style="font-size:0.82rem;font-weight:600;" data-en="Video Consultation" data-bn="ভিডিও পরামর্শ">Video Consultation</div></div>
+  <!-- SERVICES -->
+  <div id="services" style="margin-bottom:1rem;">
+    <h2 class="sec-title" data-en="Services" data-bn="সেবাসমূহ">Services</h2>
+    <div class="svc-grid" id="svcGrid">
+      <div class="glass svc-card"><div class="svc-icon">🩺</div><div class="svc-name" data-en="General Consultation" data-bn="সাধারণ পরামর্শ">General Consultation</div></div>
+      <div class="glass svc-card"><div class="svc-icon">🌿</div><div class="svc-name" data-en="Dermatology" data-bn="চর্মরোগ">Dermatology</div></div>
+      <div class="glass svc-card"><div class="svc-icon">🚻</div><div class="svc-name" data-en="Urinary Health" data-bn="মূত্রতন্ত্র">Urinary Health</div></div>
+      <div class="glass svc-card"><div class="svc-icon">📋</div><div class="svc-name" data-en="Second Opinion" data-bn="সেকেন্ড ওপিনিয়ন">Second Opinion</div></div>
+      <div class="glass svc-card"><div class="svc-icon">💊</div><div class="svc-name" data-en="Chronic Disease" data-bn="দীর্ঘমেয়াদী রোগ">Chronic Disease</div></div>
+      <div class="glass svc-card"><div class="svc-icon">🧪</div><div class="svc-name" data-en="Report Review" data-bn="রিপোর্ট রিভিউ">Report Review</div></div>
+      <div class="glass svc-card"><div class="svc-icon">👶</div><div class="svc-name" data-en="Pediatric Care" data-bn="শিশু স্বাস্থ্য">Pediatric Care</div></div>
+      <div class="glass svc-card"><div class="svc-icon">💬</div><div class="svc-name" data-en="Video Consultation" data-bn="ভিডিও পরামর্শ">Video Consultation</div></div>
     </div>
   </div>
 
-  <!-- ── URINARY ── -->
-  <div class="glass section-gap" id="urinary" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" data-en="Urinary & Kidney Health" data-bn="মূত্রতন্ত্র ও কিডনি স্বাস্থ্য">Urinary & Kidney Health</h2>
-    <p style="font-size:0.82rem;opacity:0.55;margin-bottom:0.9rem;" data-en="Common concerns I can help with:" data-bn="আমি যেসব সমস্যায় সাহায্য করতে পারি:">Common concerns I can help with:</p>
-    <div>
-      <span class="chip" data-en="Burning urination" data-bn="প্রসাবে জ্বালাপোড়া">Burning urination</span>
-      <span class="chip" data-en="Frequent urination" data-bn="বারবার প্রসাব">Frequent urination</span>
+  <!-- URINARY -->
+  <div class="glass card" id="urinary">
+    <h2 class="sec-title" data-en="Urinary & Kidney Health" data-bn="মূত্রতন্ত্র ও কিডনি স্বাস্থ্য">Urinary &amp; Kidney Health</h2>
+    <p style="font-size:0.78rem;opacity:0.48;margin-bottom:0.8rem;" data-en="Common concerns I can help with:" data-bn="আমি যেসব সমস্যায় সাহায্য করতে পারি:">Common concerns I can help with:</p>
+    <div class="chips">
+      <span class="chip" data-en="Burning urination"    data-bn="প্রসাবে জ্বালাপোড়া">Burning urination</span>
+      <span class="chip" data-en="Frequent urination"   data-bn="বারবার প্রসাব">Frequent urination</span>
       <span class="chip" data-en="Urinary tract infection" data-bn="ইউরিন ইনফেকশন">Urinary tract infection</span>
-      <span class="chip" data-en="Blood in urine" data-bn="প্রসাবে রক্ত">Blood in urine</span>
+      <span class="chip" data-en="Blood in urine"       data-bn="প্রসাবে রক্ত">Blood in urine</span>
       <span class="chip" data-en="Kidney stone symptoms" data-bn="কিডনিতে পাথর">Kidney stone symptoms</span>
-      <span class="chip" data-en="Painful urination" data-bn="প্রসাবে ব্যথা">Painful urination</span>
-      <span class="chip" data-en="Incomplete emptying" data-bn="অসম্পূর্ণ প্রসাব">Incomplete emptying</span>
-      <span class="chip" data-en="Prostate concerns" data-bn="প্রস্টেট সমস্যা">Prostate concerns</span>
-      <span class="chip" data-en="Report review" data-bn="রিপোর্ট রিভিউ">Report review</span>
+      <span class="chip" data-en="Painful urination"    data-bn="প্রসাবে ব্যথা">Painful urination</span>
+      <span class="chip" data-en="Incomplete emptying"  data-bn="অসম্পূর্ণ প্রসাব">Incomplete emptying</span>
+      <span class="chip" data-en="Prostate concerns"    data-bn="প্রস্টেট সমস্যা">Prostate concerns</span>
+      <span class="chip" data-en="Report review"        data-bn="রিপোর্ট রিভিউ">Report review</span>
     </div>
   </div>
 
   <!-- ══ TOOLS ══ -->
-  <div id="tools" style="margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" style="padding:0 4px;" data-en="Health Tools" data-bn="স্বাস্থ্য টুলস">Health Tools</h2>
+  <div id="tools" style="margin-bottom:1rem;">
+    <h2 class="sec-title" data-en="Health Tools" data-bn="স্বাস্থ্য টুলস">Health Tools</h2>
 
-    <!-- BMI Calculator -->
-    <div class="glass" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1rem;">
-      <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:8px;">⚖️ <span data-en="BMI Calculator" data-bn="বিএমআই ক্যালকুলেটর">BMI Calculator</span></h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.6rem;">
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label>
-          <input class="inp" id="bmiW" type="number" placeholder="e.g. 70" min="1" max="300"></div>
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Height (cm)" data-bn="উচ্চতা (সে.মি.)">Height (cm)</label>
-          <input class="inp" id="bmiH" type="number" placeholder="e.g. 170" min="50" max="250"></div>
+    <!-- BMI -->
+    <div class="glass card">
+      <h3 style="font-size:0.98rem;font-weight:700;margin-bottom:1rem;">⚖️ <span data-en="BMI Calculator" data-bn="বিএমআই ক্যালকুলেটর">BMI Calculator</span></h3>
+      <div class="form-grid">
+        <div><label class="lbl" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label><input class="inp" id="bmiW" type="number" inputmode="decimal" placeholder="e.g. 70"></div>
+        <div><label class="lbl" data-en="Height (cm)" data-bn="উচ্চতা (সে.মি.)">Height (cm)</label><input class="inp" id="bmiH" type="number" inputmode="decimal" placeholder="e.g. 170"></div>
       </div>
-      <label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Age (optional)" data-bn="বয়স (ঐচ্ছিক)">Age (optional)</label>
-      <input class="inp" id="bmiAge" type="number" placeholder="e.g. 30" min="1" max="120" style="margin-bottom:0.7rem;">
+      <div class="form-full">
+        <div><label class="lbl" data-en="Age (optional)" data-bn="বয়স (ঐচ্ছিক)">Age (optional)</label><input class="inp" id="bmiAge" type="number" inputmode="numeric" placeholder="e.g. 30"></div>
+      </div>
       <div style="display:flex;gap:0.5rem;">
-        <button onclick="calcBMI()" class="btn-cta" style="flex:1;text-align:center;" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
-        <button onclick="resetBMI()" style="padding:0.7rem 1rem;border-radius:0.85rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:inherit;cursor:pointer;font-size:1rem;">↺</button>
+        <button onclick="calcBMI()" class="btn-wide" style="flex:1;margin-top:0;" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
+        <button onclick="resetBMI()" class="nav-btn" style="padding:0 1rem;font-size:1.1rem;">↺</button>
       </div>
-      <div id="bmiResult" style="display:none;margin-top:1rem;">
-        <div style="display:flex;justify-content:space-between;font-size:0.7rem;margin-bottom:4px;">
+      <div class="bmi-result" id="bmiResult">
+        <div class="bmi-legend">
           <span style="color:#60a5fa;" data-en="Underweight" data-bn="কম ওজন">Underweight</span>
-          <span style="color:#4ade80;" data-en="Normal" data-bn="স্বাভাবিক">Normal</span>
-          <span style="color:#facc15;" data-en="Overweight" data-bn="বেশি ওজন">Overweight</span>
-          <span style="color:#f87171;" data-en="Obese" data-bn="স্থূলকায়">Obese</span>
+          <span style="color:#4ade80;" data-en="Normal"      data-bn="স্বাভাবিক">Normal</span>
+          <span style="color:#facc15;" data-en="Overweight"  data-bn="বেশি ওজন">Overweight</span>
+          <span style="color:#f87171;" data-en="Obese"       data-bn="স্থূলকায়">Obese</span>
         </div>
-        <div style="width:100%;height:10px;border-radius:999px;overflow:hidden;background:linear-gradient(to right,#3b82f6 0%,#22c55e 35%,#f59e0b 65%,#ef4444 100%);position:relative;">
-          <div id="bmiIndicator" style="position:absolute;top:-3px;width:16px;height:16px;border-radius:50%;background:white;box-shadow:0 0 8px rgba(0,0,0,0.5);left:0%;transition:left 0.8s cubic-bezier(.34,1.56,.64,1);"></div>
-        </div>
-        <p id="bmiValue" style="text-align:center;font-size:1.7rem;font-weight:800;margin-top:0.6rem;" class="grad-text"></p>
-        <p id="bmiLabel" style="text-align:center;font-size:0.85rem;opacity:0.7;margin-top:2px;"></p>
-        <p id="bmiAdvice" style="text-align:center;font-size:0.78rem;opacity:0.5;margin-top:4px;font-style:italic;"></p>
-        <p id="bmiIdeal" style="text-align:center;font-size:0.78rem;color:#67e8f9;margin-top:6px;"></p>
+        <div class="bmi-track"><div class="bmi-needle" id="bmiNeedle"></div></div>
+        <div class="bmi-value" id="bmiValue" style="background:linear-gradient(90deg,#67e8f9,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></div>
+        <div class="bmi-label"  id="bmiLabel"></div>
+        <div class="bmi-advice" id="bmiAdvice"></div>
+        <div class="bmi-ideal"  id="bmiIdeal"></div>
       </div>
     </div>
 
     <!-- Water Intake -->
-    <div class="glass" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1rem;">
-      <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:8px;">💧 <span data-en="Daily Water Intake" data-bn="দৈনিক পানির পরিমাণ">Daily Water Intake</span></h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.7rem;">
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label>
-          <input class="inp" id="waterW" type="number" placeholder="e.g. 65"></div>
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Activity Level" data-bn="কার্যকলাপ">Activity Level</label>
+    <div class="glass card">
+      <h3 style="font-size:0.98rem;font-weight:700;margin-bottom:1rem;">💧 <span data-en="Daily Water Intake" data-bn="দৈনিক পানির পরিমাণ">Daily Water Intake</span></h3>
+      <div class="form-grid">
+        <div><label class="lbl" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label><input class="inp" id="waterW" type="number" inputmode="decimal" placeholder="e.g. 65"></div>
+        <div><label class="lbl" data-en="Activity Level" data-bn="কার্যকলাপ">Activity Level</label>
           <select class="inp" id="waterAct">
             <option value="1"    data-en="Sedentary"   data-bn="কম সক্রিয়">Sedentary</option>
             <option value="1.15" data-en="Moderate"    data-bn="মাঝারি">Moderate</option>
             <option value="1.35" data-en="Active"      data-bn="সক্রিয়">Active</option>
             <option value="1.55" data-en="Very Active" data-bn="খুব সক্রিয়">Very Active</option>
-          </select></div>
+          </select>
+        </div>
       </div>
-      <button onclick="calcWater()" class="btn-cta" style="width:100%;text-align:center;" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
-      <div id="waterResult" style="display:none;margin-top:0.8rem;text-align:center;font-weight:600;color:#67e8f9;font-size:0.95rem;"></div>
+      <button onclick="calcWater()" class="btn-wide" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
+      <div class="water-result" id="waterResult"></div>
     </div>
 
-    <!-- Calories Calculator -->
-    <div class="glass" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1rem;">
-      <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:8px;">🔥 <span data-en="Daily Calorie Need" data-bn="দৈনিক ক্যালরি প্রয়োজন">Daily Calorie Need</span></h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.6rem;">
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label><input class="inp" id="calW" type="number" placeholder="70"></div>
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Height (cm)" data-bn="উচ্চতা (সে.মি.)">Height (cm)</label><input class="inp" id="calH" type="number" placeholder="170"></div>
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Age" data-bn="বয়স">Age</label><input class="inp" id="calAge" type="number" placeholder="30"></div>
-        <div><label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Gender" data-bn="লিঙ্গ">Gender</label>
+    <!-- Calories -->
+    <div class="glass card">
+      <h3 style="font-size:0.98rem;font-weight:700;margin-bottom:1rem;">🔥 <span data-en="Daily Calorie Need" data-bn="দৈনিক ক্যালরি প্রয়োজন">Daily Calorie Need</span></h3>
+      <div class="form-grid">
+        <div><label class="lbl" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label><input class="inp" id="calW" type="number" inputmode="decimal" placeholder="70"></div>
+        <div><label class="lbl" data-en="Height (cm)" data-bn="উচ্চতা (সে.মি.)">Height (cm)</label><input class="inp" id="calH" type="number" inputmode="decimal" placeholder="170"></div>
+        <div><label class="lbl" data-en="Age" data-bn="বয়স">Age</label><input class="inp" id="calAge" type="number" inputmode="numeric" placeholder="30"></div>
+        <div><label class="lbl" data-en="Gender" data-bn="লিঙ্গ">Gender</label>
           <select class="inp" id="calGender">
             <option value="m" data-en="Male"   data-bn="পুরুষ">Male</option>
             <option value="f" data-en="Female" data-bn="মহিলা">Female</option>
-          </select></div>
+          </select>
+        </div>
       </div>
-      <div style="margin-bottom:0.7rem;">
-        <label style="font-size:0.75rem;opacity:0.55;display:block;margin-bottom:4px;" data-en="Activity Level" data-bn="কার্যকলাপ">Activity Level</label>
+      <div style="margin-bottom:0.6rem;">
+        <label class="lbl" data-en="Activity Level" data-bn="কার্যকলাপ">Activity Level</label>
         <select class="inp" id="calAct">
-          <option value="1.2"  data-en="Sedentary (little/no exercise)"  data-bn="কম সক্রিয়">Sedentary</option>
-          <option value="1.375" data-en="Light (1–3 days/week)"           data-bn="হালকা সক্রিয়">Light</option>
-          <option value="1.55"  data-en="Moderate (3–5 days/week)"        data-bn="মাঝারি সক্রিয়">Moderate</option>
-          <option value="1.725" data-en="Very active (6–7 days/week)"     data-bn="খুব সক্রিয়">Very active</option>
+          <option value="1.2"   data-en="Sedentary"   data-bn="কম সক্রিয়">Sedentary</option>
+          <option value="1.375" data-en="Light"        data-bn="হালকা">Light</option>
+          <option value="1.55"  data-en="Moderate"     data-bn="মাঝারি">Moderate</option>
+          <option value="1.725" data-en="Very Active"  data-bn="খুব সক্রিয়">Very Active</option>
         </select>
       </div>
-      <button onclick="calcCalories()" class="btn-cta" style="width:100%;text-align:center;" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
-      <div id="calResult" style="display:none;margin-top:0.8rem;"></div>
+      <button onclick="calcCalories()" class="btn-wide" data-en="Calculate" data-bn="হিসাব করুন">Calculate</button>
+      <div id="calResult" style="display:none;"></div>
     </div>
 
     <!-- Symptom Checker -->
-    <div class="glass" style="border-radius:1.75rem;padding:1.75rem;">
-      <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:8px;">🔍 <span data-en="Symptom Guide" data-bn="উপসর্গ গাইড">Symptom Guide</span></h3>
-      <p style="font-size:0.77rem;opacity:0.5;margin-bottom:0.9rem;" data-en="Tap symptoms for guidance — not a diagnosis." data-bn="উপসর্গ ট্যাপ করুন — এটি রোগ নির্ণয় নয়।">Tap symptoms for guidance — not a diagnosis.</p>
-      <div id="symptomList">
-        <button class="chip" onclick="toggleSymp(this)" data-key="fever"        data-en="Fever"             data-bn="জ্বর">Fever</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="rash"         data-en="Rash"              data-bn="চর্মজ ফুসকুড়ি">Rash</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="burn"         data-en="Burning urination" data-bn="প্রসাবে জ্বালা">Burning urination</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="freq"         data-en="Frequent urination" data-bn="বারবার প্রসাব">Frequent urination</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="itch"         data-en="Skin itching"      data-bn="ত্বকে চুলকানি">Skin itching</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="acne"         data-en="Acne / pimples"    data-bn="ব্রণ">Acne / pimples</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="back"         data-en="Lower back pain"   data-bn="পিঠে ব্যথা">Lower back pain</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="fatigue"      data-en="Fatigue"           data-bn="ক্লান্তি">Fatigue</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="blood"        data-en="Blood in urine"    data-bn="প্রসাবে রক্ত">Blood in urine</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="headache"     data-en="Headache"          data-bn="মাথাব্যথা">Headache</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="nausea"       data-en="Nausea"            data-bn="বমিভাব">Nausea</button>
-        <button class="chip" onclick="toggleSymp(this)" data-key="swelling"     data-en="Leg swelling"      data-bn="পায়ে ফোলা">Leg swelling</button>
+    <div class="glass card">
+      <h3 style="font-size:0.98rem;font-weight:700;margin-bottom:0.3rem;">🔍 <span data-en="Symptom Guide" data-bn="উপসর্গ গাইড">Symptom Guide</span></h3>
+      <p style="font-size:0.73rem;opacity:0.44;margin-bottom:0.85rem;" data-en="Tap symptoms for general guidance — not a diagnosis." data-bn="উপসর্গ ট্যাপ করুন — এটি রোগ নির্ণয় নয়।">Tap symptoms for general guidance — not a diagnosis.</p>
+      <div class="chips" id="sympList">
+        <button class="chip" onclick="tSym(this)" data-key="fever"    data-en="Fever"              data-bn="জ্বর">Fever</button>
+        <button class="chip" onclick="tSym(this)" data-key="rash"     data-en="Rash"               data-bn="চর্মজ ফুসকুড়ি">Rash</button>
+        <button class="chip" onclick="tSym(this)" data-key="burn"     data-en="Burning urination"  data-bn="প্রসাবে জ্বালা">Burning urination</button>
+        <button class="chip" onclick="tSym(this)" data-key="freq"     data-en="Frequent urination" data-bn="বারবার প্রসাব">Frequent urination</button>
+        <button class="chip" onclick="tSym(this)" data-key="itch"     data-en="Skin itching"       data-bn="ত্বকে চুলকানি">Skin itching</button>
+        <button class="chip" onclick="tSym(this)" data-key="acne"     data-en="Acne / pimples"     data-bn="ব্রণ">Acne / pimples</button>
+        <button class="chip" onclick="tSym(this)" data-key="back"     data-en="Lower back pain"    data-bn="পিঠে ব্যথা">Lower back pain</button>
+        <button class="chip" onclick="tSym(this)" data-key="fatigue"  data-en="Fatigue"            data-bn="ক্লান্তি">Fatigue</button>
+        <button class="chip" onclick="tSym(this)" data-key="blood"    data-en="Blood in urine"     data-bn="প্রসাবে রক্ত">Blood in urine</button>
+        <button class="chip" onclick="tSym(this)" data-key="head"     data-en="Headache"           data-bn="মাথাব্যথা">Headache</button>
+        <button class="chip" onclick="tSym(this)" data-key="nausea"   data-en="Nausea"             data-bn="বমিভাব">Nausea</button>
+        <button class="chip" onclick="tSym(this)" data-key="swell"    data-en="Leg swelling"       data-bn="পায়ে ফোলা">Leg swelling</button>
       </div>
-      <button onclick="checkSymptoms()" class="btn-cta" style="width:100%;text-align:center;margin-top:0.9rem;" data-en="Get Guidance" data-bn="পরামর্শ দেখুন">Get Guidance</button>
-      <div id="sympResult" style="display:none;margin-top:1rem;padding:1rem;border-radius:0.85rem;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);font-size:0.84rem;line-height:1.7;"></div>
+      <button onclick="checkSym()" class="btn-wide" data-en="Get Guidance" data-bn="পরামর্শ দেখুন">Get Guidance</button>
+      <div class="result-box" id="sympResult"></div>
     </div>
   </div>
 
-  <!-- ── HEALTH TIPS ── -->
-  <div class="glass section-gap" id="tips" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" data-en="Daily Health Tips" data-bn="দৈনন্দিন স্বাস্থ্য টিপস">Daily Health Tips</h2>
-    <div id="tipCards">
-      <div class="tip-card"><strong data-en="💧 Stay Hydrated" data-bn="💧 পানি পান করুন">💧 Stay Hydrated</strong><br><span style="font-size:0.83rem;opacity:0.72;" data-en="Drink at least 8 glasses of water daily. Proper hydration prevents UTIs and kidney stones." data-bn="প্রতিদিন কমপক্ষে ৮ গ্লাস পানি পান করুন। সঠিক হাইড্রেশন UTI ও কিডনিতে পাথর প্রতিরোধ করে।">Drink at least 8 glasses of water daily. Proper hydration prevents UTIs and kidney stones.</span></div>
-      <div class="tip-card"><strong data-en="🌙 Sleep Well" data-bn="🌙 পর্যাপ্ত ঘুমান">🌙 Sleep Well</strong><br><span style="font-size:0.83rem;opacity:0.72;" data-en="Adults need 7–9 hours of quality sleep. Poor sleep weakens immunity and raises blood pressure." data-bn="প্রাপ্তবয়স্কদের ৭–৯ ঘণ্টা ঘুম দরকার। ঘুম কম হলে রোগ প্রতিরোধ ক্ষমতা দুর্বল হয়।">Adults need 7–9 hours of quality sleep. Poor sleep weakens immunity and raises blood pressure.</span></div>
-      <div class="tip-card"><strong data-en="🥦 Eat Balanced" data-bn="🥦 সুষম খাবার খান">🥦 Eat Balanced</strong><br><span style="font-size:0.83rem;opacity:0.72;" data-en="Include vegetables, fruits, lean protein, and whole grains in every meal for optimal health." data-bn="প্রতিটি খাবারে শাকসবজি, ফল, প্রোটিন ও শস্যজাতীয় খাবার রাখুন।">Include vegetables, fruits, lean protein, and whole grains in every meal for optimal health.</span></div>
-      <div class="tip-card"><strong data-en="🚶 Move Daily" data-bn="🚶 প্রতিদিন হাঁটুন">🚶 Move Daily</strong><br><span style="font-size:0.83rem;opacity:0.72;" data-en="30 minutes of brisk walking reduces risk of heart disease, diabetes, and depression." data-bn="৩০ মিনিট দ্রুত হাঁটা হৃদরোগ, ডায়াবেটিস ও বিষণ্নতার ঝুঁকি কমায়।">30 minutes of brisk walking reduces risk of heart disease, diabetes, and depression.</span></div>
-      <div class="tip-card"><strong data-en="🧴 Skin Care" data-bn="🧴 ত্বকের যত্ন">🧴 Skin Care</strong><br><span style="font-size:0.83rem;opacity:0.72;" data-en="Use SPF 30+ sunscreen daily and moisturize regularly to protect and maintain healthy skin." data-bn="প্রতিদিন SPF 30+ সানস্ক্রিন ব্যবহার করুন ও নিয়মিত ময়েশ্চারাইজ করুন।">Use SPF 30+ sunscreen daily and moisturize regularly to protect and maintain healthy skin.</span></div>
+  <!-- HEALTH TIPS -->
+  <div class="glass card" id="tips">
+    <h2 class="sec-title" data-en="Daily Health Tips" data-bn="দৈনন্দিন স্বাস্থ্য টিপস">Daily Health Tips</h2>
+    <div class="tip"><strong data-en="💧 Stay Hydrated" data-bn="💧 পানি পান করুন">💧 Stay Hydrated</strong><span data-en="Drink at least 8 glasses of water daily to prevent UTIs and kidney stones." data-bn="প্রতিদিন কমপক্ষে ৮ গ্লাস পানি পান করুন। UTI ও কিডনিতে পাথর প্রতিরোধ হয়।">Drink at least 8 glasses of water daily to prevent UTIs and kidney stones.</span></div>
+    <div class="tip"><strong data-en="🌙 Sleep Well" data-bn="🌙 পর্যাপ্ত ঘুমান">🌙 Sleep Well</strong><span data-en="Adults need 7–9 hours of quality sleep. Poor sleep weakens immunity and raises blood pressure." data-bn="প্রাপ্তবয়স্কদের ৭–৯ ঘণ্টা ঘুম দরকার। ঘুম কম হলে রোগ প্রতিরোধ ক্ষমতা কমে।">Adults need 7–9 hours of quality sleep. Poor sleep weakens immunity and raises blood pressure.</span></div>
+    <div class="tip"><strong data-en="🥦 Eat Balanced" data-bn="🥦 সুষম খাবার খান">🥦 Eat Balanced</strong><span data-en="Include vegetables, fruits, lean protein, and whole grains in every meal." data-bn="প্রতিটি খাবারে শাকসবজি, ফল, প্রোটিন ও শস্যজাতীয় খাবার রাখুন।">Include vegetables, fruits, lean protein, and whole grains in every meal.</span></div>
+    <div class="tip"><strong data-en="🚶 Move Daily" data-bn="🚶 প্রতিদিন হাঁটুন">🚶 Move Daily</strong><span data-en="30 minutes of brisk walking daily reduces risk of heart disease, diabetes, and depression." data-bn="৩০ মিনিট দ্রুত হাঁটা হৃদরোগ, ডায়াবেটিস ও বিষণ্নতার ঝুঁকি কমায়।">30 minutes of brisk walking daily reduces risk of heart disease, diabetes, and depression.</span></div>
+    <div class="tip" style="margin-bottom:0"><strong data-en="🧴 Skin Care" data-bn="🧴 ত্বকের যত্ন">🧴 Skin Care</strong><span data-en="Use SPF 30+ sunscreen daily and moisturize regularly to protect your skin." data-bn="প্রতিদিন SPF 30+ সানস্ক্রিন ব্যবহার করুন ও নিয়মিত ময়েশ্চারাইজ করুন।">Use SPF 30+ sunscreen daily and moisturize regularly to protect your skin.</span></div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="glass card" id="faq">
+    <h2 class="sec-title" data-en="Frequently Asked Questions" data-bn="সাধারণ প্রশ্নোত্তর">Frequently Asked Questions</h2>
+
+    <div class="faq-item glass">
+      <button class="faq-btn" onclick="togFaq(this)">
+        <span data-en="How do I book an online consultation?" data-bn="অনলাইন পরামর্শ কীভাবে নেব?">How do I book an online consultation?</span>
+        <i class="fas fa-chevron-down faq-icon"></i>
+      </button>
+      <div class="faq-body"><p data-en="You can book via the Dr Live app, Shukhee App, or message me directly on Facebook Messenger. All platforms support video calls." data-bn="Dr Live অ্যাপ, Shukhee অ্যাপ বা Facebook Messenger-এর মাধ্যমে পরামর্শ নিতে পারেন।">You can book via the Dr Live app, Shukhee App, or message me directly on Facebook Messenger.</p></div>
+    </div>
+
+    <div class="faq-item glass">
+      <button class="faq-btn" onclick="togFaq(this)">
+        <span data-en="Can I share my lab reports for review?" data-bn="রিপোর্ট রিভিউ করা যাবে?">Can I share my lab reports for review?</span>
+        <i class="fas fa-chevron-down faq-icon"></i>
+      </button>
+      <div class="faq-body"><p data-en="Yes. Share lab reports, ultrasound reports, and prescriptions via Messenger or during your video call." data-bn="হ্যাঁ। Messenger বা ভিডিও কলে রিপোর্ট, আল্ট্রাসাউন্ড, প্রেসক্রিপশন শেয়ার করতে পারবেন।">Yes. Share lab reports, ultrasound reports, and prescriptions via Messenger or during your video call.</p></div>
+    </div>
+
+    <div class="faq-item glass">
+      <button class="faq-btn" onclick="togFaq(this)">
+        <span data-en="Is online consultation safe and private?" data-bn="অনলাইন পরামর্শ নিরাপদ ও গোপনীয়?">Is online consultation safe and private?</span>
+        <i class="fas fa-chevron-down faq-icon"></i>
+      </button>
+      <div class="faq-body"><p data-en="Absolutely. All consultations are strictly confidential. Your medical information is never shared with anyone." data-bn="অবশ্যই। সকল পরামর্শ সম্পূর্ণ গোপনীয়। আপনার তথ্য কারো সাথে শেয়ার করা হয় না।">Absolutely. All consultations are strictly confidential. Your medical information is never shared with anyone.</p></div>
+    </div>
+
+    <div class="faq-item glass">
+      <button class="faq-btn" onclick="togFaq(this)">
+        <span data-en="What are the available hours?" data-bn="কোন সময় পরামর্শ নেওয়া যাবে?">What are the available hours?</span>
+        <i class="fas fa-chevron-down faq-icon"></i>
+      </button>
+      <div class="faq-body"><p data-en="Available 24/7 via Dr Live & Shukhee. For Messenger, typically 8 AM – 10 PM Bangladesh Time." data-bn="Dr Live এবং Shukhee অ্যাপে ২৪/৭। Messenger-এ সাধারণত সকাল ৮টা – রাত ১০টা।">Available 24/7 via Dr Live &amp; Shukhee. For Messenger, typically 8 AM – 10 PM Bangladesh Time.</p></div>
+    </div>
+
+    <div class="faq-item glass">
+      <button class="faq-btn" onclick="togFaq(this)">
+        <span data-en="Do you prescribe medication online?" data-bn="অনলাইনে ওষুধ দেওয়া হয়?">Do you prescribe medication online?</span>
+        <i class="fas fa-chevron-down faq-icon"></i>
+      </button>
+      <div class="faq-body"><p data-en="Yes, digital prescriptions are provided after a proper consultation and thorough assessment of your condition." data-bn="হ্যাঁ, সঠিক পরামর্শ ও মূল্যায়নের পর ডিজিটাল প্রেসক্রিপশন দেওয়া হয়।">Yes, digital prescriptions are provided after a proper consultation and thorough assessment of your condition.</p></div>
     </div>
   </div>
 
-  <!-- ── FAQ ── -->
-  <div class="glass section-gap" id="faq" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" data-en="Frequently Asked Questions" data-bn="সাধারণ প্রশ্নোত্তর">Frequently Asked Questions</h2>
-    <div id="faqList" style="display:flex;flex-direction:column;gap:0.6rem;">
+  <!-- BOOK -->
+  <div class="glass card" id="book">
+    <h2 class="sec-title" data-en="Book a Consultation" data-bn="পরামর্শ বুক করুন">Book a Consultation</h2>
+    <p style="font-size:0.8rem;opacity:0.48;margin-bottom:1rem;" data-en="Choose your preferred platform." data-bn="আপনার পছন্দের মাধ্যম বেছে নিন।">Choose your preferred platform.</p>
 
-      <div class="glass" style="border-radius:1rem;overflow:hidden;">
-        <button onclick="toggleAcc(this)" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1rem;background:none;border:none;color:inherit;cursor:pointer;font-size:0.88rem;font-weight:600;font-family:inherit;">
-          <span data-en="How do I book an online consultation?" data-bn="অনলাইন পরামর্শ কীভাবে নেব?">How do I book an online consultation?</span>
-          <i class="fas fa-chevron-down acc-icon" style="color:#67e8f9;flex-shrink:0;margin-left:8px;"></i>
-        </button>
-        <div class="acc-body"><p style="padding:0 1rem 1rem;opacity:0.72;font-size:0.85rem;line-height:1.65;" data-en="You can book via the Dr Live app, Shukhee App, or message me directly on Facebook Messenger. All platforms support video calls." data-bn="Dr Live অ্যাপ, Shukhee অ্যাপ বা সরাসরি Facebook Messenger-এর মাধ্যমে পরামর্শ নিতে পারেন।">You can book via the Dr Live app, Shukhee App, or message me directly on Facebook Messenger.</p></div>
+    <a href="https://play.google.com/store/apps/details?id=com.mobu.drlivepatient" target="_blank" class="book-btn">
+      <i class="fas fa-video book-icon" style="color:#67e8f9;"></i>
+      <div>
+        <div class="book-title" data-en="Video Call – Dr Live App" data-bn="ভিডিও কল – Dr Live অ্যাপ">Video Call – Dr Live App</div>
+        <div class="book-sub"  data-en="Instant video consultation, 24/7" data-bn="তাৎক্ষণিক ভিডিও পরামর্শ, ২৪/৭">Instant video consultation, 24/7</div>
       </div>
+      <i class="fas fa-chevron-right book-arrow"></i>
+    </a>
 
-      <div class="glass" style="border-radius:1rem;overflow:hidden;">
-        <button onclick="toggleAcc(this)" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1rem;background:none;border:none;color:inherit;cursor:pointer;font-size:0.88rem;font-weight:600;font-family:inherit;">
-          <span data-en="Can I share my lab reports for review?" data-bn="রিপোর্ট রিভিউ করা যাবে?">Can I share my lab reports for review?</span>
-          <i class="fas fa-chevron-down acc-icon" style="color:#67e8f9;flex-shrink:0;margin-left:8px;"></i>
-        </button>
-        <div class="acc-body"><p style="padding:0 1rem 1rem;opacity:0.72;font-size:0.85rem;line-height:1.65;" data-en="Yes. Share lab reports, ultrasound reports, and prescriptions via Messenger or during your video call." data-bn="হ্যাঁ। Messenger বা ভিডিও কলের সময় রিপোর্ট, আল্ট্রাসাউন্ড, প্রেসক্রিপশন শেয়ার করতে পারবেন।">Yes. Share lab reports, ultrasound reports, and prescriptions via Messenger or during your video call.</p></div>
+    <a href="https://play.google.com/store/apps/details?id=com.shukhee.patientapp" target="_blank" class="book-btn">
+      <i class="fas fa-calendar-check book-icon" style="color:#4ade80;"></i>
+      <div>
+        <div class="book-title" data-en="Schedule – Shukhee App" data-bn="অ্যাপয়েন্টমেন্ট – Shukhee অ্যাপ">Schedule – Shukhee App</div>
+        <div class="book-sub"  data-en="Book a slot at your convenience" data-bn="সুবিধামতো সময় বুক করুন">Book a slot at your convenience</div>
       </div>
+      <i class="fas fa-chevron-right book-arrow"></i>
+    </a>
 
-      <div class="glass" style="border-radius:1rem;overflow:hidden;">
-        <button onclick="toggleAcc(this)" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1rem;background:none;border:none;color:inherit;cursor:pointer;font-size:0.88rem;font-weight:600;font-family:inherit;">
-          <span data-en="Is online consultation safe and private?" data-bn="অনলাইন পরামর্শ কি নিরাপদ ও গোপনীয়?">Is online consultation safe and private?</span>
-          <i class="fas fa-chevron-down acc-icon" style="color:#67e8f9;flex-shrink:0;margin-left:8px;"></i>
-        </button>
-        <div class="acc-body"><p style="padding:0 1rem 1rem;opacity:0.72;font-size:0.85rem;line-height:1.65;" data-en="Absolutely. All consultations are strictly confidential. Your medical information is never shared with anyone." data-bn="অবশ্যই। সকল পরামর্শ সম্পূর্ণ গোপনীয়। আপনার তথ্য কারো সাথে শেয়ার করা হয় না।">Absolutely. All consultations are strictly confidential. Your medical information is never shared with anyone.</p></div>
+    <a href="https://m.me/drafifbashar" target="_blank" class="book-btn" style="margin-bottom:0;">
+      <i class="fab fa-facebook-messenger book-icon" style="color:#60a5fa;"></i>
+      <div>
+        <div class="book-title" data-en="Message on Messenger" data-bn="Messenger-এ বার্তা পাঠান">Message on Messenger</div>
+        <div class="book-sub"  data-en="Direct chat & report sharing" data-bn="সরাসরি চ্যাট ও রিপোর্ট শেয়ার">Direct chat &amp; report sharing</div>
       </div>
-
-      <div class="glass" style="border-radius:1rem;overflow:hidden;">
-        <button onclick="toggleAcc(this)" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1rem;background:none;border:none;color:inherit;cursor:pointer;font-size:0.88rem;font-weight:600;font-family:inherit;">
-          <span data-en="What are the available hours?" data-bn="কোন সময় পরামর্শ নেওয়া যাবে?">What are the available hours?</span>
-          <i class="fas fa-chevron-down acc-icon" style="color:#67e8f9;flex-shrink:0;margin-left:8px;"></i>
-        </button>
-        <div class="acc-body"><p style="padding:0 1rem 1rem;opacity:0.72;font-size:0.85rem;line-height:1.65;" data-en="Available 24/7 via Dr Live & Shukhee. For Messenger, typically 8 AM – 10 PM Bangladesh Time." data-bn="Dr Live এবং Shukhee অ্যাপে ২৪/৭। Messenger-এ সাধারণত সকাল ৮টা – রাত ১০টা (বাংলাদেশ সময়)।">Available 24/7 via Dr Live &amp; Shukhee. For Messenger, typically 8 AM – 10 PM Bangladesh Time.</p></div>
-      </div>
-
-      <div class="glass" style="border-radius:1rem;overflow:hidden;">
-        <button onclick="toggleAcc(this)" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1rem;background:none;border:none;color:inherit;cursor:pointer;font-size:0.88rem;font-weight:600;font-family:inherit;">
-          <span data-en="Do you prescribe medication online?" data-bn="অনলাইনে ওষুধ দেওয়া হয় কি?">Do you prescribe medication online?</span>
-          <i class="fas fa-chevron-down acc-icon" style="color:#67e8f9;flex-shrink:0;margin-left:8px;"></i>
-        </button>
-        <div class="acc-body"><p style="padding:0 1rem 1rem;opacity:0.72;font-size:0.85rem;line-height:1.65;" data-en="Yes, digital prescriptions are provided after a proper consultation. I assess your condition thoroughly before recommending any medication." data-bn="হ্যাঁ, সঠিক পরামর্শের পর ডিজিটাল প্রেসক্রিপশন দেওয়া হয়। আমি যেকোনো ওষুধ দেওয়ার আগে আপনার অবস্থা ভালোভাবে মূল্যায়ন করি।">Yes, digital prescriptions are provided after a proper consultation. I assess your condition thoroughly before recommending any medication.</p></div>
-      </div>
-
-    </div>
+      <i class="fas fa-chevron-right book-arrow"></i>
+    </a>
   </div>
 
-  <!-- ── BOOK ── -->
-  <div class="glass section-gap" id="book" style="border-radius:1.75rem;padding:1.75rem;margin-bottom:1.5rem;">
-    <h2 class="sec-title grad-text" data-en="Book a Consultation" data-bn="পরামর্শ বুক করুন">Book a Consultation</h2>
-    <p style="font-size:0.83rem;opacity:0.55;margin-bottom:1rem;" data-en="Choose your preferred platform." data-bn="আপনার পছন্দের মাধ্যম বেছে নিন।">Choose your preferred platform.</p>
-    <div style="display:flex;flex-direction:column;gap:0.75rem;">
-      <a href="https://play.google.com/store/apps/details?id=com.mobu.drlivepatient" target="_blank" class="btn-book">
-        <i class="fas fa-video" style="font-size:1.5rem;color:#67e8f9;width:28px;text-align:center;flex-shrink:0;"></i>
-        <div style="flex:1;"><p style="font-weight:700;font-size:0.92rem;" data-en="Video Call – Dr Live App" data-bn="ভিডিও কল – Dr Live অ্যাপ">Video Call – Dr Live App</p><p style="font-size:0.75rem;opacity:0.5;" data-en="Instant video consultation, 24/7" data-bn="তাৎক্ষণিক ভিডিও পরামর্শ, ২৪/৭">Instant video consultation, 24/7</p></div>
-        <i class="fas fa-arrow-right" style="opacity:0.3;"></i>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.shukhee.patientapp" target="_blank" class="btn-book">
-        <i class="fas fa-calendar-check" style="font-size:1.5rem;color:#4ade80;width:28px;text-align:center;flex-shrink:0;"></i>
-        <div style="flex:1;"><p style="font-weight:700;font-size:0.92rem;" data-en="Schedule – Shukhee App" data-bn="অ্যাপয়েন্টমেন্ট – Shukhee অ্যাপ">Schedule – Shukhee App</p><p style="font-size:0.75rem;opacity:0.5;" data-en="Book a slot at your convenience" data-bn="সুবিধামতো সময় বুক করুন">Book a slot at your convenience</p></div>
-        <i class="fas fa-arrow-right" style="opacity:0.3;"></i>
-      </a>
-      <a href="https://m.me/drafifbashar" target="_blank" class="btn-book">
-        <i class="fab fa-facebook-messenger" style="font-size:1.5rem;color:#60a5fa;width:28px;text-align:center;flex-shrink:0;"></i>
-        <div style="flex:1;"><p style="font-weight:700;font-size:0.92rem;" data-en="Message on Messenger" data-bn="Messenger-এ বার্তা পাঠান">Message on Messenger</p><p style="font-size:0.75rem;opacity:0.5;" data-en="Direct chat & report sharing" data-bn="সরাসরি চ্যাট ও রিপোর্ট শেয়ার">Direct chat &amp; report sharing</p></div>
-        <i class="fas fa-arrow-right" style="opacity:0.3;"></i>
-      </a>
+  <!-- SOCIAL + FOOTER -->
+  <div class="glass card" style="text-align:center;">
+    <p style="font-size:0.78rem;opacity:0.48;margin-bottom:0.8rem;" data-en="Follow for health tips & updates" data-bn="স্বাস্থ্য টিপস ও আপডেটের জন্য অনুসরণ করুন">Follow for health tips &amp; updates</p>
+    <div class="social-row">
+      <a href="https://facebook.com/drafifbashar"  target="_blank" style="color:#60a5fa;"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com/drafifbashar" target="_blank" style="color:#f472b6;"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@drafifbashar"  target="_blank" style="color:#f87171;"><i class="fab fa-youtube"></i></a>
+      <a href="https://tiktok.com/@drafifbashar"   target="_blank" style="color:#a5f3fc;"><i class="fab fa-tiktok"></i></a>
+      <a href="https://x.com/afifbashar"           target="_blank" style="color:#7dd3fc;"><i class="fab fa-x-twitter"></i></a>
     </div>
-  </div>
-
-  <!-- ── SOCIAL + FOOTER ── -->
-  <div class="glass" style="border-radius:1.75rem;padding:1.75rem;text-align:center;">
-    <p style="font-size:0.82rem;opacity:0.55;margin-bottom:1rem;" data-en="Follow for health tips & updates" data-bn="স্বাস্থ্য টিপস ও আপডেটের জন্য অনুসরণ করুন">Follow for health tips &amp; updates</p>
-    <div style="display:flex;justify-content:center;gap:1.5rem;font-size:1.75rem;">
-      <a href="https://facebook.com/drafifbashar"  target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s,transform 0.2s;" onmouseover="this.style.color='#60a5fa';this.style.transform='scale(1.2)'" onmouseout="this.style.color='';this.style.transform=''"><i class="fab fa-facebook"></i></a>
-      <a href="https://instagram.com/drafifbashar" target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s,transform 0.2s;" onmouseover="this.style.color='#f472b6';this.style.transform='scale(1.2)'" onmouseout="this.style.color='';this.style.transform=''"><i class="fab fa-instagram"></i></a>
-      <a href="https://youtube.com/@drafifbashar"  target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s,transform 0.2s;" onmouseover="this.style.color='#f87171';this.style.transform='scale(1.2)'" onmouseout="this.style.color='';this.style.transform=''"><i class="fab fa-youtube"></i></a>
-      <a href="https://tiktok.com/@drafifbashar"   target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s,transform 0.2s;" onmouseover="this.style.color='#a5f3fc';this.style.transform='scale(1.2)'" onmouseout="this.style.color='';this.style.transform=''"><i class="fab fa-tiktok"></i></a>
-      <a href="https://x.com/afifbashar"           target="_blank" style="color:inherit;text-decoration:none;transition:color 0.2s,transform 0.2s;" onmouseover="this.style.color='#7dd3fc';this.style.transform='scale(1.2)'" onmouseout="this.style.color='';this.style.transform=''"><i class="fab fa-x-twitter"></i></a>
-    </div>
-    <div style="margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1);font-size:0.75rem;opacity:0.4;">
+    <div class="footer">
       <p>© 2025 Dr. Afif Bashar • All Rights Reserved</p>
-      <p style="margin-top:6px;color:#fca5a5;opacity:1;" data-en="⚠️ Emergency? Call 999 or visit the nearest hospital immediately." data-bn="⚠️ জরুরি অবস্থায় ৯৯৯ কল করুন বা নিকটতম হাসপাতালে যান।">⚠️ Emergency? Call 999 or visit the nearest hospital immediately.</p>
+      <p class="emergency" data-en="⚠️ Emergency? Call 999 or visit the nearest hospital immediately." data-bn="⚠️ জরুরি অবস্থায় ৯৯৯ কল করুন বা নিকটতম হাসপাতালে যান।">⚠️ Emergency? Call 999 or visit the nearest hospital immediately.</p>
     </div>
   </div>
 
-</div><!-- /main -->
-
-<!-- ══ MOBILE BOTTOM NAV ══ -->
-<nav id="bottomNav" class="glass md:hidden">
-  <button class="bnav-btn" onclick="scrollTo('hero')"    ><i class="fas fa-home"></i><span data-en="Home"   data-bn="হোম">Home</span></button>
-  <button class="bnav-btn" onclick="scrollTo('services')"><i class="fas fa-stethoscope"></i><span data-en="Services" data-bn="সেবা">Services</span></button>
-  <button class="bnav-btn" onclick="scrollTo('tools')"   ><i class="fas fa-calculator"></i><span data-en="Tools"  data-bn="টুলস">Tools</span></button>
-  <button class="bnav-btn" onclick="scrollTo('tips')"    ><i class="fas fa-lightbulb"></i><span data-en="Tips"   data-bn="টিপস">Tips</span></button>
-  <button class="bnav-btn" onclick="scrollTo('book')"    ><i class="fas fa-calendar-plus"></i><span data-en="Book"   data-bn="বুকিং">Book</span></button>
-</nav>
+</div><!-- /wrap -->
 
 <script>
-// ── Smooth scroll (offset for fixed nav) ──────────────────────
-function scrollTo(id) {
+/* ─── Scroll offset nav ─── */
+function navTo(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const navH = document.getElementById('mainNav').offsetHeight + 8;
+  const navH = document.getElementById('navbar').offsetHeight + 6;
   const top = el.getBoundingClientRect().top + window.pageYOffset - navH;
   window.scrollTo({ top, behavior: 'smooth' });
+  return false;
 }
 
-// ── Theme ─────────────────────────────────────────────────────
+/* ─── Hamburger / mobile menu ─── */
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('hamburger').classList.toggle('open', menuOpen);
+  document.getElementById('mobileMenu').classList.toggle('open', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+}
+function closeMenu() {
+  menuOpen = false;
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ─── Theme ─── */
 let isDark = true;
 function toggleTheme() {
   isDark = !isDark;
@@ -639,7 +921,7 @@ if (window.matchMedia('(prefers-color-scheme: light)').matches) {
   document.getElementById('themeBtn').textContent = '🌙';
 }
 
-// ── Language ──────────────────────────────────────────────────
+/* ─── Language ─── */
 let isBn = false;
 function toggleLang() {
   isBn = !isBn;
@@ -649,120 +931,128 @@ function toggleLang() {
   document.getElementById('langBtn').textContent = isBn ? 'English' : 'বাংলা';
 }
 
-// ── Scroll progress + scroll-to-top ──────────────────────────
+/* ─── Progress bar + scroll-top ─── */
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY;
-  const total = document.body.scrollHeight - window.innerHeight;
-  document.getElementById('readProgress').style.width = (scrolled / total * 100) + '%';
-  document.getElementById('scrollTop').classList.toggle('visible', scrolled > 400);
-});
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('readProgress').style.width = pct + '%';
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 350);
+}, { passive: true });
 
-// ── BMI Calculator ────────────────────────────────────────────
+/* ─── BMI ─── */
 function calcBMI() {
   const w = parseFloat(document.getElementById('bmiW').value);
   const h = parseFloat(document.getElementById('bmiH').value) / 100;
-  if (!w || !h || h <= 0) { toast(isBn ? 'ওজন ও উচ্চতা দিন।' : 'Enter weight and height.'); return; }
+  if (!w || !h || h <= 0) { toast(isBn ? 'ওজন ও উচ্চতা দিন।' : 'Enter valid weight & height.'); return; }
   const bmi = +(w / (h * h)).toFixed(1);
-  let label, advice, idealLine, pct;
-  if (bmi < 18.5)      { label = isBn?'কম ওজন':'Underweight';  advice = isBn?'পুষ্টিকর খাবার খান ও ডাক্তারের পরামর্শ নিন।':'Eat nutrient-rich food and consult a doctor.'; pct = Math.max(2, bmi/18.5*25); }
-  else if (bmi < 25)   { label = isBn?'স্বাভাবিক':'Normal';    advice = isBn?'চমৎকার! সুস্বাস্থ্য বজায় রাখুন।':'Great! Maintain your healthy lifestyle.'; pct = 25 + (bmi-18.5)/6.5*25; }
-  else if (bmi < 30)   { label = isBn?'অতিরিক্ত ওজন':'Overweight'; advice = isBn?'নিয়মিত ব্যায়াম ও সুষম খাবার খান।':'Regular exercise and balanced diet recommended.'; pct = 50 + (bmi-25)/5*25; }
-  else                 { label = isBn?'স্থূলকায়':'Obese';     advice = isBn?'দ্রুত ডাক্তারের পরামর্শ নিন।':'Please consult a doctor for a health plan.'; pct = Math.min(96, 75 + (bmi-30)*2); }
-  const idealLow  = +(18.5 * h * h).toFixed(1);
-  const idealHigh = +(24.9 * h * h).toFixed(1);
-  idealLine = isBn
-    ? `আপনার আদর্শ ওজন: ${idealLow}–${idealHigh} কেজি`
-    : `Ideal weight for your height: ${idealLow}–${idealHigh} kg`;
+  let label, advice, pct;
+  if      (bmi < 18.5) { label = isBn?'কম ওজন':'Underweight';   advice = isBn?'পুষ্টিকর খাবার খান ও ডাক্তারের পরামর্শ নিন।':'Eat nutrient-rich food and consult a doctor.'; pct = Math.max(2, bmi/18.5*25); }
+  else if (bmi < 25)   { label = isBn?'স্বাভাবিক':'Normal';      advice = isBn?'চমৎকার! সুস্বাস্থ্য বজায় রাখুন।':'Great! Maintain your healthy lifestyle.'; pct = 25 + (bmi-18.5)/6.5*25; }
+  else if (bmi < 30)   { label = isBn?'অতিরিক্ত ওজন':'Overweight'; advice = isBn?'নিয়মিত ব্যায়াম ও সুষম খাবার খান।':'Exercise regularly and eat a balanced diet.'; pct = 50 + (bmi-25)/5*25; }
+  else                 { label = isBn?'স্থূলকায়':'Obese';        advice = isBn?'দ্রুত ডাক্তারের পরামর্শ নিন।':'Please consult a doctor for a health plan.'; pct = Math.min(95, 75+(bmi-30)*2); }
+  const lo = +(18.5*h*h).toFixed(1), hi = +(24.9*h*h).toFixed(1);
   document.getElementById('bmiResult').style.display = 'block';
-  document.getElementById('bmiValue').textContent = 'BMI ' + bmi;
-  document.getElementById('bmiLabel').textContent = label;
+  document.getElementById('bmiValue').textContent  = 'BMI ' + bmi;
+  document.getElementById('bmiLabel').textContent  = label;
   document.getElementById('bmiAdvice').textContent = advice;
-  document.getElementById('bmiIdeal').textContent = idealLine;
-  setTimeout(() => { document.getElementById('bmiIndicator').style.left = (pct - 1) + '%'; }, 80);
+  document.getElementById('bmiIdeal').textContent  = isBn ? `আদর্শ ওজন: ${lo}–${hi} কেজি` : `Ideal weight: ${lo}–${hi} kg`;
+  setTimeout(() => { document.getElementById('bmiNeedle').style.left = (pct - 1.5) + '%'; }, 80);
 }
 function resetBMI() {
   ['bmiW','bmiH','bmiAge'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('bmiResult').style.display = 'none';
-  document.getElementById('bmiIndicator').style.left = '0%';
+  document.getElementById('bmiNeedle').style.left = '0%';
 }
 
-// ── Water Intake ──────────────────────────────────────────────
+/* ─── Water ─── */
 function calcWater() {
   const w = parseFloat(document.getElementById('waterW').value);
-  const act = parseFloat(document.getElementById('waterAct').value);
+  const a = parseFloat(document.getElementById('waterAct').value);
   if (!w) { toast(isBn?'ওজন দিন।':'Enter your weight.'); return; }
-  const liters = +(w * 0.033 * act).toFixed(1);
-  const cups = Math.round(liters / 0.25);
-  const ml = Math.round(liters * 1000);
-  const res = document.getElementById('waterResult');
-  res.style.display = 'block';
-  res.innerHTML = isBn
-    ? `💧 প্রতিদিন <strong>${liters} লিটার</strong> (${ml} মিলি / ${cups} গ্লাস) পানি পান করুন`
-    : `💧 Drink <strong>${liters} L</strong> (${ml} ml / ${cups} glasses) daily`;
+  const L = +(w * 0.033 * a).toFixed(1);
+  const cups = Math.round(L / 0.25);
+  const el = document.getElementById('waterResult');
+  el.style.display = 'block';
+  el.innerHTML = isBn ? `💧 প্রতিদিন <strong>${L} লিটার</strong> (${cups} গ্লাস) পানি পান করুন` : `💧 Drink <strong>${L} L</strong> (${cups} glasses) of water daily`;
 }
 
-// ── Calories (Mifflin-St Jeor) ────────────────────────────────
+/* ─── Calories (Mifflin-St Jeor) ─── */
 function calcCalories() {
   const w = parseFloat(document.getElementById('calW').value);
   const h = parseFloat(document.getElementById('calH').value);
   const age = parseFloat(document.getElementById('calAge').value);
-  const gender = document.getElementById('calGender').value;
-  const act = parseFloat(document.getElementById('calAct').value);
-  if (!w || !h || !age) { toast(isBn?'সব তথ্য দিন।':'Fill all fields.'); return; }
-  const bmr = gender === 'm'
-    ? 10*w + 6.25*h - 5*age + 5
-    : 10*w + 6.25*h - 5*age - 161;
-  const tdee = Math.round(bmr * act);
-  const loss  = Math.round(tdee - 500);
-  const gain  = Math.round(tdee + 300);
-  const res = document.getElementById('calResult');
-  res.style.display = 'block';
-  res.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;text-align:center;">
-      <div style="padding:0.7rem;border-radius:0.75rem;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);">
-        <div style="font-size:1.1rem;font-weight:800;color:#f87171;">${loss}</div>
-        <div style="font-size:0.68rem;opacity:0.6;margin-top:2px;" data-en="Weight Loss" data-bn="ওজন কমাতে">${isBn?'ওজন কমাতে':'Weight Loss'}</div>
+  const g = document.getElementById('calGender').value;
+  const a = parseFloat(document.getElementById('calAct').value);
+  if (!w||!h||!age) { toast(isBn?'সব তথ্য দিন।':'Fill all fields.'); return; }
+  const bmr = g==='m' ? 10*w+6.25*h-5*age+5 : 10*w+6.25*h-5*age-161;
+  const tdee = Math.round(bmr*a), loss = tdee-500, gain = tdee+300;
+  const el = document.getElementById('calResult');
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="cal-boxes">
+      <div class="cal-box" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.22);">
+        <div class="cal-box-num" style="color:#f87171;">${loss}</div>
+        <div class="cal-box-lbl">${isBn?'ওজন কমাতে':'Weight Loss'}</div>
       </div>
-      <div style="padding:0.7rem;border-radius:0.75rem;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);">
-        <div style="font-size:1.1rem;font-weight:800;color:#4ade80;">${tdee}</div>
-        <div style="font-size:0.68rem;opacity:0.6;margin-top:2px;">${isBn?'বজায় রাখতে':'Maintain'}</div>
+      <div class="cal-box" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.22);">
+        <div class="cal-box-num" style="color:#4ade80;">${tdee}</div>
+        <div class="cal-box-lbl">${isBn?'বজায় রাখতে':'Maintain'}</div>
       </div>
-      <div style="padding:0.7rem;border-radius:0.75rem;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.25);">
-        <div style="font-size:1.1rem;font-weight:800;color:#60a5fa;">${gain}</div>
-        <div style="font-size:0.68rem;opacity:0.6;margin-top:2px;">${isBn?'ওজন বাড়াতে':'Weight Gain'}</div>
+      <div class="cal-box" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.22);">
+        <div class="cal-box-num" style="color:#60a5fa;">${gain}</div>
+        <div class="cal-box-lbl">${isBn?'ওজন বাড়াতে':'Weight Gain'}</div>
       </div>
     </div>
-    <p style="text-align:center;font-size:0.73rem;opacity:0.45;margin-top:0.5rem;">${isBn?'kcal/দিন — Mifflin-St Jeor সূত্র অনুযায়ী':'kcal/day — based on Mifflin-St Jeor formula'}</p>`;
+    <div class="cal-note">${isBn?'kcal/দিন · Mifflin-St Jeor সূত্র':'kcal/day · Mifflin-St Jeor formula'}</div>`;
 }
 
-// ── Symptom Checker ───────────────────────────────────────────
-const sympData = {
-  fever:   { en:'Fever with urinary symptoms may indicate kidney/bladder infection. Stay hydrated and seek medical advice.', bn:'জ্বরের সাথে প্রস্রাবের সমস্যা কিডনি বা মূত্রাশয়ের সংক্রমণের লক্ষণ হতে পারে।' },
-  rash:    { en:'Skin rashes can result from allergies, infections, or skin conditions. A dermatology consult is recommended.', bn:'চর্মজ ফুসকুড়ি অ্যালার্জি বা সংক্রমণ থেকে হতে পারে। চর্মরোগ বিশেষজ্ঞ দেখান।' },
-  burn:    { en:'Burning urination is a classic UTI sign. Drink plenty of water and consult a doctor promptly.', bn:'প্রসাবে জ্বালাপোড়া UTI-এর লক্ষণ। প্রচুর পানি পান করুন ও দ্রুত ডাক্তার দেখান।' },
-  freq:    { en:'Frequent urination may be linked to UTI, diabetes, or prostate issues. A urine test is advisable.', bn:'বারবার প্রসাব UTI, ডায়াবেটিস বা প্রস্টেটের সমস্যার লক্ষণ হতে পারে। প্রস্রাব পরীক্ষা করান।' },
-  itch:    { en:'Persistent skin itching may be due to allergies, eczema, or fungal infection. Keep the area clean and dry.', bn:'ত্বকে চুলকানি অ্যালার্জি বা একজিমার কারণে হতে পারে। পরিষ্কার ও শুষ্ক রাখুন।' },
-  acne:    { en:'Acne is linked to hormones, diet, or skin hygiene. A dermatologist can provide targeted treatment.', bn:'ব্রণ হরমোন বা খাদ্যাভ্যাসের সাথে সম্পর্কিত। চর্মরোগ বিশেষজ্ঞ দেখান।' },
-  back:    { en:'Lower back pain with urinary symptoms may suggest kidney stones or infection. See a doctor soon.', bn:'পিঠে ব্যথার সাথে প্রস্রাবের সমস্যা কিডনিতে পাথর বা সংক্রমণের ইঙ্গিত হতে পারে।' },
-  fatigue: { en:'Persistent fatigue may stem from anemia, infection, or thyroid issues. A blood test is a good start.', bn:'দীর্ঘস্থায়ী ক্লান্তি রক্তশূন্যতা বা থাইরয়েড সমস্যার লক্ষণ হতে পারে। রক্ত পরীক্ষা করান।' },
-  blood:   { en:'Blood in urine (hematuria) needs prompt evaluation. Please consult a doctor immediately.', bn:'প্রসাবে রক্ত দেখা দিলে দ্রুত ডাক্তার দেখানো জরুরি।' },
-  headache:{ en:'Frequent headaches can be from dehydration, stress, hypertension, or other causes. Monitor blood pressure.', bn:'ঘন ঘন মাথাব্যথা পানিশূন্যতা, চাপ বা উচ্চ রক্তচাপের কারণে হতে পারে। রক্তচাপ মাপুন।' },
-  nausea:  { en:'Nausea can be a sign of infection, digestive issues, or medication side effects. Consult a doctor if persistent.', bn:'বমিভাব সংক্রমণ বা হজম সমস্যার লক্ষণ হতে পারে। দীর্ঘস্থায়ী হলে ডাক্তার দেখান।' },
-  swelling:{ en:'Leg swelling can indicate kidney, heart, or circulatory problems. Seek medical evaluation promptly.', bn:'পায়ে ফোলা কিডনি, হৃদয় বা রক্তসংবহন সমস্যার লক্ষণ হতে পারে। দ্রুত ডাক্তার দেখান।' },
+/* ─── Symptom guide ─── */
+const sel = new Set();
+const SD = {
+  fever:   {en:'Fever with urinary symptoms may indicate kidney/bladder infection. Stay hydrated and seek medical advice.',                       bn:'জ্বরের সাথে প্রস্রাবের সমস্যা কিডনি বা মূত্রাশয়ের সংক্রমণের লক্ষণ হতে পারে।'},
+  rash:    {en:'Skin rashes can result from allergies, infections, or skin conditions. A dermatology consult is recommended.',                    bn:'চর্মজ ফুসকুড়ি অ্যালার্জি বা সংক্রমণ থেকে হতে পারে। চর্মরোগ বিশেষজ্ঞ দেখান।'},
+  burn:    {en:'Burning urination is a classic UTI sign. Drink plenty of water and consult a doctor promptly.',                                  bn:'প্রসাবে জ্বালাপোড়া UTI-এর লক্ষণ। প্রচুর পানি পান করুন ও দ্রুত ডাক্তার দেখান।'},
+  freq:    {en:'Frequent urination may be linked to UTI, diabetes, or prostate issues. A urine test is advisable.',                              bn:'বারবার প্রসাব UTI, ডায়াবেটিস বা প্রস্টেটের সমস্যার লক্ষণ হতে পারে।'},
+  itch:    {en:'Persistent skin itching may be due to allergies, eczema, or fungal infection. Keep the area clean and dry.',                     bn:'ত্বকে চুলকানি অ্যালার্জি বা একজিমার কারণে হতে পারে।'},
+  acne:    {en:'Acne is linked to hormones, diet, or skin hygiene. A dermatologist can provide targeted treatment.',                              bn:'ব্রণ হরমোন বা খাদ্যাভ্যাসের সাথে সম্পর্কিত। চর্মরোগ বিশেষজ্ঞ দেখান।'},
+  back:    {en:'Lower back pain with urinary symptoms may suggest kidney stones or infection. See a doctor soon.',                                bn:'পিঠে ব্যথার সাথে প্রস্রাবের সমস্যা কিডনিতে পাথর বা সংক্রমণের ইঙ্গিত হতে পারে।'},
+  fatigue: {en:'Persistent fatigue may stem from anemia, infection, or thyroid issues. A blood test is a good start.',                           bn:'দীর্ঘস্থায়ী ক্লান্তি রক্তশূন্যতা বা থাইরয়েড সমস্যার লক্ষণ হতে পারে।'},
+  blood:   {en:'Blood in urine (hematuria) requires prompt medical evaluation. Please consult a doctor immediately.',                            bn:'প্রসাবে রক্ত দেখা দিলে দ্রুত ডাক্তার দেখানো জরুরি।'},
+  head:    {en:'Frequent headaches can stem from dehydration, stress, or hypertension. Monitor your blood pressure.',                            bn:'ঘন ঘন মাথাব্যথা পানিশূন্যতা, চাপ বা উচ্চ রক্তচাপের কারণে হতে পারে।'},
+  nausea:  {en:'Nausea can be a sign of infection, digestive issues, or medication side effects. Consult a doctor if persistent.',               bn:'বমিভাব সংক্রমণ বা হজম সমস্যার লক্ষণ হতে পারে।'},
+  swell:   {en:'Leg swelling can indicate kidney, heart, or circulatory problems. Seek medical evaluation promptly.',                            bn:'পায়ে ফোলা কিডনি, হৃদয় বা রক্তসংবহন সমস্যার লক্ষণ হতে পারে।'},
 };
-const selected = new Set();
-function toggleSymp(el) {
+function tSym(el) {
   const k = el.dataset.key;
-  if (selected.has(k)) { selected.delete(k); el.classList.remove('selected'); }
-  else                 { selected.add(k);    el.classList.add('selected'); }
+  if (sel.has(k)) { sel.delete(k); el.classList.remove('on'); }
+  else            { sel.add(k);    el.classList.add('on'); }
 }
-function checkSymptoms() {
-  const res = document.getElementById('sympResult');
-  if (!selected.size) { toast(isBn?'একটি উপসর্গ বেছে নিন।':'Select at least one symptom.'); return; }
+function checkSym() {
+  const box = document.getElementById('sympResult');
+  if (!sel.size) { toast(isBn?'একটি উপসর্গ বেছে নিন।':'Select at least one symptom.'); return; }
   let html = '';
-  selected.forEach(k => {
-    if (sympData[k]) html += `<div style="margin-bottom:0.55rem;"><strong style="color:#67e8f9;">▸</strong> ${isBn ? sympData[k].bn : sympData[k].en}</div>`;
-  });
-  html += `<div style="margin-top:0.6rem;color:#67e8f9;font-size:0.78rem;font-weight:600;">${isBn?'⚠️ এটি রোগ নির্ণয় নয়। সঠিক চিকিৎসার জন্য ডাঃ আফিফ বাশারের পরামর্শ নিন।':'⚠️ This is guidance only, not a diagnosis. Please consult Dr. Afif Bashar for proper evaluation.'}</div>`;
-  res.innerHTML = html;
-  res.style.d
+  sel.forEach(k => { if (SD[k]) html += `<div style="margin-bottom:0.5rem;"><span style="color:#67e8f9;font-weight:700;">▸</span> ${isBn?SD[k].bn:SD[k].en}</div>`; });
+  html += `<div style="margin-top:0.6rem;color:#67e8f9;font-size:0.75rem;font-weight:600;">${isBn?'⚠️ এটি রোগ নির্ণয় নয়। সঠিক চিকিৎসার জন্য ডাঃ আফিফ বাশারের পরামর্শ নিন।':'⚠️ This is guidance only. Please consult Dr. Afif Bashar for proper evaluation.'}</div>`;
+  box.innerHTML = html;
+  box.style.display = 'block';
+}
+
+/* ─── FAQ accordion ─── */
+function togFaq(btn) {
+  const body = btn.nextElementSibling;
+  const icon = btn.querySelector('.faq-icon');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); icon.classList.add('open'); }
+}
+
+/* ─── Toast ─── */
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
