@@ -527,6 +527,85 @@
     }
     #scrollTop.visible{opacity:1;transform:scale(1)}
 
+    /* ── About section ── */
+    .about-qual{
+      font-size:clamp(.78rem,2.8vw,.88rem);
+      font-weight:700;color:#67e8f9;
+      margin-bottom:1rem;letter-spacing:.01em;
+    }
+    html.light .about-qual{color:#0369a1}
+    .about-body{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.1rem}
+    .about-body p{
+      font-size:clamp(.78rem,2.8vw,.86rem);
+      line-height:1.78;opacity:.78;
+    }
+    .about-svc-title{
+      font-size:clamp(.8rem,3vw,.9rem);
+      font-weight:700;margin-bottom:.6rem;
+      color:#67e8f9;
+    }
+    html.light .about-svc-title{color:#0369a1}
+    .about-svc-list{
+      list-style:none;
+      display:flex;flex-direction:column;gap:.45rem;
+      padding:0;
+    }
+    .about-svc-list li{
+      font-size:clamp(.76rem,2.7vw,.84rem);
+      opacity:.78;line-height:1.5;
+      padding-left:1.4rem;position:relative;
+    }
+    .about-svc-list li::before{
+      content:'✦';
+      position:absolute;left:0;
+      color:#06b6d4;font-size:.6rem;top:.22rem;
+    }
+    html.light .about-svc-list li::before{color:#0369a1}
+
+    /* ── Urinary grouped section ── */
+    .uri-sub{font-size:.78rem;opacity:.48;margin-bottom:1rem}
+    .uri-group{margin-bottom:1rem}
+    .uri-group-label{
+      font-size:.75rem;font-weight:700;
+      color:#67e8f9;margin-bottom:.5rem;
+      letter-spacing:.02em;
+    }
+    html.light .uri-group-label{color:#0369a1}
+
+    /* ── YouTube video section ── */
+    .vid-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:.85rem;
+      margin-bottom:1rem;
+    }
+    @media(min-width:500px){
+      .vid-grid{grid-template-columns:1fr 1fr}
+    }
+    .vid-frame-wrap{
+      position:relative;
+      width:100%;
+      padding-bottom:56.25%; /* 16:9 */
+      height:0;overflow:hidden;
+      border-radius:12px;
+      background:#000;
+    }
+    .vid-frame{
+      position:absolute;top:0;left:0;
+      width:100%;height:100%;
+      border:none;border-radius:12px;
+    }
+    .yt-cta{
+      display:flex;align-items:center;justify-content:center;
+      gap:.55rem;padding:.75rem 1.2rem;border-radius:12px;
+      background:#ff0000;color:#fff;
+      font-weight:700;font-size:clamp(.8rem,3vw,.88rem);
+      text-decoration:none;
+      transition:background .2s,transform .2s;
+      box-shadow:0 4px 16px rgba(255,0,0,.35);
+    }
+    .yt-cta:hover{background:#cc0000;transform:translateY(-2px)}
+
     /* ── Reduced motion ── */
     @media(prefers-reduced-motion:reduce){
       .float-card,.hero-photo,.online-dot{animation:none}
@@ -552,6 +631,7 @@
     <a href="#services" onclick="navTo('services')" data-en="Services" data-bn="সেবা">Services</a>
     <a href="#urinary"  onclick="navTo('urinary')"  data-en="Urinary"  data-bn="মূত্রতন্ত্র">Urinary</a>
     <a href="#tools"    onclick="navTo('tools')"    data-en="Tools"    data-bn="টুলস">Tools</a>
+    <a href="#videos"   onclick="navTo('videos')"   data-en="Videos"   data-bn="ভিডিও">Videos</a>
     <a href="#tips"     onclick="navTo('tips')"     data-en="Tips"     data-bn="টিপস">Tips</a>
     <a href="#book"     onclick="navTo('book')"     data-en="Book"     data-bn="বুকিং">Book</a>
   </div>
@@ -571,6 +651,7 @@
   <a href="#services" onclick="navTo('services');closeMenu()" data-en="Services" data-bn="সেবা">Services</a>
   <a href="#urinary"  onclick="navTo('urinary');closeMenu()"  data-en="Urinary"  data-bn="মূত্রতন্ত্র">Urinary</a>
   <a href="#tools"    onclick="navTo('tools');closeMenu()"    data-en="Tools"    data-bn="টুলস">Tools</a>
+  <a href="#videos"   onclick="navTo('videos');closeMenu()"   data-en="Videos"   data-bn="ভিডিও">Videos</a>
   <a href="#tips"     onclick="navTo('tips');closeMenu()"     data-en="Tips"     data-bn="টিপস">Tips</a>
   <a href="#book"     onclick="navTo('book');closeMenu()"     data-en="Book"     data-bn="বুকিং">Book</a>
 </div>
@@ -619,7 +700,7 @@
   <div class="glass card" style="padding:.5rem 0;">
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-num">1000+</div>
+        <div class="stat-num">500+</div>
         <div class="stat-label" data-en="Patients Helped" data-bn="রোগী সহায়তা">Patients Helped</div>
       </div>
       <div class="stat-item">
@@ -636,55 +717,47 @@
   <!-- ABOUT -->
   <div class="glass card" id="about">
     <h2 class="sec-title" data-en="About Me" data-bn="আমার সম্পর্কে">About Me</h2>
-    <p style="font-size:0.88rem;line-height:1.78;opacity:0.78;"
-       data-en="MBBS, FCPS Part-I (Urology), MRCS Part A (England)
- 
- I provide consultation and treatment for a wide range of common health conditions affecting both children and adults, including sexual health concerns, fever, cough and cold, diabetes, hypertension, and common skin disorders.
- 
- I have a special interest in the evaluation and management of urinary problems, kidney stones, erectile dysfunction, prostate-related conditions, and various men's health issues.
- 
- I believe in listening carefully to my patients, understanding their concerns, and providing appropriate medical advice and treatment. When necessary, I recommend relevant investigations and offer clear guidance regarding diagnosis, treatment, and follow-up care.
- 
- My goal is to deliver high-quality, patient-centered healthcare while maintaining professionalism, confidentiality, compassion, and respect for every patient.
- 
- Services Provided:
- *Treatment of fever, cough, cold, and other common illnesses
- *Diabetes and hypertension management
- *Management of common skin conditions
- *General healthcare for children and adults
- *Evaluation and treatment of urinary tract problems
- *Kidney stone consultation and management
- *Erectile dysfunction assessment and treatment
- *Prostate disease evaluation and management
- *Men's health consultation
- *Medical advice, health counseling, and follow-up care
- *Guidance on appropriate investigations and treatment plans"
-       data-bn="
- এমবিবিএস, এফসিপিএস পার্ট-I (ইউরোলজি), এমআরসিএস পার্ট A (ইংল্যান্ড)
- 
- আমি শিশু ও প্রাপ্তবয়স্কদের বিভিন্ন সাধারণ রোগের চিকিৎসা প্রদান করে থাকি। জ্বর, সর্দি-কাশি, ডায়াবেটিস, উচ্চ রক্তচাপ, ত্বকের সাধারণ সমস্যা এবং যৌন স্বাস্থ্যসংক্রান্ত বিভিন্ন সমস্যার সঠিক রোগনির্ণয় ও চিকিৎসায় সেবা দিয়ে থাকি।
- 
- প্রস্রাবের বিভিন্ন সমস্যা, কিডনির পাথর, উত্থানজনিত সমস্যা (Erectile Dysfunction), প্রোস্টেটজনিত রোগ এবং পুরুষদের বিভিন্ন স্বাস্থ্যসমস্যা বিষয়ে আমার বিশেষ আগ্রহ রয়েছে।
- 
- রোগীর কথা মনোযোগ সহকারে শুনে তাঁদের সমস্যার যথাযথ মূল্যায়ন, প্রয়োজনীয় পরামর্শ এবং আধুনিক চিকিৎসা প্রদানকে আমি গুরুত্ব দিই। প্রয়োজন অনুযায়ী উপযুক্ত পরীক্ষা-নিরীক্ষার পরামর্শ এবং পরবর্তী করণীয় সম্পর্কে সুস্পষ্ট দিকনির্দেশনা দিয়ে থাকি।
- 
- আন্তরিকতা, গোপনীয়তা এবং রোগীকেন্দ্রিক সেবার মাধ্যমে সর্বোচ্চ মানের চিকিৎসাসেবা প্রদান করাই আমার লক্ষ্য।
- 
- প্রদত্ত সেবাসমূহ:
- *যৌন সমস্যার পরামর্শ ও চিকিৎসা
- *জ্বর, সর্দি-কাশি ও সাধারণ রোগের চিকিৎসা
- *ডায়াবেটিস ও উচ্চ রক্তচাপের ব্যবস্থাপনা
- *ত্বকের সাধারণ সমস্যার চিকিৎসা
- *শিশু ও প্রাপ্তবয়স্কদের সাধারণ স্বাস্থ্যসেবা
- *প্রস্রাবের বিভিন্ন সমস্যার মূল্যায়ন ও চিকিৎসা
- *কিডনির পাথর সম্পর্কিত পরামর্শ ও চিকিৎসা
- *উত্থানজনিত সমস্যার (ইরেকটাইল ডিসফাংশন) ব্যবস্থাপনা
- *প্রোস্টেটজনিত রোগের পরামর্শ ও চিকিৎসা
- *পুরুষদের বিভিন্ন স্বাস্থ্যসমস্যার মূল্যায়ন ও চিকিৎসা
- *প্রয়োজনীয় পরীক্ষা-নিরীক্ষা ও চিকিৎসা পরিকল্পনা
- *স্বাস্থ্যবিষয়ক পরামর্শ ও ফলো-আপ সেবা">
-      I am Dr. Afif Bashar — a qualified physician with MBBS, MRCS Part A (UK), and FCPS Part-I in Surgery &amp; Urology. I provide patient-centered online consultations covering general health, dermatology, chronic disease management, and urinary health assessment. My aim is to make quality healthcare accessible from the comfort of your home.
+
+    <!-- Qualification line -->
+    <p class="about-qual" data-en="MBBS, FCPS Part-I (Urology), MRCS Part A (England)" data-bn="MBBS, FCPS Part-I (ইউরোলজি), MRCS Part A (ইংল্যান্ড)">
+      MBBS, FCPS Part-I (Urology), MRCS Part A (England)
     </p>
+
+    <!-- Paragraphs -->
+    <div class="about-body">
+      <p data-en="I provide consultation and treatment for a wide range of common health conditions affecting both children and adults, including sexual health concerns, fever, cough and cold, diabetes, hypertension, and common skin disorders."
+         data-bn="আমি শিশু ও প্রাপ্তবয়স্ক উভয়ের জন্য বিভিন্ন সাধারণ স্বাস্থ্য সমস্যায় পরামর্শ ও চিকিৎসা প্রদান করি — যেমন যৌন স্বাস্থ্য সমস্যা, জ্বর, সর্দি-কাশি, ডায়াবেটিস, উচ্চ রক্তচাপ এবং সাধারণ চর্মরোগ।">
+        I provide consultation and treatment for a wide range of common health conditions affecting both children and adults, including sexual health concerns, fever, cough and cold, diabetes, hypertension, and common skin disorders.
+      </p>
+      <p data-en="I have a special interest in the evaluation and management of urinary problems, kidney stones, erectile dysfunction, prostate-related conditions, and various men's health issues."
+         data-bn="আমার বিশেষ আগ্রহ রয়েছে মূত্রতন্ত্রের সমস্যা, কিডনিতে পাথর, ইরেক্টাইল ডিসফাংশন, প্রস্টেট-সংক্রান্ত রোগ এবং পুরুষ স্বাস্থ্যের বিভিন্ন সমস্যার মূল্যায়ন ও চিকিৎসায়।">
+        I have a special interest in the evaluation and management of urinary problems, kidney stones, erectile dysfunction, prostate-related conditions, and various men's health issues.
+      </p>
+      <p data-en="I believe in listening carefully to my patients, understanding their concerns, and providing appropriate medical advice and treatment. When necessary, I recommend relevant investigations and offer clear guidance regarding diagnosis, treatment, and follow-up care."
+         data-bn="আমি রোগীর কথা মনোযোগ দিয়ে শুনি, তাদের উদ্বেগ বুঝি এবং উপযুক্ত চিকিৎসা পরামর্শ প্রদান করি। প্রয়োজনে প্রাসঙ্গিক পরীক্ষা-নিরীক্ষার পরামর্শ দিই এবং রোগ নির্ণয়, চিকিৎসা ও ফলো-আপ সম্পর্কে স্পষ্ট নির্দেশনা প্রদান করি।">
+        I believe in listening carefully to my patients, understanding their concerns, and providing appropriate medical advice and treatment. When necessary, I recommend relevant investigations and offer clear guidance regarding diagnosis, treatment, and follow-up care.
+      </p>
+      <p data-en="My goal is to deliver high-quality, patient-centered healthcare while maintaining professionalism, confidentiality, compassion, and respect for every patient."
+         data-bn="আমার লক্ষ্য হলো পেশাদারিত্ব, গোপনীয়তা, সহমর্মিতা এবং প্রতিটি রোগীর প্রতি সম্মান বজায় রেখে উচ্চমানের রোগীকেন্দ্রিক স্বাস্থ্যসেবা প্রদান করা।">
+        My goal is to deliver high-quality, patient-centered healthcare while maintaining professionalism, confidentiality, compassion, and respect for every patient.
+      </p>
+    </div>
+
+    <!-- Services Provided -->
+    <div class="about-svc-title" data-en="Services Provided:" data-bn="প্রদত্ত সেবাসমূহ:">Services Provided:</div>
+    <ul class="about-svc-list">
+      <li data-en="Treatment of fever, cough, cold, and other common illnesses"         data-bn="জ্বর, সর্দি-কাশি ও অন্যান্য সাধারণ রোগের চিকিৎসা">Treatment of fever, cough, cold, and other common illnesses</li>
+      <li data-en="Diabetes and hypertension management"                                data-bn="ডায়াবেটিস ও উচ্চ রক্তচাপ ব্যবস্থাপনা">Diabetes and hypertension management</li>
+      <li data-en="Management of common skin conditions"                                data-bn="সাধারণ চর্মরোগের চিকিৎসা">Management of common skin conditions</li>
+      <li data-en="General healthcare for children and adults"                          data-bn="শিশু ও প্রাপ্তবয়স্কদের সাধারণ স্বাস্থ্যসেবা">General healthcare for children and adults</li>
+      <li data-en="Evaluation and treatment of urinary tract problems"                  data-bn="মূত্রতন্ত্রের সমস্যার মূল্যায়ন ও চিকিৎসা">Evaluation and treatment of urinary tract problems</li>
+      <li data-en="Kidney stone consultation and management"                            data-bn="কিডনিতে পাথরের পরামর্শ ও ব্যবস্থাপনা">Kidney stone consultation and management</li>
+      <li data-en="Erectile dysfunction assessment and treatment"                       data-bn="ইরেক্টাইল ডিসফাংশন মূল্যায়ন ও চিকিৎসা">Erectile dysfunction assessment and treatment</li>
+      <li data-en="Prostate disease evaluation and management"                          data-bn="প্রস্টেট রোগের মূল্যায়ন ও ব্যবস্থাপনা">Prostate disease evaluation and management</li>
+      <li data-en="Men's health consultation"                                           data-bn="পুরুষ স্বাস্থ্য পরামর্শ">Men's health consultation</li>
+      <li data-en="Medical advice, health counseling, and follow-up care"               data-bn="চিকিৎসা পরামর্শ, স্বাস্থ্য কাউন্সেলিং ও ফলো-আপ">Medical advice, health counseling, and follow-up care</li>
+      <li data-en="Guidance on appropriate investigations and treatment plans"          data-bn="প্রয়োজনীয় পরীক্ষা-নিরীক্ষা ও চিকিৎসা পরিকল্পনার নির্দেশনা">Guidance on appropriate investigations and treatment plans</li>
+    </ul>
   </div>
 
   <!-- SERVICES -->
@@ -694,29 +767,128 @@
       <div class="glass svc-card"><div class="svc-icon">🩺</div><div class="svc-name" data-en="General Consultation" data-bn="সাধারণ পরামর্শ">General Consultation</div></div>
       <div class="glass svc-card"><div class="svc-icon">🌿</div><div class="svc-name" data-en="Dermatology" data-bn="চর্মরোগ">Dermatology</div></div>
       <div class="glass svc-card"><div class="svc-icon">🚻</div><div class="svc-name" data-en="Urinary Health" data-bn="মূত্রতন্ত্র">Urinary Health</div></div>
-      <div class="glass svc-card"><div class="svc-icon">📋</div><div class="svc-name" data-en="Second Opinion" data-bn="সেকেন্ড ওপিনিয়ন">Second Opinion</div></div>
+      <div class="glass svc-card"><div class="svc-icon">🫘</div><div class="svc-name" data-en="Kidney Stones" data-bn="কিডনিতে পাথর">Kidney Stones</div></div>
       <div class="glass svc-card"><div class="svc-icon">💊</div><div class="svc-name" data-en="Chronic Disease" data-bn="দীর্ঘমেয়াদী রোগ">Chronic Disease</div></div>
       <div class="glass svc-card"><div class="svc-icon">🧪</div><div class="svc-name" data-en="Report Review" data-bn="রিপোর্ট রিভিউ">Report Review</div></div>
       <div class="glass svc-card"><div class="svc-icon">👶</div><div class="svc-name" data-en="Pediatric Care" data-bn="শিশু স্বাস্থ্য">Pediatric Care</div></div>
-      <div class="glass svc-card"><div class="svc-icon">💬</div><div class="svc-name" data-en="Video Consultation" data-bn="ভিডিও পরামর্শ">Video Consultation</div></div>
+      <div class="glass svc-card"><div class="svc-icon">❤️</div><div class="svc-name" data-en="Erectile Dysfunction" data-bn="ইরেক্টাইল ডিসফাংশন">Erectile Dysfunction</div></div>
+      <div class="glass svc-card"><div class="svc-icon">⚡</div><div class="svc-name" data-en="Premature Ejaculation" data-bn="দ্রুত বীর্যপাত">Premature Ejaculation</div></div>
+      <div class="glass svc-card"><div class="svc-icon">🔬</div><div class="svc-name" data-en="Prostate Health" data-bn="প্রস্টেট স্বাস্থ্য">Prostate Health</div></div>
+      <div class="glass svc-card"><div class="svc-icon">👨</div><div class="svc-name" data-en="Men's Health" data-bn="পুরুষ স্বাস্থ্য">Men's Health</div></div>
+      <div class="glass svc-card"><div class="svc-icon">📋</div><div class="svc-name" data-en="Second Opinion" data-bn="সেকেন্ড ওপিনিয়ন">Second Opinion</div></div>
     </div>
   </div>
 
   <!-- URINARY -->
   <div class="glass card" id="urinary">
-    <h2 class="sec-title" data-en="Urinary & Kidney Health" data-bn="মূত্রতন্ত্র ও কিডনি স্বাস্থ্য">Urinary &amp; Kidney Health</h2>
-    <p style="font-size:0.78rem;opacity:0.48;margin-bottom:0.8rem;" data-en="Common concerns I can help with:" data-bn="আমি যেসব সমস্যায় সাহায্য করতে পারি:">Common concerns I can help with:</p>
-    <div class="chips">
-      <span class="chip" data-en="Burning urination"    data-bn="প্রসাবে জ্বালাপোড়া">Burning urination</span>
-      <span class="chip" data-en="Frequent urination"   data-bn="বারবার প্রসাব">Frequent urination</span>
-      <span class="chip" data-en="Urinary tract infection" data-bn="ইউরিন ইনফেকশন">Urinary tract infection</span>
-      <span class="chip" data-en="Blood in urine"       data-bn="প্রসাবে রক্ত">Blood in urine</span>
-      <span class="chip" data-en="Kidney stone symptoms" data-bn="কিডনিতে পাথর">Kidney stone symptoms</span>
-      <span class="chip" data-en="Painful urination"    data-bn="প্রসাবে ব্যথা">Painful urination</span>
-      <span class="chip" data-en="Incomplete emptying"  data-bn="অসম্পূর্ণ প্রসাব">Incomplete emptying</span>
-      <span class="chip" data-en="Prostate concerns"    data-bn="প্রস্টেট সমস্যা">Prostate concerns</span>
-      <span class="chip" data-en="Report review"        data-bn="রিপোর্ট রিভিউ">Report review</span>
+    <h2 class="sec-title" data-en="Urinary, Kidney &amp; Men's Health" data-bn="মূত্রতন্ত্র, কিডনি ও পুরুষ স্বাস্থ্য">Urinary, Kidney &amp; Men's Health</h2>
+    <p class="uri-sub" data-en="Conditions I evaluate and treat:" data-bn="আমি যেসব সমস্যা মূল্যায়ন ও চিকিৎসা করি:">Conditions I evaluate and treat:</p>
+
+    <div class="uri-group">
+      <div class="uri-group-label" data-en="🚻 Urinary Problems" data-bn="🚻 মূত্রতন্ত্রের সমস্যা">🚻 Urinary Problems</div>
+      <div class="chips">
+        <span class="chip" data-en="Burning urination"      data-bn="প্রসাবে জ্বালাপোড়া">Burning urination</span>
+        <span class="chip" data-en="Frequent urination"     data-bn="বারবার প্রসাব">Frequent urination</span>
+        <span class="chip" data-en="Urinary tract infection" data-bn="ইউরিন ইনফেকশন">Urinary tract infection</span>
+        <span class="chip" data-en="Blood in urine"         data-bn="প্রসাবে রক্ত">Blood in urine</span>
+        <span class="chip" data-en="Painful urination"      data-bn="প্রসাবে ব্যথা">Painful urination</span>
+        <span class="chip" data-en="Incomplete bladder emptying" data-bn="অসম্পূর্ণ প্রসাব">Incomplete bladder emptying</span>
+        <span class="chip" data-en="Urinary incontinence"   data-bn="প্রস্রাব ধরে রাখতে না পারা">Urinary incontinence</span>
+      </div>
     </div>
+
+    <div class="uri-group">
+      <div class="uri-group-label" data-en="🫘 Kidney Problems" data-bn="🫘 কিডনির সমস্যা">🫘 Kidney Problems</div>
+      <div class="chips">
+        <span class="chip" data-en="Kidney stone symptoms"  data-bn="কিডনিতে পাথরের উপসর্গ">Kidney stone symptoms</span>
+        <span class="chip" data-en="Kidney stone management" data-bn="কিডনিতে পাথরের চিকিৎসা">Kidney stone management</span>
+        <span class="chip" data-en="Flank / back pain"      data-bn="পাশে / পিঠে ব্যথা">Flank / back pain</span>
+        <span class="chip" data-en="Kidney infection"       data-bn="কিডনি সংক্রমণ">Kidney infection</span>
+        <span class="chip" data-en="Report &amp; scan review" data-bn="রিপোর্ট ও স্ক্যান রিভিউ">Report &amp; scan review</span>
+      </div>
+    </div>
+
+    <div class="uri-group">
+      <div class="uri-group-label" data-en="🔬 Prostate Health" data-bn="🔬 প্রস্টেট স্বাস্থ্য">🔬 Prostate Health</div>
+      <div class="chips">
+        <span class="chip" data-en="Enlarged prostate (BPH)" data-bn="প্রস্টেট বড় হওয়া (BPH)">Enlarged prostate (BPH)</span>
+        <span class="chip" data-en="Prostate infection"      data-bn="প্রস্টেটের সংক্রমণ">Prostate infection</span>
+        <span class="chip" data-en="Weak urine stream"       data-bn="দুর্বল প্রস্রাবের ধারা">Weak urine stream</span>
+        <span class="chip" data-en="Prostate-related pain"   data-bn="প্রস্টেট সংক্রান্ত ব্যথা">Prostate-related pain</span>
+      </div>
+    </div>
+
+    <div class="uri-group" style="margin-bottom:0">
+      <div class="uri-group-label" data-en="❤️ Men's Sexual Health" data-bn="❤️ পুরুষ যৌন স্বাস্থ্য">❤️ Men's Sexual Health</div>
+      <div class="chips">
+        <span class="chip" data-en="Erectile dysfunction"   data-bn="ইরেক্টাইল ডিসফাংশন">Erectile dysfunction</span>
+        <span class="chip" data-en="Premature ejaculation"  data-bn="দ্রুত বীর্যপাত">Premature ejaculation</span>
+        <span class="chip" data-en="Low libido"             data-bn="যৌন ইচ্ছা কমে যাওয়া">Low libido</span>
+        <span class="chip" data-en="Male infertility concerns" data-bn="পুরুষ বন্ধ্যাত্ব সংক্রান্ত">Male infertility concerns</span>
+        <span class="chip" data-en="Sexual health counseling" data-bn="যৌন স্বাস্থ্য পরামর্শ">Sexual health counseling</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ VIDEOS ══ -->
+  <div class="glass card" id="videos">
+    <h2 class="sec-title" data-en="Health Videos" data-bn="স্বাস্থ্য ভিডিও">Health Videos</h2>
+    <p class="uri-sub" data-en="Watch health tips and educational videos from my YouTube channel:" data-bn="আমার YouTube চ্যানেল থেকে স্বাস্থ্য টিপস ও শিক্ষামূলক ভিডিও দেখুন:">Watch health tips and educational videos from my YouTube channel:</p>
+
+    <!-- Video Grid -->
+    <div class="vid-grid">
+
+      <div class="vid-wrap">
+        <div class="vid-frame-wrap">
+          <iframe class="vid-frame"
+            src="https://www.youtube.com/embed?listType=user_uploads&list=drafifbashar&index=1"
+            title="Dr Afif Bashar – Video 1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="vid-wrap">
+        <div class="vid-frame-wrap">
+          <iframe class="vid-frame"
+            src="https://www.youtube.com/embed?listType=user_uploads&list=drafifbashar&index=2"
+            title="Dr Afif Bashar – Video 2"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="vid-wrap">
+        <div class="vid-frame-wrap">
+          <iframe class="vid-frame"
+            src="https://www.youtube.com/embed?listType=user_uploads&list=drafifbashar&index=3"
+            title="Dr Afif Bashar – Video 3"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="vid-wrap">
+        <div class="vid-frame-wrap">
+          <iframe class="vid-frame"
+            src="https://www.youtube.com/embed?listType=user_uploads&list=drafifbashar&index=4"
+            title="Dr Afif Bashar – Video 4"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Subscribe CTA -->
+    <a href="https://youtube.com/@drafifbashar" target="_blank" class="yt-cta">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      <span data-en="Subscribe to my YouTube Channel" data-bn="আমার YouTube চ্যানেল সাবস্ক্রাইব করুন">Subscribe to my YouTube Channel</span>
+    </a>
   </div>
 
   <!-- ══ TOOLS ══ -->
@@ -728,7 +900,17 @@
       <h3 style="font-size:0.98rem;font-weight:700;margin-bottom:1rem;">⚖️ <span data-en="BMI Calculator" data-bn="বিএমআই ক্যালকুলেটর">BMI Calculator</span></h3>
       <div class="form-grid">
         <div><label class="lbl" data-en="Weight (kg)" data-bn="ওজন (কেজি)">Weight (kg)</label><input class="inp" id="bmiW" type="number" inputmode="decimal" placeholder="e.g. 70"></div>
-        <div><label class="lbl" data-en="Height (cm)" data-bn="উচ্চতা (সে.মি.)">Height (cm)</label><input class="inp" id="bmiH" type="number" inputmode="decimal" placeholder="e.g. 170"></div>
+        <div>
+          <label class="lbl" data-en="Height" data-bn="উচ্চতা">Height</label>
+          <div style="display:flex;gap:0.4rem;">
+            <input class="inp" id="bmiFt" type="number" inputmode="numeric" placeholder="ft" min="1" max="8" style="width:50%">
+            <input class="inp" id="bmiIn" type="number" inputmode="numeric" placeholder="in" min="0" max="11" style="width:50%">
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:3px;">
+            <span style="font-size:0.65rem;opacity:0.4;width:50%;text-align:center;" data-en="feet" data-bn="ফুট">feet</span>
+            <span style="font-size:0.65rem;opacity:0.4;width:50%;text-align:center;" data-en="inches" data-bn="ইঞ্চি">inches</span>
+          </div>
+        </div>
       </div>
       <div class="form-full">
         <div><label class="lbl" data-en="Age (optional)" data-bn="বয়স (ঐচ্ছিক)">Age (optional)</label><input class="inp" id="bmiAge" type="number" inputmode="numeric" placeholder="e.g. 30"></div>
@@ -984,25 +1166,39 @@ window.addEventListener('scroll', () => {
 
 /* ─── BMI ─── */
 function calcBMI() {
-  const w = parseFloat(document.getElementById('bmiW').value);
-  const h = parseFloat(document.getElementById('bmiH').value) / 100;
-  if (!w || !h || h <= 0) { toast(isBn ? 'ওজন ও উচ্চতা দিন।' : 'Enter valid weight & height.'); return; }
+  const w   = parseFloat(document.getElementById('bmiW').value);
+  const ft  = parseFloat(document.getElementById('bmiFt').value) || 0;
+  const inc = parseFloat(document.getElementById('bmiIn').value) || 0;
+  // convert feet + inches → metres
+  const totalInches = (ft * 12) + inc;
+  const h = totalInches * 0.0254; // 1 inch = 0.0254 m
+  if (!w || totalInches <= 0) { toast(isBn ? 'ওজন ও উচ্চতা দিন।' : 'Enter valid weight & height.'); return; }
+  if (ft < 1 || ft > 8)      { toast(isBn ? 'সঠিক উচ্চতা দিন (১–৮ ফুট)।' : 'Enter a valid height (1–8 ft).'); return; }
+  if (inc < 0 || inc > 11)   { toast(isBn ? 'ইঞ্চি ০–১১ এর মধ্যে হওয়া উচিত।' : 'Inches must be between 0 and 11.'); return; }
   const bmi = +(w / (h * h)).toFixed(1);
   let label, advice, pct;
-  if      (bmi < 18.5) { label = isBn?'কম ওজন':'Underweight';   advice = isBn?'পুষ্টিকর খাবার খান ও ডাক্তারের পরামর্শ নিন।':'Eat nutrient-rich food and consult a doctor.'; pct = Math.max(2, bmi/18.5*25); }
-  else if (bmi < 25)   { label = isBn?'স্বাভাবিক':'Normal';      advice = isBn?'চমৎকার! সুস্বাস্থ্য বজায় রাখুন।':'Great! Maintain your healthy lifestyle.'; pct = 25 + (bmi-18.5)/6.5*25; }
+  if      (bmi < 18.5) { label = isBn?'কম ওজন':'Underweight';      advice = isBn?'পুষ্টিকর খাবার খান ও ডাক্তারের পরামর্শ নিন।':'Eat nutrient-rich food and consult a doctor.'; pct = Math.max(2, bmi/18.5*25); }
+  else if (bmi < 25)   { label = isBn?'স্বাভাবিক':'Normal weight';  advice = isBn?'চমৎকার! সুস্বাস্থ্য বজায় রাখুন।':'Great! Maintain your healthy lifestyle.'; pct = 25 + (bmi-18.5)/6.5*25; }
   else if (bmi < 30)   { label = isBn?'অতিরিক্ত ওজন':'Overweight'; advice = isBn?'নিয়মিত ব্যায়াম ও সুষম খাবার খান।':'Exercise regularly and eat a balanced diet.'; pct = 50 + (bmi-25)/5*25; }
-  else                 { label = isBn?'স্থূলকায়':'Obese';        advice = isBn?'দ্রুত ডাক্তারের পরামর্শ নিন।':'Please consult a doctor for a health plan.'; pct = Math.min(95, 75+(bmi-30)*2); }
-  const lo = +(18.5*h*h).toFixed(1), hi = +(24.9*h*h).toFixed(1);
+  else                 { label = isBn?'স্থূলকায়':'Obese';           advice = isBn?'দ্রুত ডাক্তারের পরামর্শ নিন।':'Please consult a doctor for a health plan.'; pct = Math.min(95, 75+(bmi-30)*2); }
+  // ideal weight range in kg for this height
+  const loKg = +(18.5 * h * h).toFixed(1);
+  const hiKg = +(24.9 * h * h).toFixed(1);
+  // also show ideal range in lbs
+  const loLb = +(loKg * 2.2046).toFixed(1);
+  const hiLb = +(hiKg * 2.2046).toFixed(1);
+  const heightStr = `${ft}'${inc}"`;
   document.getElementById('bmiResult').style.display = 'block';
   document.getElementById('bmiValue').textContent  = 'BMI ' + bmi;
   document.getElementById('bmiLabel').textContent  = label;
   document.getElementById('bmiAdvice').textContent = advice;
-  document.getElementById('bmiIdeal').textContent  = isBn ? `আদর্শ ওজন: ${lo}–${hi} কেজি` : `Ideal weight: ${lo}–${hi} kg`;
+  document.getElementById('bmiIdeal').textContent  = isBn
+    ? `আদর্শ ওজন (${heightStr}): ${loKg}–${hiKg} কেজি`
+    : `Ideal weight for ${heightStr}: ${loKg}–${hiKg} kg (${loLb}–${hiLb} lbs)`;
   setTimeout(() => { document.getElementById('bmiNeedle').style.left = (pct - 1.5) + '%'; }, 80);
 }
 function resetBMI() {
-  ['bmiW','bmiH','bmiAge'].forEach(id => document.getElementById(id).value = '');
+  ['bmiW','bmiFt','bmiIn','bmiAge'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('bmiResult').style.display = 'none';
   document.getElementById('bmiNeedle').style.left = '0%';
 }
